@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.env
+*.json.swp
+bb-calendar-488901-6a4730c846cc.json

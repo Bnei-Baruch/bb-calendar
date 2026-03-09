@@ -1,0 +1,6643 @@
+[
+  {
+    "id": "ev-1",
+    "type": "regular",
+    "date": "2026-01-01",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-2",
+    "type": "regular",
+    "date": "2026-01-01",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-3",
+    "type": "regular",
+    "date": "2026-01-01",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-4",
+    "type": "regular",
+    "date": "2026-01-01",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-5",
+    "type": "regular",
+    "date": "2026-01-02",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-6",
+    "type": "regular",
+    "date": "2026-01-02",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-7",
+    "type": "regular",
+    "date": "2026-01-02",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-8",
+    "type": "regular",
+    "date": "2026-01-02",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-9",
+    "type": "regular",
+    "date": "2026-01-02",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-10",
+    "type": "regular",
+    "date": "2026-01-03",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-11",
+    "type": "regular",
+    "date": "2026-01-03",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-12",
+    "type": "regular",
+    "date": "2026-01-03",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-13",
+    "type": "regular",
+    "date": "2026-01-03",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-14",
+    "type": "regular",
+    "date": "2026-01-03",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-15",
+    "type": "regular",
+    "date": "2026-01-03",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-16",
+    "type": "regular",
+    "date": "2026-01-04",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-17",
+    "type": "regular",
+    "date": "2026-01-04",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-18",
+    "type": "regular",
+    "date": "2026-01-04",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-19",
+    "type": "regular",
+    "date": "2026-01-04",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-20",
+    "type": "regular",
+    "date": "2026-01-04",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-21",
+    "type": "regular",
+    "date": "2026-01-05",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-22",
+    "type": "regular",
+    "date": "2026-01-05",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-23",
+    "type": "regular",
+    "date": "2026-01-05",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-24",
+    "type": "regular",
+    "date": "2026-01-05",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-25",
+    "type": "regular",
+    "date": "2026-01-05",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-26",
+    "type": "regular",
+    "date": "2026-01-05",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-27",
+    "type": "regular",
+    "date": "2026-01-06",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-28",
+    "type": "regular",
+    "date": "2026-01-06",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-29",
+    "type": "regular",
+    "date": "2026-01-06",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-30",
+    "type": "regular",
+    "date": "2026-01-06",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-31",
+    "type": "regular",
+    "date": "2026-01-07",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-32",
+    "type": "regular",
+    "date": "2026-01-07",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-33",
+    "type": "regular",
+    "date": "2026-01-07",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-34",
+    "type": "regular",
+    "date": "2026-01-07",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-35",
+    "type": "regular",
+    "date": "2026-01-08",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-36",
+    "type": "regular",
+    "date": "2026-01-08",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-37",
+    "type": "regular",
+    "date": "2026-01-08",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-38",
+    "type": "regular",
+    "date": "2026-01-08",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-39",
+    "type": "regular",
+    "date": "2026-01-09",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-40",
+    "type": "regular",
+    "date": "2026-01-09",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-41",
+    "type": "regular",
+    "date": "2026-01-09",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-42",
+    "type": "regular",
+    "date": "2026-01-09",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-43",
+    "type": "regular",
+    "date": "2026-01-09",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-44",
+    "type": "regular",
+    "date": "2026-01-10",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-45",
+    "type": "regular",
+    "date": "2026-01-10",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-46",
+    "type": "regular",
+    "date": "2026-01-10",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-47",
+    "type": "regular",
+    "date": "2026-01-10",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-48",
+    "type": "regular",
+    "date": "2026-01-10",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-49",
+    "type": "regular",
+    "date": "2026-01-10",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-50",
+    "type": "regular",
+    "date": "2026-01-11",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-51",
+    "type": "regular",
+    "date": "2026-01-11",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-52",
+    "type": "regular",
+    "date": "2026-01-11",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-53",
+    "type": "regular",
+    "date": "2026-01-11",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-54",
+    "type": "regular",
+    "date": "2026-01-11",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-55",
+    "type": "regular",
+    "date": "2026-01-12",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-56",
+    "type": "regular",
+    "date": "2026-01-12",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-57",
+    "type": "regular",
+    "date": "2026-01-12",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-58",
+    "type": "regular",
+    "date": "2026-01-12",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-59",
+    "type": "regular",
+    "date": "2026-01-13",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-60",
+    "type": "regular",
+    "date": "2026-01-13",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-61",
+    "type": "regular",
+    "date": "2026-01-13",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-62",
+    "type": "regular",
+    "date": "2026-01-13",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-63",
+    "type": "regular",
+    "date": "2026-01-13",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-64",
+    "type": "regular",
+    "date": "2026-01-13",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-65",
+    "type": "regular",
+    "date": "2026-01-14",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-66",
+    "type": "regular",
+    "date": "2026-01-14",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-67",
+    "type": "regular",
+    "date": "2026-01-14",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-68",
+    "type": "regular",
+    "date": "2026-01-14",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-69",
+    "type": "regular",
+    "date": "2026-01-15",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-70",
+    "type": "regular",
+    "date": "2026-01-15",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-71",
+    "type": "regular",
+    "date": "2026-01-15",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-72",
+    "type": "regular",
+    "date": "2026-01-15",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-73",
+    "type": "regular",
+    "date": "2026-01-16",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-74",
+    "type": "regular",
+    "date": "2026-01-16",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-75",
+    "type": "regular",
+    "date": "2026-01-16",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-76",
+    "type": "regular",
+    "date": "2026-01-16",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-77",
+    "type": "regular",
+    "date": "2026-01-16",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-78",
+    "type": "regular",
+    "date": "2026-01-17",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-79",
+    "type": "regular",
+    "date": "2026-01-17",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-80",
+    "type": "regular",
+    "date": "2026-01-17",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-81",
+    "type": "regular",
+    "date": "2026-01-17",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-82",
+    "type": "regular",
+    "date": "2026-01-17",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-83",
+    "type": "regular",
+    "date": "2026-01-17",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-84",
+    "type": "regular",
+    "date": "2026-01-18",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-85",
+    "type": "regular",
+    "date": "2026-01-18",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-86",
+    "type": "regular",
+    "date": "2026-01-18",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-87",
+    "type": "regular",
+    "date": "2026-01-18",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-88",
+    "type": "regular",
+    "date": "2026-01-18",
+    "startTime": "18:30",
+    "endTime": "19:30",
+    "title": {
+      "he": "ישיבת חברים",
+      "en": "Gathering of Friends",
+      "ru": "Собрание товарищей",
+      "es": "Reunión de amigos"
+    }
+  },
+  {
+    "id": "ev-89",
+    "type": "regular",
+    "date": "2026-01-19",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-90",
+    "type": "regular",
+    "date": "2026-01-19",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-91",
+    "type": "regular",
+    "date": "2026-01-19",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-92",
+    "type": "regular",
+    "date": "2026-01-19",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-93",
+    "type": "regular",
+    "date": "2026-01-19",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-94",
+    "type": "regular",
+    "date": "2026-01-20",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-95",
+    "type": "regular",
+    "date": "2026-01-20",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-96",
+    "type": "regular",
+    "date": "2026-01-20",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-97",
+    "type": "regular",
+    "date": "2026-01-20",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-98",
+    "type": "regular",
+    "date": "2026-01-21",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-99",
+    "type": "regular",
+    "date": "2026-01-21",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-100",
+    "type": "regular",
+    "date": "2026-01-21",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-101",
+    "type": "regular",
+    "date": "2026-01-21",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-102",
+    "type": "regular",
+    "date": "2026-01-22",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-103",
+    "type": "regular",
+    "date": "2026-01-22",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-104",
+    "type": "regular",
+    "date": "2026-01-22",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-105",
+    "type": "regular",
+    "date": "2026-01-22",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-106",
+    "type": "regular",
+    "date": "2026-01-23",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-107",
+    "type": "regular",
+    "date": "2026-01-23",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-108",
+    "type": "regular",
+    "date": "2026-01-23",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-109",
+    "type": "regular",
+    "date": "2026-01-23",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-110",
+    "type": "regular",
+    "date": "2026-01-23",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-111",
+    "type": "regular",
+    "date": "2026-01-24",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-112",
+    "type": "regular",
+    "date": "2026-01-24",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-113",
+    "type": "regular",
+    "date": "2026-01-24",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-114",
+    "type": "regular",
+    "date": "2026-01-24",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-115",
+    "type": "regular",
+    "date": "2026-01-24",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-116",
+    "type": "regular",
+    "date": "2026-01-24",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-117",
+    "type": "regular",
+    "date": "2026-01-25",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-118",
+    "type": "regular",
+    "date": "2026-01-25",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-119",
+    "type": "regular",
+    "date": "2026-01-25",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-120",
+    "type": "regular",
+    "date": "2026-01-25",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-121",
+    "type": "regular",
+    "date": "2026-01-25",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-122",
+    "type": "regular",
+    "date": "2026-01-26",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-123",
+    "type": "regular",
+    "date": "2026-01-26",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-124",
+    "type": "regular",
+    "date": "2026-01-26",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-125",
+    "type": "regular",
+    "date": "2026-01-26",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-126",
+    "type": "regular",
+    "date": "2026-01-26",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-127",
+    "type": "regular",
+    "date": "2026-01-26",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-128",
+    "type": "regular",
+    "date": "2026-01-27",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-129",
+    "type": "regular",
+    "date": "2026-01-27",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-130",
+    "type": "regular",
+    "date": "2026-01-27",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-131",
+    "type": "regular",
+    "date": "2026-01-27",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-132",
+    "type": "regular",
+    "date": "2026-01-28",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-133",
+    "type": "regular",
+    "date": "2026-01-28",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-134",
+    "type": "regular",
+    "date": "2026-01-28",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-135",
+    "type": "regular",
+    "date": "2026-01-28",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-136",
+    "type": "regular",
+    "date": "2026-01-29",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-137",
+    "type": "regular",
+    "date": "2026-01-29",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-138",
+    "type": "regular",
+    "date": "2026-01-29",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-139",
+    "type": "regular",
+    "date": "2026-01-29",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-140",
+    "type": "regular",
+    "date": "2026-01-30",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-141",
+    "type": "regular",
+    "date": "2026-01-30",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-142",
+    "type": "regular",
+    "date": "2026-01-30",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-143",
+    "type": "regular",
+    "date": "2026-01-30",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-144",
+    "type": "regular",
+    "date": "2026-01-30",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-145",
+    "type": "regular",
+    "date": "2026-01-31",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-146",
+    "type": "regular",
+    "date": "2026-01-31",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-147",
+    "type": "regular",
+    "date": "2026-01-31",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-148",
+    "type": "regular",
+    "date": "2026-01-31",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-149",
+    "type": "regular",
+    "date": "2026-01-31",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-150",
+    "type": "regular",
+    "date": "2026-01-31",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-151",
+    "type": "regular",
+    "date": "2026-02-01",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-152",
+    "type": "regular",
+    "date": "2026-02-01",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-153",
+    "type": "regular",
+    "date": "2026-02-01",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-154",
+    "type": "regular",
+    "date": "2026-02-01",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-155",
+    "type": "regular",
+    "date": "2026-02-01",
+    "startTime": "18:30",
+    "endTime": "19:30",
+    "title": {
+      "he": "ישיבת חברים",
+      "en": "Gathering of Friends",
+      "ru": "Собрание товарищей",
+      "es": "Reunión de amigos"
+    }
+  },
+  {
+    "id": "ev-156",
+    "type": "regular",
+    "date": "2026-02-02",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-157",
+    "type": "regular",
+    "date": "2026-02-02",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-158",
+    "type": "regular",
+    "date": "2026-02-02",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-159",
+    "type": "regular",
+    "date": "2026-02-02",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-160",
+    "type": "regular",
+    "date": "2026-02-02",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-161",
+    "type": "regular",
+    "date": "2026-02-02",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-162",
+    "type": "regular",
+    "date": "2026-02-03",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-163",
+    "type": "regular",
+    "date": "2026-02-03",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-164",
+    "type": "regular",
+    "date": "2026-02-03",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-165",
+    "type": "regular",
+    "date": "2026-02-03",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-166",
+    "type": "regular",
+    "date": "2026-02-04",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-167",
+    "type": "regular",
+    "date": "2026-02-04",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-168",
+    "type": "regular",
+    "date": "2026-02-04",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-169",
+    "type": "regular",
+    "date": "2026-02-05",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-170",
+    "type": "regular",
+    "date": "2026-02-05",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-171",
+    "type": "regular",
+    "date": "2026-02-05",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-172",
+    "type": "regular",
+    "date": "2026-02-06",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-173",
+    "type": "regular",
+    "date": "2026-02-06",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-174",
+    "type": "regular",
+    "date": "2026-02-06",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-175",
+    "type": "regular",
+    "date": "2026-02-06",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-176",
+    "type": "regular",
+    "date": "2026-02-06",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-177",
+    "type": "regular",
+    "date": "2026-02-07",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-178",
+    "type": "regular",
+    "date": "2026-02-07",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-179",
+    "type": "regular",
+    "date": "2026-02-07",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-180",
+    "type": "regular",
+    "date": "2026-02-07",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-181",
+    "type": "regular",
+    "date": "2026-02-07",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-182",
+    "type": "regular",
+    "date": "2026-02-07",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-183",
+    "type": "regular",
+    "date": "2026-02-08",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-184",
+    "type": "regular",
+    "date": "2026-02-08",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-185",
+    "type": "regular",
+    "date": "2026-02-08",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-186",
+    "type": "regular",
+    "date": "2026-02-08",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-187",
+    "type": "regular",
+    "date": "2026-02-09",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-188",
+    "type": "regular",
+    "date": "2026-02-09",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-189",
+    "type": "regular",
+    "date": "2026-02-09",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-190",
+    "type": "regular",
+    "date": "2026-02-09",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-191",
+    "type": "regular",
+    "date": "2026-02-09",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-192",
+    "type": "regular",
+    "date": "2026-02-10",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-193",
+    "type": "regular",
+    "date": "2026-02-10",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-194",
+    "type": "regular",
+    "date": "2026-02-10",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-195",
+    "type": "regular",
+    "date": "2026-02-11",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-196",
+    "type": "regular",
+    "date": "2026-02-11",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-197",
+    "type": "regular",
+    "date": "2026-02-11",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-198",
+    "type": "regular",
+    "date": "2026-02-12",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-199",
+    "type": "regular",
+    "date": "2026-02-12",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-200",
+    "type": "regular",
+    "date": "2026-02-12",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-201",
+    "type": "regular",
+    "date": "2026-02-13",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-202",
+    "type": "regular",
+    "date": "2026-02-13",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-203",
+    "type": "regular",
+    "date": "2026-02-13",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-204",
+    "type": "regular",
+    "date": "2026-02-13",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-205",
+    "type": "regular",
+    "date": "2026-02-13",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-206",
+    "type": "regular",
+    "date": "2026-02-14",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-207",
+    "type": "regular",
+    "date": "2026-02-14",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-208",
+    "type": "regular",
+    "date": "2026-02-14",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-209",
+    "type": "regular",
+    "date": "2026-02-14",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-210",
+    "type": "regular",
+    "date": "2026-02-14",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-211",
+    "type": "regular",
+    "date": "2026-02-14",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-212",
+    "type": "regular",
+    "date": "2026-02-15",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-213",
+    "type": "regular",
+    "date": "2026-02-15",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-214",
+    "type": "regular",
+    "date": "2026-02-24",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-215",
+    "type": "regular",
+    "date": "2026-02-24",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-216",
+    "type": "regular",
+    "date": "2026-02-24",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-217",
+    "type": "regular",
+    "date": "2026-02-25",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-218",
+    "type": "regular",
+    "date": "2026-02-25",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-219",
+    "type": "regular",
+    "date": "2026-02-25",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-220",
+    "type": "regular",
+    "date": "2026-02-26",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-221",
+    "type": "regular",
+    "date": "2026-02-26",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-222",
+    "type": "regular",
+    "date": "2026-02-26",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-223",
+    "type": "regular",
+    "date": "2026-02-27",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-224",
+    "type": "regular",
+    "date": "2026-02-27",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-225",
+    "type": "regular",
+    "date": "2026-02-27",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-226",
+    "type": "regular",
+    "date": "2026-02-27",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-227",
+    "type": "regular",
+    "date": "2026-02-27",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-228",
+    "type": "regular",
+    "date": "2026-02-28",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-229",
+    "type": "regular",
+    "date": "2026-02-28",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-230",
+    "type": "regular",
+    "date": "2026-02-28",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-231",
+    "type": "regular",
+    "date": "2026-02-28",
+    "startTime": "16:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "שיעור צוהריים מוקלט",
+      "en": "Recorded lesson",
+      "ru": "урок в записи",
+      "es": "Clase grabado"
+    }
+  },
+  {
+    "id": "ev-232",
+    "type": "regular",
+    "date": "2026-03-01",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור - וירטואלי",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-233",
+    "type": "regular",
+    "date": "2026-03-01",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר - וירטואלי",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-234",
+    "type": "regular",
+    "date": "2026-03-01",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-235",
+    "type": "regular",
+    "date": "2026-03-01",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Studying from the Sources",
+      "ru": "Учимся по первоисточникам",
+      "es": "Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-236",
+    "type": "regular",
+    "date": "2026-03-02",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-237",
+    "type": "regular",
+    "date": "2026-03-02",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-238",
+    "type": "regular",
+    "date": "2026-03-02",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-239",
+    "type": "regular",
+    "date": "2026-03-03",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-240",
+    "type": "regular",
+    "date": "2026-03-03",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-241",
+    "type": "regular",
+    "date": "2026-03-03",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-242",
+    "type": "regular",
+    "date": "2026-03-03",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-243",
+    "type": "regular",
+    "date": "2026-03-04",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-244",
+    "type": "regular",
+    "date": "2026-03-04",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-245",
+    "type": "regular",
+    "date": "2026-03-04",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-246",
+    "type": "regular",
+    "date": "2026-03-04",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-247",
+    "type": "regular",
+    "date": "2026-03-05",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-248",
+    "type": "regular",
+    "date": "2026-03-05",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-249",
+    "type": "regular",
+    "date": "2026-03-05",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-250",
+    "type": "regular",
+    "date": "2026-03-05",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-251",
+    "type": "regular",
+    "date": "2026-03-06",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-252",
+    "type": "regular",
+    "date": "2026-03-06",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-253",
+    "type": "regular",
+    "date": "2026-03-06",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה - וירטואלית",
+      "en": "Virtual Meal",
+      "ru": "Виртуальная Трапеза",
+      "es": "Comida virtual"
+    }
+  },
+  {
+    "id": "ev-254",
+    "type": "regular",
+    "date": "2026-03-06",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-255",
+    "type": "regular",
+    "date": "2026-03-06",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים - וירטואלית",
+      "en": "Virtual Meal",
+      "ru": "Виртуальная Трапеза",
+      "es": "Comida virtual"
+    }
+  },
+  {
+    "id": "ev-256",
+    "type": "regular",
+    "date": "2026-03-07",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-257",
+    "type": "regular",
+    "date": "2026-03-07",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-258",
+    "type": "regular",
+    "date": "2026-03-07",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה - וירטואלית",
+      "en": "Virtual Meal",
+      "ru": "Виртуальная Трапеза",
+      "es": "Comida virtual"
+    }
+  },
+  {
+    "id": "ev-259",
+    "type": "regular",
+    "date": "2026-03-07",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-260",
+    "type": "regular",
+    "date": "2026-03-07",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-261",
+    "type": "regular",
+    "date": "2026-03-07",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית - וירטואלית",
+      "en": "Virtual Meal",
+      "ru": "Виртуальная Трапеза",
+      "es": "Comida virtual"
+    }
+  },
+  {
+    "id": "ev-262",
+    "type": "regular",
+    "date": "2026-03-08",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-263",
+    "type": "regular",
+    "date": "2026-03-08",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-264",
+    "type": "regular",
+    "date": "2026-03-08",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-265",
+    "type": "regular",
+    "date": "2026-03-08",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-266",
+    "type": "regular",
+    "date": "2026-03-08",
+    "startTime": "18:30",
+    "endTime": "19:30",
+    "title": {
+      "he": "ישיבת חברים - וירטואלית",
+      "en": "Gathering of Friends - Virtual",
+      "ru": "Собрание товарищей - Виртуальная",
+      "es": "Reunión de amigos - Virtual"
+    }
+  },
+  {
+    "id": "ev-267",
+    "type": "regular",
+    "date": "2026-03-09",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-268",
+    "type": "regular",
+    "date": "2026-03-09",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-269",
+    "type": "regular",
+    "date": "2026-03-09",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-270",
+    "type": "regular",
+    "date": "2026-03-09",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-271",
+    "type": "regular",
+    "date": "2026-03-09",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-272",
+    "type": "regular",
+    "date": "2026-03-09",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-273",
+    "type": "regular",
+    "date": "2026-03-10",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-274",
+    "type": "regular",
+    "date": "2026-03-10",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-275",
+    "type": "regular",
+    "date": "2026-03-10",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-276",
+    "type": "regular",
+    "date": "2026-03-10",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-277",
+    "type": "regular",
+    "date": "2026-03-11",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-278",
+    "type": "regular",
+    "date": "2026-03-11",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-279",
+    "type": "regular",
+    "date": "2026-03-11",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-280",
+    "type": "regular",
+    "date": "2026-03-11",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-281",
+    "type": "regular",
+    "date": "2026-03-11",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\" - עשיריות\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-282",
+    "type": "regular",
+    "date": "2026-03-12",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-283",
+    "type": "regular",
+    "date": "2026-03-12",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-284",
+    "type": "regular",
+    "date": "2026-03-12",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-285",
+    "type": "regular",
+    "date": "2026-03-12",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-286",
+    "type": "regular",
+    "date": "2026-03-13",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-287",
+    "type": "regular",
+    "date": "2026-03-13",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-288",
+    "type": "regular",
+    "date": "2026-03-13",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-289",
+    "type": "regular",
+    "date": "2026-03-13",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-290",
+    "type": "regular",
+    "date": "2026-03-13",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-291",
+    "type": "regular",
+    "date": "2026-03-14",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-292",
+    "type": "regular",
+    "date": "2026-03-14",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-293",
+    "type": "regular",
+    "date": "2026-03-14",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-294",
+    "type": "regular",
+    "date": "2026-03-14",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-295",
+    "type": "regular",
+    "date": "2026-03-14",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-296",
+    "type": "regular",
+    "date": "2026-03-14",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-297",
+    "type": "regular",
+    "date": "2026-03-15",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-298",
+    "type": "regular",
+    "date": "2026-03-15",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-299",
+    "type": "regular",
+    "date": "2026-03-15",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-300",
+    "type": "regular",
+    "date": "2026-03-15",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-301",
+    "type": "regular",
+    "date": "2026-03-15",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-302",
+    "type": "regular",
+    "date": "2026-03-16",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-303",
+    "type": "regular",
+    "date": "2026-03-16",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-304",
+    "type": "regular",
+    "date": "2026-03-16",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-305",
+    "type": "regular",
+    "date": "2026-03-16",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-306",
+    "type": "regular",
+    "date": "2026-03-16",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-307",
+    "type": "regular",
+    "date": "2026-03-17",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-308",
+    "type": "regular",
+    "date": "2026-03-17",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-309",
+    "type": "regular",
+    "date": "2026-03-17",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-310",
+    "type": "regular",
+    "date": "2026-03-17",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-311",
+    "type": "regular",
+    "date": "2026-03-18",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-312",
+    "type": "regular",
+    "date": "2026-03-18",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-313",
+    "type": "regular",
+    "date": "2026-03-18",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-314",
+    "type": "regular",
+    "date": "2026-03-18",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-315",
+    "type": "regular",
+    "date": "2026-03-19",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-316",
+    "type": "regular",
+    "date": "2026-03-19",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-317",
+    "type": "regular",
+    "date": "2026-03-19",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-318",
+    "type": "regular",
+    "date": "2026-03-19",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-319",
+    "type": "regular",
+    "date": "2026-03-20",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-320",
+    "type": "regular",
+    "date": "2026-03-20",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-321",
+    "type": "regular",
+    "date": "2026-03-20",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-322",
+    "type": "regular",
+    "date": "2026-03-20",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-323",
+    "type": "regular",
+    "date": "2026-03-20",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-324",
+    "type": "regular",
+    "date": "2026-03-21",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-325",
+    "type": "regular",
+    "date": "2026-03-21",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-326",
+    "type": "regular",
+    "date": "2026-03-21",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-327",
+    "type": "regular",
+    "date": "2026-03-21",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-328",
+    "type": "regular",
+    "date": "2026-03-21",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-329",
+    "type": "regular",
+    "date": "2026-03-21",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-330",
+    "type": "regular",
+    "date": "2026-03-22",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-331",
+    "type": "regular",
+    "date": "2026-03-22",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-332",
+    "type": "regular",
+    "date": "2026-03-22",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-333",
+    "type": "regular",
+    "date": "2026-03-22",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-334",
+    "type": "regular",
+    "date": "2026-03-22",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-335",
+    "type": "regular",
+    "date": "2026-03-23",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-336",
+    "type": "regular",
+    "date": "2026-03-23",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-337",
+    "type": "regular",
+    "date": "2026-03-23",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-338",
+    "type": "regular",
+    "date": "2026-03-23",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-339",
+    "type": "regular",
+    "date": "2026-03-23",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-340",
+    "type": "regular",
+    "date": "2026-03-23",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-341",
+    "type": "regular",
+    "date": "2026-03-24",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-342",
+    "type": "regular",
+    "date": "2026-03-24",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-343",
+    "type": "regular",
+    "date": "2026-03-24",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-344",
+    "type": "regular",
+    "date": "2026-03-24",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-345",
+    "type": "regular",
+    "date": "2026-03-25",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-346",
+    "type": "regular",
+    "date": "2026-03-25",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-347",
+    "type": "regular",
+    "date": "2026-03-25",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-348",
+    "type": "regular",
+    "date": "2026-03-25",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-349",
+    "type": "regular",
+    "date": "2026-03-26",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-350",
+    "type": "regular",
+    "date": "2026-03-26",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-351",
+    "type": "regular",
+    "date": "2026-03-26",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-352",
+    "type": "regular",
+    "date": "2026-03-26",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-353",
+    "type": "regular",
+    "date": "2026-03-27",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-354",
+    "type": "regular",
+    "date": "2026-03-27",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-355",
+    "type": "regular",
+    "date": "2026-03-27",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודת חומוס",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-356",
+    "type": "regular",
+    "date": "2026-03-27",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-357",
+    "type": "regular",
+    "date": "2026-03-27",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-358",
+    "type": "regular",
+    "date": "2026-03-28",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-359",
+    "type": "regular",
+    "date": "2026-03-28",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-360",
+    "type": "regular",
+    "date": "2026-03-28",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-361",
+    "type": "regular",
+    "date": "2026-03-28",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-362",
+    "type": "regular",
+    "date": "2026-03-28",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-363",
+    "type": "regular",
+    "date": "2026-03-28",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-364",
+    "type": "regular",
+    "date": "2026-03-29",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-365",
+    "type": "regular",
+    "date": "2026-03-29",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-366",
+    "type": "regular",
+    "date": "2026-03-29",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-367",
+    "type": "regular",
+    "date": "2026-03-29",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-368",
+    "type": "regular",
+    "date": "2026-03-29",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-369",
+    "type": "regular",
+    "date": "2026-03-30",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-370",
+    "type": "regular",
+    "date": "2026-03-30",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-371",
+    "type": "regular",
+    "date": "2026-03-30",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-372",
+    "type": "regular",
+    "date": "2026-03-30",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-373",
+    "type": "regular",
+    "date": "2026-03-30",
+    "startTime": "18:50",
+    "endTime": "19:00",
+    "title": {
+      "he": "הכנה לשיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Preparation Student Community Lesson - Hebrew Only",
+      "ru": "Подготовка к уроку учебного сообщества – только на иврите",
+      "es": "Preparación para la Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-374",
+    "type": "regular",
+    "date": "2026-03-30",
+    "startTime": "19:00",
+    "endTime": "20:30",
+    "title": {
+      "he": "שיעור \"קהילת הלומדים\"\n - עברית בלבד",
+      "en": "Student Community Lesson - Hebrew Only",
+      "ru": "Урок учебного сообщества – только на иврите",
+      "es": "Lección de la comunidad de aprendizaje – solo en hebreo"
+    }
+  },
+  {
+    "id": "ev-375",
+    "type": "regular",
+    "date": "2026-03-31",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-376",
+    "type": "regular",
+    "date": "2026-03-31",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-377",
+    "type": "regular",
+    "date": "2026-03-31",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-378",
+    "type": "regular",
+    "date": "2026-03-31",
+    "startTime": "17:30",
+    "endTime": "18:30",
+    "title": {
+      "he": "שיעור זוהר",
+      "en": "Zohar Lesson",
+      "ru": "Урок Зоара",
+      "es": "Lección de Zóhar"
+    }
+  },
+  {
+    "id": "ev-379",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "לו\"ז פסח 2026",
+      "en": "Passover- April 2026",
+      "ru": "Песах - апрель 2026",
+      "es": "Pésaj - Abril 2026"
+    }
+  },
+  {
+    "id": "ev-380",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "ערב חג הפסח",
+      "en": "Holiday Eve",
+      "ru": "Канун Песаха",
+      "es": "Noche de Pésaj"
+    }
+  },
+  {
+    "id": "ev-381",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "כניסת החג: 18:20",
+      "en": "",
+      "ru": "",
+      "es": ""
+    }
+  },
+  {
+    "id": "ev-382",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-383",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-384",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "11:00",
+    "endTime": "11:20",
+    "title": {
+      "he": "שריפת חמץ (לא משודר)",
+      "en": "Burning Hametz (No Broadcast)",
+      "ru": "Сжигание квасного \n(не транслируется)",
+      "es": "Quemado de Jametz (pan) - (no transmitido)"
+    }
+  },
+  {
+    "id": "ev-385",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-386",
+    "type": "regular",
+    "date": "2026-04-01",
+    "startTime": "14:30",
+    "endTime": "16:00",
+    "title": {
+      "he": "סעודת ערב חג פסח",
+      "en": "Passover Eve Meal",
+      "ru": "Вечерняя праздничная трапеза",
+      "es": "Comida festiva de Pésaj"
+    }
+  },
+  {
+    "id": "ev-387",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "חג הפסח",
+      "en": "Passover",
+      "ru": "Песах",
+      "es": "Pésaj"
+    }
+  },
+  {
+    "id": "ev-388",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "5:45",
+    "endTime": "6:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-389",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "6:00",
+    "endTime": "8:00",
+    "title": {
+      "he": "שיעור",
+      "en": "Lesson",
+      "ru": "урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-390",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "8:00",
+    "endTime": "9:00",
+    "title": {
+      "he": "תפילה (לא משודר)",
+      "en": "Prayer (No Broadcast)",
+      "ru": "Молитва\n(не транслируется)",
+      "es": "Plegaria (no transmitido)"
+    }
+  },
+  {
+    "id": "ev-391",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "9:00",
+    "endTime": "10:00",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-392",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-393",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-394",
+    "type": "regular",
+    "date": "2026-04-02",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-395",
+    "type": "regular",
+    "date": "2026-04-03",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-396",
+    "type": "regular",
+    "date": "2026-04-03",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-397",
+    "type": "regular",
+    "date": "2026-04-03",
+    "startTime": "5:35",
+    "endTime": "6:10",
+    "title": {
+      "he": "ארוחת בוקר",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-398",
+    "type": "regular",
+    "date": "2026-04-03",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-399",
+    "type": "regular",
+    "date": "2026-04-03",
+    "startTime": "14:30",
+    "endTime": "15:15",
+    "title": {
+      "he": "סעודת שישי צוהריים",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-400",
+    "type": "regular",
+    "date": "2026-04-04",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-401",
+    "type": "regular",
+    "date": "2026-04-04",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-402",
+    "type": "regular",
+    "date": "2026-04-04",
+    "startTime": "5:40",
+    "endTime": "6:10",
+    "title": {
+      "he": "סעודה שנייה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-403",
+    "type": "regular",
+    "date": "2026-04-04",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-404",
+    "type": "regular",
+    "date": "2026-04-04",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-405",
+    "type": "regular",
+    "date": "2026-04-04",
+    "startTime": "17:30",
+    "endTime": "18:15",
+    "title": {
+      "he": "סעודה שלישית",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-406",
+    "type": "regular",
+    "date": "2026-04-05",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-407",
+    "type": "regular",
+    "date": "2026-04-05",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-408",
+    "type": "regular",
+    "date": "2026-04-05",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-409",
+    "type": "regular",
+    "date": "2026-04-05",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-410",
+    "type": "regular",
+    "date": "2026-04-05",
+    "startTime": "18:00",
+    "endTime": "19:00",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-411",
+    "type": "regular",
+    "date": "2026-04-06",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-412",
+    "type": "regular",
+    "date": "2026-04-06",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-413",
+    "type": "regular",
+    "date": "2026-04-06",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-414",
+    "type": "regular",
+    "date": "2026-04-06",
+    "startTime": "18:00",
+    "endTime": "19:00",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-415",
+    "type": "regular",
+    "date": "2026-04-07",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "ערב חג שני - שביעי של פסח",
+      "en": "Seventh Eve of Passover",
+      "ru": "седьмой ночи Песаха",
+      "es": "Séptima noche de Pésaj"
+    }
+  },
+  {
+    "id": "ev-416",
+    "type": "regular",
+    "date": "2026-04-07",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-417",
+    "type": "regular",
+    "date": "2026-04-07",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-418",
+    "type": "regular",
+    "date": "2026-04-07",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-419",
+    "type": "regular",
+    "date": "2026-04-07",
+    "startTime": "14:30",
+    "endTime": "15:30",
+    "title": {
+      "he": "סעודת ערב חג שני - שביעי של פסח",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-420",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "5:45",
+    "endTime": "6:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-421",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "6:00",
+    "endTime": "8:00",
+    "title": {
+      "he": "שיעור",
+      "en": "Lesson",
+      "ru": "урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-422",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "8:00",
+    "endTime": "9:00",
+    "title": {
+      "he": "תפילה (לא משודר)",
+      "en": "Prayer (No Broadcast)",
+      "ru": "Молитва\n(не транслируется)",
+      "es": "Plegaria (no transmitido)"
+    }
+  },
+  {
+    "id": "ev-423",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "9:00",
+    "endTime": "10:00",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-424",
+    "type": "regular",
+    "date": "2026-04-09",
+    "startTime": "9:00",
+    "endTime": "10:00",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-425",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "15:45",
+    "endTime": "16:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-426",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Lesson",
+      "ru": "Урок",
+      "es": "Lección"
+    }
+  },
+  {
+    "id": "ev-427",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "יציאת החג: 19:42",
+      "en": "",
+      "ru": "",
+      "es": ""
+    }
+  },
+  {
+    "id": "ev-428",
+    "type": "regular",
+    "date": "2026-04-08",
+    "startTime": "20:00",
+    "endTime": "21:00",
+    "title": {
+      "he": "סעודה חמץ (לא משודר)",
+      "en": "Meal (No Broadcast)",
+      "ru": "Трапеза (не транслируется)",
+      "es": "Comida (no transmitido)"
+    }
+  },
+  {
+    "id": "ev-429",
+    "type": "regular",
+    "date": "2025-12-12",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "יום איחוד ל\"קהילת לומדים\" (לא משודר)",
+      "en": "Unity Day Learners’ Community (not broadcast)",
+      "ru": "День Единства - сообщества учащихся (не транслируется)",
+      "es": "Día de Unidad\tde la Comunidad de Estudiantes (no se transmite)"
+    }
+  },
+  {
+    "id": "ev-430",
+    "type": "conference",
+    "date": "2025-12-14",
+    "endDate": "2025-12-22",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "חנוכה",
+      "en": "Hanukkah",
+      "ru": "Ханука",
+      "es": "Janucá"
+    }
+  },
+  {
+    "id": "ev-431",
+    "type": "regular",
+    "date": "2025-12-28",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "מפגש גברים  קבוצת פתח תקווה (לא משודר)",
+      "en": "Men’s Meeting – Petah Tikva Group (not broadcast)",
+      "ru": "Встреча мужчин – группа Петах-Тиква (не транслируется)",
+      "es": "Reunión de hombres – grupo Petaj Tikva (no se transmite)"
+    }
+  },
+  {
+    "id": "ev-432",
+    "type": "regular",
+    "date": "2026-01-28",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "\"אירוע חוויה עם משמעות\" (ברוסית) - לא משודר)",
+      "en": "\"An Experience With Meaning\" (no broadcast)",
+      "ru": "\"Встреча со смыслом\" (не транслируется)",
+      "es": "\"Significante Experiencia\"  (no se transmite)"
+    }
+  },
+  {
+    "id": "ev-433",
+    "type": "conference",
+    "date": "2026-02-16",
+    "endDate": "2026-02-23",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "פעילות תוכן לכלי העולמי בבניין",
+      "en": "Content Activities for the World Kli in the Building",
+      "ru": "Content Activities for the World Kli in the Building",
+      "es": "Actividad de contenido para  el Kli mundial en el edificio"
+    }
+  },
+  {
+    "id": "ev-434",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-435",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-436",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "5:30",
+    "endTime": "6:30",
+    "title": {
+      "he": "ארוחת בוקר (לא משודר)",
+      "en": "Morning Buffet (No Broadcast)",
+      "ru": "Утренний буфет\n (нет трансляции)",
+      "es": "Buffet de la mañana (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-437",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-438",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "ארוחת צהריים (לא משודר)",
+      "en": "Lunch (Not Broadcast)",
+      "ru": "Обед  (нет трансляции)",
+      "es": "Almuerzo (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-439",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "ארוחת ערב (לא משודר)",
+      "en": "Dinner (Not Broadcast)",
+      "ru": "Ужин (нет трансляции)",
+      "es": "Cena (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-440",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "18:30",
+    "endTime": "19:30",
+    "title": {
+      "he": "ישיבת חברות",
+      "en": "Women Gathering",
+      "ru": "Собрание подруг",
+      "es": "Lectura del TES (Talmud Eser Sefirot)"
+    }
+  },
+  {
+    "id": "ev-441",
+    "type": "regular",
+    "date": "2026-02-16",
+    "startTime": "18:30",
+    "endTime": "19:30",
+    "title": {
+      "he": "ישיבת חברים (לא משודר)",
+      "en": "Gathering of Friends (No Broadcast)",
+      "ru": "Собрание товарищей (нет трансляции)",
+      "es": "Reunión de amigos (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-442",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-443",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-444",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "5:30",
+    "endTime": "6:30",
+    "title": {
+      "he": "ארוחת בוקר (לא משודר)",
+      "en": "Morning Buffet (No Broadcast)",
+      "ru": "Утренний буфет\n (нет трансляции)",
+      "es": "Buffet de la mañana (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-445",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-446",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "ארוחת צהריים (לא משודר)",
+      "en": "Lunch (No Broadcast)",
+      "ru": "Обед  (нет трансляции)",
+      "es": "Almuerzo (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-447",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "title": {
+      "he": "שיחת הנהלה עם הכלי העולמי",
+      "en": "Management Meeting with the World Kli",
+      "ru": "Встреча руководства с мировым кли",
+      "es": "Reunión de la dirección con el Kli mundial"
+    }
+  },
+  {
+    "id": "ev-448",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "סעודת \"ברוכים הבאים\"",
+      "en": "“Welcome” Meal",
+      "ru": "Трапеза \"Добро пожаловать\"",
+      "es": "Comida de bienvenida"
+    }
+  },
+  {
+    "id": "ev-449",
+    "type": "regular",
+    "date": "2026-02-17",
+    "startTime": "18:30",
+    "endTime": "19:15",
+    "title": {
+      "he": "ישיבת חברים על הגג",
+      "en": "Gathering of Friends On the Rooftop",
+      "ru": "Собрание товарищей на крыше",
+      "es": "Reunión de amigos en la azotea"
+    }
+  },
+  {
+    "id": "ev-450",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-451",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-452",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "5:30",
+    "endTime": "6:30",
+    "title": {
+      "he": "ארוחת בוקר (לא משודר)",
+      "en": "Morning Buffet (No Broadcast)",
+      "ru": "Утренний буфет\n (нет трансляции)",
+      "es": "Buffet de la mañana (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-453",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-454",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "ארוחת צהריים (לא משודר)",
+      "en": "Lunch (No Broadcast)",
+      "ru": "Обед  (нет трансляции)",
+      "es": "Almuerzo (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-455",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "13:00",
+    "endTime": "15:00",
+    "title": {
+      "he": "ארוחות עם ראשי שפות בבניין (לא משודר)",
+      "en": "Meals with Language Heads in the Building (No Broadcast)",
+      "ru": "Праздничная трапеза русскоговорящего сообщества (не транслируется)",
+      "es": "Comidas con los responsables de idiomas en el edificio (no transmitido)"
+    }
+  },
+  {
+    "id": "ev-456",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "15:00",
+    "endTime": "17:00",
+    "title": {
+      "he": "יחד מכינים את הבית לכנס (לא משודר)",
+      "en": "Work in the Building – Preparation for the Convention (No Broadcast)",
+      "ru": "Вместе подготавливаем наш дом к Конгрессу (нет трансляции)",
+      "es": "Juntos preparamos la casa para el congreso (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-457",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "ארוחת ערב (לא משודר)",
+      "en": "Dinner (No Broadcast)",
+      "ru": "Ужин (нет трансляции)",
+      "es": "Cena (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-458",
+    "type": "regular",
+    "date": "2026-02-18",
+    "startTime": "18:00",
+    "endTime": "20:00",
+    "title": {
+      "he": "יחד מכינים את הבית לכנס (לא משודר)",
+      "en": "Building Work – Preparation for the Convention (No Broadcast)",
+      "ru": "Вместе подготавливаем наш дом к Конгрессу (нет трансляции)",
+      "es": "Juntos preparamos la casa para el congreso (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-459",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "6:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "טיול",
+      "en": "TOUR",
+      "ru": "Экскурсия",
+      "es": "Paseo"
+    }
+  },
+  {
+    "id": "ev-460",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "3:50",
+    "endTime": "4:00",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-461",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "4:00",
+    "endTime": "5:20",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-462",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "5:30",
+    "endTime": "6:30",
+    "title": {
+      "he": "ארוחת בוקר (לא משודר)",
+      "en": "Morning Buffet (No Broadcast)",
+      "ru": "Утренний буфет\n (нет трансляции)",
+      "es": "Buffet de la mañana (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-463",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "12:00",
+    "endTime": "13:30",
+    "title": {
+      "he": "קמפוס גלובלי 2025/26 - קורס ״יסודות חכמת הקבלה",
+      "en": "Global Campus 2025/26 – Kabbalah Fundamentals Course",
+      "ru": "Глобальный кампус 2025/26 — курс «Основы Каббалы»",
+      "es": "Campus Global 2025/26 — curso \"Fundamentos de la Cabalá\""
+    }
+  },
+  {
+    "id": "ev-464",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "ארוחת צהריים (לא משודר)",
+      "en": "Lunch (No Broadcast)",
+      "ru": "Обед  (нет трансляции)",
+      "es": "Almuerzo (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-465",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "16:00",
+    "endTime": "17:30",
+    "title": {
+      "he": "שיעור - לומדים מהמקורות",
+      "en": "Lesson - Studying from the Sources",
+      "ru": "Урок - Учимся по первоисточникам",
+      "es": "Lección - Estudiamos de las fuentes"
+    }
+  },
+  {
+    "id": "ev-466",
+    "type": "regular",
+    "date": "2026-02-22",
+    "startTime": "18:00",
+    "endTime": "19:00",
+    "title": {
+      "he": "סעודת הודיה",
+      "en": "Gratitude Meal",
+      "ru": "Трапеза благодарности",
+      "es": "Comida de agradecimiento"
+    }
+  },
+  {
+    "id": "ev-467",
+    "type": "regular",
+    "date": "2026-02-23",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-468",
+    "type": "regular",
+    "date": "2026-02-23",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-469",
+    "type": "regular",
+    "date": "2026-02-23",
+    "startTime": "5:30",
+    "endTime": "6:30",
+    "title": {
+      "he": "ארוחת בוקר (לא משודר)",
+      "en": "Morning Buffet (No Broadcast)",
+      "ru": "Утренний буфет\n (нет трансляции)",
+      "es": "Buffet de la mañana (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-470",
+    "type": "regular",
+    "date": "2026-02-23",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "שיעור צוהריים",
+      "en": "Afternoon Lesson",
+      "ru": "Дневной урок",
+      "es": "Lección del mediodía"
+    }
+  },
+  {
+    "id": "ev-471",
+    "type": "regular",
+    "date": "2026-02-23",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "ארוחת צהריים (לא משודר)",
+      "en": "Lunch (No Broadcast)",
+      "ru": "Обед  (нет трансляции)",
+      "es": "Almuerzo (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-472",
+    "type": "regular",
+    "date": "2026-02-23",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "ארוחת ערב (לא משודר)",
+      "en": "Dinner (No Broadcast)",
+      "ru": "Ужин (нет трансляции)",
+      "es": "Cena (sin transmisión)"
+    }
+  },
+  {
+    "id": "ev-473",
+    "type": "conference",
+    "date": "2026-02-19",
+    "endDate": "2026-02-21",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "כנס \"קבלה לעם\" העולמי",
+      "en": "World Kabbalah Convention",
+      "ru": "Конгресс \"Каббала ле-Ам\"",
+      "es": "Congreso mundial de Cabalá La'am"
+    }
+  },
+  {
+    "id": "ev-474",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "7:00",
+    "endTime": "8:00",
+    "title": {
+      "he": "התכנסות ובופה\nארוחת בוקר וכניסה הדרגתית לאווירת הכנס, בליווי אולפן פתוח עם שידור חי, מוזיקה וריאיונות מהשטח.",
+      "en": "Gathering & Buffet\nBreakfast and a gradual entry into the convention atmosphere, accompanied by an open studio with live broadcast, music, and on-site interviews.",
+      "ru": "Сбор и буфет\nЗавтрак и постепенное проникновение в атмосферу конгресса, в сопровождении открытой студии с прямой трансляцией, музыкой и репортажем с места событий.",
+      "es": "Recepción y buffet\nDesayuno y entrada gradual en el ambiente del congreso, acompañado de un estudio abierto con transmisión en vivo, música y entrevistas desde el lugar."
+    },
+    "description": {
+      "he": "לצפיה היכנס ללינק: https://arvut.kli.one/",
+      "en": "To watch, go to the link: https://arvut.kli.one/",
+      "ru": "Для просмотра перейдите по ссылке: https://arvut.kli.one/",
+      "es": "Para verlo, visita el siguiente enlace: https://arvut.kli.one/"
+    }
+  },
+  {
+    "id": "ev-475",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "8:00",
+    "endTime": "8:30",
+    "title": {
+      "he": "הכנה בעשירייה\nהכנה משותפת לשיעור",
+      "en": "Preparation in the Ten\nMutual preparation for the lesson",
+      "ru": "Подготовка в десятке\n    Совместная подготовка к уроку",
+      "es": "Preparación en la decena\nPreparación conjunta para la clase"
+    }
+  },
+  {
+    "id": "ev-476",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "8:30",
+    "endTime": "9:00",
+    "title": {
+      "he": "ישיבת חברים \nפתיחה מרגשת עם הכלי האוקראיני",
+      "en": "Gathering of Friends\nMoving opening with the Ukrainian Kli",
+      "ru": "Собрание товарищей\n Волнующее открытие с украинским кли",
+      "es": "Reunión de amigos \nEmocionante apertura con el Kli ucraniano"
+    }
+  },
+  {
+    "id": "ev-477",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "9:00",
+    "endTime": "11:00",
+    "title": {
+      "he": "שיעור 1\n\"עשירייה כתנאי לדבקות\", בהובלת PT2",
+      "en": "Lesson No. 1\n\"The Ten as a Condition for Adhesion,\" led by PT2",
+      "ru": "Урок 1\n    Десятка как условие слияния, во главе с РТ 2",
+      "es": "Lección 1\nLa «decena como condición para la adhesión», liderada por PT2"
+    }
+  },
+  {
+    "id": "ev-478",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "11:00",
+    "endTime": "12:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nזמן קפה, שירה ומפגשים חופשיים",
+      "en": "Active Intermission/Open Studio\nCoffee Time, Singing, and Free Meetings",
+      "ru": "Активный перерыв \\ Открытая студия \nВремя на кофе, пение и свободные встречи",
+      "es": "Pausa activa/estudio abierto\nTiempo para café, canto y encuentros informales"
+    }
+  },
+  {
+    "id": "ev-479",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "סעודה \nסעודה בעשיריות כהמשך לעבודה המשותפת",
+      "en": "Meal\nA meal in tens as a continuation of the mutual work",
+      "ru": "Трапеза\n        Трапеза в десятках, как продолжение совместной работы",
+      "es": "Comida\nComida en decenas como continuación del trabajo conjunto"
+    }
+  },
+  {
+    "id": "ev-480",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nמפגשים חופשיים ושיחה בין החברים",
+      "en": "Active Intermission/Open Studio\nFree meetings and conversation between friends",
+      "ru": "Активный перерыв \\ Открытая студия\n Свободные встречи и беседы между товарищами",
+      "es": "Pausa activa/estudio abierto\nEncuentros libres y charlas entre amigos"
+    }
+  },
+  {
+    "id": "ev-481",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "14:00",
+    "endTime": "14:30",
+    "title": {
+      "he": "טקס פתיחה \nרגע משותף שבו נחדש יחד את התפילה המשותפת ונכוון את הלב למטרה אחת.",
+      "en": "Opening Ceremony\nA shared moment in which we renew the collective prayer together and align our hearts at a single goal.",
+      "ru": "Церемония открытия\nМомент, когда мы вместе возобновим нашу общую молитву и направим  сердце к единой цели",
+      "es": "Ceremonia de Apertura\nUn momento compartido en el que renovaremos juntos la plegaria colectiva\ny orientaremos el corazón hacia un solo propósito."
+    }
+  },
+  {
+    "id": "ev-482",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "14:30",
+    "endTime": "16:00",
+    "title": {
+      "he": "שיעור 2\n\"אתם עשיתם אותי\", בהובלת PT6",
+      "en": "Lesson No. 2\n\"You Made Me,\" led by PT6",
+      "ru": "Урок 2\n        Вы создали меня, во главе с ПТ6",
+      "es": "Lección 2\n«Ustedes me han hecho», liderado por PT6"
+    }
+  },
+  {
+    "id": "ev-483",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "16:00",
+    "endTime": "17:00",
+    "title": {
+      "he": "בונים חברה רוחנית בהובלת ההנהלה \nבירור משותף על עתיד החברה שלנו",
+      "en": "Building a Spiritual Society Led by Management\nA Mutual Inquiry into the Future of Our Society",
+      "ru": "Строим духовное общество под руководством руководства                                                                              Совместное выяснение будущего\nнашей группы",
+      "es": "Construyendo una sociedad espiritual bajo el liderazgo de la dirección\nReflexión conjunta sobre el futuro de nuestra sociedad"
+    }
+  },
+  {
+    "id": "ev-484",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nזמן פתוח למפגש ושיחה בין החברים",
+      "en": "Active Intermission/Open Studio\nFree meetings and conversation between friends",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                             Свободное время для встреч и\nобщения между товарищами",
+      "es": "Pausa activa/estudio abierto\nTiempo libre para reunirse y conversar entre amigos."
+    }
+  },
+  {
+    "id": "ev-485",
+    "type": "regular",
+    "date": "2026-02-19",
+    "startTime": "18:00",
+    "endTime": "19:30",
+    "title": {
+      "he": "סעודה וערב תרבות\nקולות של החברים המוזיקאים מכל הכלי העולמי",
+      "en": "Meal and Cultural Evening\nVoices of Musician Friends from Around the World",
+      "ru": "Трапеза + Культурная программа                                                                                                                                                                                                                                                                                                                                                  Голоса товарищей музыкантов всего\nмирового кли",
+      "es": "Comida-Velada cultural\nLas voces de los músicos de todo el Kli mundial"
+    }
+  },
+  {
+    "id": "ev-486",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "7:00",
+    "endTime": "8:00",
+    "title": {
+      "he": "התכנסות ובופה\nארוחת בוקר ופתיחה רגועה של היום השני, כהכנה ליום ולחידוש הקשר, בליווי אולפן פתוח.",
+      "en": "Gathering & Buffet\nBreakfast and a calm opening to the second day, preparing for the day ahead and renewing connection, accompanied by an open studio.",
+      "ru": "Сбор + Буфет                                                                                                                                                                                                                                                                                                                                                                                                                         Завтрак и подготовка ко второму дню\nконгресса\n\nОткрытая студия                                                                                                                                                                                                                                                                    Спокойное утреннее начало и\nвозобновление связи",
+      "es": "Recepción y buffet\nDesayuno y apertura relajada del segundo día, como preparación para la jornada y la renovación del vínculo, acompañado de un estudio abierto."
+    }
+  },
+  {
+    "id": "ev-487",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "8:00",
+    "endTime": "8:30",
+    "title": {
+      "he": "הכנה בעשירייה\nהתכווננות לעבודה מעל ההפרעות",
+      "en": "Preparation in the Ten\nPreparation for Work above the Disturbances",
+      "ru": "Подготовка в десятке                                                                                                                                                                                                                                                                                                                                                                                                                Настраиваемся на работу над помехами",
+      "es": "Preparación en la decena\nPreparación para trabajar por encima de las perturbaciones"
+    }
+  },
+  {
+    "id": "ev-488",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "8:30",
+    "endTime": "9:00",
+    "title": {
+      "he": "ישיבת חברים \nהכלי הטורקי מחמם את הלב",
+      "en": "Gathering of Friends\nThe Turkish Kli Warms the Heart",
+      "ru": "Собрание товарищей                                                                                                                                                                                                                                                                                                                                                                                                                                                  Турецкое кли согревает сердце",
+      "es": "Reunión de amigos \nEl Kli turco nos enciende el corazón"
+    }
+  },
+  {
+    "id": "ev-489",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "9:00",
+    "endTime": "11:00",
+    "title": {
+      "he": "שיעור 3\n\"מה מפריע לנו להתחבר באמת\", בהובלת מוסקבה 7",
+      "en": "Lesson No. 3\n\"What Prevents Us from Truly Connecting,\" led by Moscow 7",
+      "ru": "Урок 3\nЧто мешает нам объединиться на самом деле, во главе с Москва 7",
+      "es": "Lección 3\r\n«¿Qué nos impide conectarnos de verdad?», dirigida por Moscú 7."
+    }
+  },
+  {
+    "id": "ev-490",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "11:00",
+    "endTime": "12:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nנפגשים, נושמים ושומרים על חיבור",
+      "en": "Active Intermission/Open Studio\nGathering, Breathing, and Staying Connected",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                                                                                                                                                                    Встречаемся, дышим и сохраняем\nобъединение                                                                                                                                                                                                         Свободное время для встреч и\nобщения между товарищами",
+      "es": "Pausa activa/estudio abierto\nNos reunimos, respiramos y mantenemos la conexión"
+    }
+  },
+  {
+    "id": "ev-491",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "סעודה \nסעודת צהריים בעשיריות לחיזוק הקשר",
+      "en": "Meal\nLunch in the Tens to Strengthen the Connection",
+      "ru": "Трапеза.                                                                                                                                                                                                                                                                                                                                                                                                                              Обед в десятках для укрепления связи",
+      "es": "Comida\nAlmuerzo en decenas para fortalecer los lazos"
+    }
+  },
+  {
+    "id": "ev-492",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nזמן פתוח להעמקת הקשר בין החברים",
+      "en": "Active Intermission/Open Studio\nOpen time to deepen the connection between friends",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                                                                                                                                                                                    Свободное время для углубления связи\nмежду товарищами",
+      "es": "Pausa activa/estudio abierto\nTiempo libre para profundizar la relación entre los amigos"
+    }
+  },
+  {
+    "id": "ev-493",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "14:00",
+    "endTime": "15:00",
+    "title": {
+      "he": "שירים מהמקורות\nניגונים ושירה משותפת מהמקורות",
+      "en": "Songs from the Sources\nNigunim and Mutual Singing from the Sources",
+      "ru": "Песни из источников                                                                                                      Мелодии и песни из первоисточников",
+      "es": "Canciones de las fuentes\nMelodías y canto conjunto de las fuentes originales"
+    }
+  },
+  {
+    "id": "ev-494",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "15:00",
+    "endTime": "17:00",
+    "title": {
+      "he": "שיעור 4\n\"ערבות בעשירייה\", בהובלת אשקתניה (אשקלון ונתניה)",
+      "en": "Lesson No. 4\n\"Arvut in the Ten,\" led by Ashkatanya (Ashkelon and Netanya)",
+      "ru": "Урок 4\nПоручительство в десятке, во главе с группами Ашкелона и\nНетании",
+      "es": "Lección 4\n«Garantías en la decena», liderada por Ashkelon y Netanya."
+    }
+  },
+  {
+    "id": "ev-495",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nנשארים בחיבור וממשיכים את הרוח",
+      "en": "Active Intermission/Open Studio\nStaying Connected and Continuing the Spirit",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                                                                                                                                                                               Остаемся в объединении и продолжаем\nдуховное общение",
+      "es": "Pausa activa/estudio abierto\nPermanecemos conectados y continuamos con el mismo espíritu"
+    }
+  },
+  {
+    "id": "ev-496",
+    "type": "regular",
+    "date": "2026-02-20",
+    "startTime": "18:00",
+    "endTime": "19:30",
+    "title": {
+      "he": "סעודה וערב תרבות\nערב מרגש של שירים וסיפורים בהובלת PT4",
+      "en": "Meal and Cultural Evening\nAn exciting evening of songs and stories led by PT4",
+      "ru": "Трапеза и культурная программа                                                                                                                                                                                         Увлекательный вечер с песнями и\nисториями\nво главе с ПТ 4",
+      "es": "Comida-Velada cultural\nUna emocionante velada de canciones y relatos dirigida por PT4."
+    }
+  },
+  {
+    "id": "ev-497",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "7:00",
+    "endTime": "8:00",
+    "title": {
+      "he": "התכנסות ובופה\nפתיחה שקטה ומחוברת של היום, בליווי אולפן פתוח.",
+      "en": "Gathering & Buffet\nA quiet, connected start to the day, accompanied by an open studio",
+      "ru": "Сбор и буфет\nТихое начало дня  в объединении, в сопровождении открытой студии.",
+      "es": "Recepción y buffet\nApertura tranquila y conectada del día, acompañado de un estudio abierto."
+    }
+  },
+  {
+    "id": "ev-498",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "8:00",
+    "endTime": "8:30",
+    "title": {
+      "he": "הכנה בעשירייה\nמכוונים את הלב ליום של רצון אחד",
+      "en": "Preparation in the Ten\nCalibrating the Heart for a Day of One Desire",
+      "ru": "Подготовка в десятке                                                                                                                                                                                                                                                                                                                                                                                  Направляем сердце на единое желание",
+      "es": "Preparación en la decena\nDirigimos el corazón hacia un día de un solo deseo"
+    }
+  },
+  {
+    "id": "ev-499",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "8:30",
+    "endTime": "9:00",
+    "title": {
+      "he": "ישיבת חברים \nהכלי האיטלקי מכניס שמחה וחיבור",
+      "en": "Gathering of Friends\nThe Italian Kli Brings Joy and Connection",
+      "ru": "Собрание товарищей                                                                                                                                                                                                                                                                                                                                                                               Итальянское кли вносит радость и\nобъединение",
+      "es": "Reunión de amigos \nEl Kli italiano aporta alegría y conexión."
+    }
+  },
+  {
+    "id": "ev-500",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "9:00",
+    "endTime": "11:00",
+    "title": {
+      "he": "שיעור 5\n\"תפילה מתוך עשירייה\", בהובלת קבוצת ניו יורק",
+      "en": "Lesson No. 5\n\"Prayer from Within the Ten,\" led by the New York Group",
+      "ru": "Урок 5\n\n            Молитва из десятки, во главе с группой Нью-Йорка",
+      "es": "Lección 5\nPlegaria en las decena, dirigida por el grupo de Nueva York"
+    }
+  },
+  {
+    "id": "ev-501",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "11:00",
+    "endTime": "12:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nקפה ושירה בעשיריות",
+      "en": "Active Intermission/Open Studio\nCoffee and Song in Tens",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                                                                                                                                                                               Кофе и пение в десятках",
+      "es": "Pausa activa/estudio abierto\nCafé y canto en decenas"
+    }
+  },
+  {
+    "id": "ev-502",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "12:00",
+    "endTime": "13:00",
+    "title": {
+      "he": "סעודה \nסעודת צהריים מחוברת ומרוממת",
+      "en": "Meal\nA Connected and Uplifting Lunch",
+      "ru": "Трапеза.                                                                                                                                                                                                                                                                                                                                                                                                               Дневная трапеза в объединении и\nвеличии",
+      "es": "Comida\nComida del mediodía, conectada y edificante"
+    }
+  },
+  {
+    "id": "ev-503",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "13:00",
+    "endTime": "14:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nהפעלות מקוריות ושירה בעשיריות",
+      "en": "Active Intermission/Open Studio\nActivities and Singing in Tens",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                                                                                                                                                                 Оригинальные действия и пение в\nдесятках",
+      "es": "Pausa activa/estudio abierto\nActividades originales y canto en decenas"
+    }
+  },
+  {
+    "id": "ev-504",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "14:00",
+    "endTime": "14:30",
+    "title": {
+      "he": "ישיבת חברים \nהכלי הלטיני מכין אותנו לקראת כריתת ברית",
+      "en": "Gathering of Friends\nThe Latin Kli Is Preparing Us Toward Making a Covenant",
+      "ru": "Собрание товарищей\nЛатинское кли готовит нас к заключению союза",
+      "es": "Reunión de amigos \nEl Kli latino nos prepara para hacer el pacto"
+    }
+  },
+  {
+    "id": "ev-505",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "14:30",
+    "endTime": "16:00",
+    "title": {
+      "he": "שיעור 6\n\"כריתת ברית בעשירייה\", בהובלת PT5",
+      "en": "Lesson No. 6\n\"Making a Covenant in Tens,\" led by PT5",
+      "ru": "Урок 6\n        Заключение союза в десятке, во главе с ПТ 5",
+      "es": "Lección 6\n«Hacer un pacto en la decena», dirigida por PT5"
+    }
+  },
+  {
+    "id": "ev-506",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "16:00",
+    "endTime": "17:00",
+    "title": {
+      "he": "בונים חברה רוחנית בהובלת ההנהלה \nסיכום משותף והסתכלות על השלב הבא",
+      "en": "Building a Spiritual Society Led by Management\nA Mutual Summary and Looking to the Next Stage",
+      "ru": "Строим духовное общество под руководством                                                                               Совместное подведение итога и взгляд\nна следующий этап",
+      "es": "Construyendo una sociedad espiritual bajo el liderazgo de la dirección\nResumen conjunto y reflexión sobre la siguiente etapa"
+    }
+  },
+  {
+    "id": "ev-507",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "17:00",
+    "endTime": "18:00",
+    "title": {
+      "he": "הפסקה פעילה/אולפן פתוח \nרגעים אחרונים של חיבור וקרבה",
+      "en": "Active Intermission/Open Studio\nLast Moments of Connection and Closeness",
+      "ru": "Активный перерыв \\ Открытая студия                                                                                                                                                                                                                                                                                                                                                      Последние моменты объединения и\nблизости",
+      "es": "Pausa activa/estudio abierto\nÚltimos momentos de conexión y cercanía"
+    }
+  },
+  {
+    "id": "ev-508",
+    "type": "regular",
+    "date": "2026-02-21",
+    "startTime": "18:30",
+    "endTime": "20:00",
+    "title": {
+      "he": "סעודה וערב תרבות\nסעודת הודיה עוצמתית בהובלת PT13",
+      "en": "Meal and Cultural Evening\nA powerful gratitude meal led by PT13",
+      "ru": "Трапеза + Культурная программа                                                                                                                                                                                                                                                                                                                                    Благодарственная трапеза\nво главе с ПТ 13",
+      "es": "Comida-Velada cultural\nIntensa comida de gratitud liderada por PT13"
+    }
+  },
+  {
+    "id": "ev-509",
+    "type": "conference",
+    "date": "2026-05-28",
+    "endDate": "2026-05-31",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "כנס \"קבלה לעם\"  - מקומי בעשיריות",
+      "en": "Kabbalah Convention - Local (in tens)",
+      "ru": "Конгресс \"Каббала ле-Ам\" - Местный (в десятках)",
+      "es": "Congreso de Cabalá La'am - Local (en decenas)"
+    }
+  },
+  {
+    "id": "ev-510",
+    "type": "conference",
+    "date": "2026-10-29",
+    "endDate": "2026-10-31",
+    "startTime": "",
+    "endTime": "",
+    "title": {
+      "he": "כנס \"קבלה לעם\"  - אזורי",
+      "en": "Kabbalah Convention - Regional–Continental",
+      "ru": "Конгресс \"Каббала ле-Ам\"",
+      "es": "Congreso de Cabalá La'am"
+    }
+  }
+]
