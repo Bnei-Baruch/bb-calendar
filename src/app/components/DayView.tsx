@@ -79,27 +79,27 @@ export function DayView() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={`container mx-auto px-4 py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className={`container mx-auto px-3 sm:px-4 py-4 sm:py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-4 sm:mb-8 gap-2">
           <Button
             variant="outline"
             size="icon"
             onClick={() => navigateDay('prev')}
-            className="h-11 w-11 border border-blue-200 bg-blue-50 hover:bg-blue-100 shadow-sm hover:shadow-md"
+            className="h-9 w-9 sm:h-11 sm:w-11 border border-blue-200 bg-blue-50 hover:bg-blue-100 shadow-sm hover:shadow-md shrink-0"
           >
-            {isRTL ? <ChevronRight className="w-6 h-6 text-blue-600" /> : <ChevronLeft className="w-6 h-6 text-blue-600" />}
+            {isRTL ? <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" /> : <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />}
           </Button>
 
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2">
-              <h2 className="text-3xl font-bold">
+          <div className="text-center flex-1 min-w-0">
+            <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
+              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold truncate">
                 {formatDateByLanguage(currentDate)}
               </h2>
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <button
-                    className="h-9 w-9 inline-flex items-center justify-center rounded-md border border-blue-200 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer shadow-sm hover:shadow-md"
+                    className="h-7 w-7 sm:h-9 sm:w-9 inline-flex items-center justify-center rounded-md border border-blue-200 bg-blue-50 hover:bg-blue-100 transition-colors cursor-pointer shadow-sm hover:shadow-md shrink-0"
                     title={t.selectDate}
                   >
                     <CalendarIcon className="h-5 w-5 text-blue-600" />
@@ -126,9 +126,9 @@ export function DayView() {
             variant="outline"
             size="icon"
             onClick={() => navigateDay('next')}
-            className="h-11 w-11 border border-blue-200 bg-blue-50 hover:bg-blue-100 shadow-sm hover:shadow-md"
+            className="h-9 w-9 sm:h-11 sm:w-11 border border-blue-200 bg-blue-50 hover:bg-blue-100 shadow-sm hover:shadow-md shrink-0"
           >
-            {isRTL ? <ChevronLeft className="w-6 h-6 text-blue-600" /> : <ChevronRight className="w-6 h-6 text-blue-600" />}
+            {isRTL ? <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" /> : <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />}
           </Button>
         </div>
 
@@ -149,7 +149,7 @@ export function DayView() {
                 <div className="flex items-start gap-4">
                   <div className="flex items-center gap-2 text-sm text-gray-600 min-w-[120px]">
                     <Clock className="w-4 h-4" />
-                    <span className="font-medium">
+                    <span className="font-medium" dir="ltr">
                       {event.startTime} - {event.endTime}
                     </span>
                   </div>

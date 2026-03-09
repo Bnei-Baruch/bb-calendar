@@ -13,17 +13,16 @@ export function ViewNavigation({ currentLanguage }: ViewNavigationProps) {
   const isRTL = currentLanguage === 'he';
 
   const navItems = [
-    { path: '/', label: t.todayView, icon: Calendar },
-    { path: '/upcoming', label: t.upcomingEvents, icon: MeetingIcon },
-    { path: '/calendar', label: t.calendarView, icon: CalendarDays },
+    { path: '/', label: t.todayView, icon: Calendar, isMeeting: false },
+    { path: '/upcoming', label: t.upcomingEvents, icon: null, isMeeting: true },
+    { path: '/calendar', label: t.calendarView, icon: CalendarDays, isMeeting: false },
   ];
 
   return (
     <nav className="bg-white border-b border-gray-200 shadow-sm">
-      <div className="container mx-auto px-4">
-        <div className={`flex gap-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
+      <div className="container mx-auto px-1 sm:px-4">
+        <div className={`flex ${isRTL ? 'flex-row-reverse' : ''}`}>
           {navItems.map((item) => {
-            const Icon = item.icon;
             const isActive = location.pathname === item.path;
             
             return (
@@ -31,7 +30,7 @@ export function ViewNavigation({ currentLanguage }: ViewNavigationProps) {
                 key={item.path}
                 to={item.path}
                 className={`
-                  flex items-center gap-2 px-6 py-4 transition-colors border-b-2
+                  flex-1 sm:flex-none flex items-center justify-center gap-1 sm:gap-2 px-1 sm:px-6 py-3 sm:py-4 transition-colors border-b-2 min-w-0
                   ${isActive 
                     ? 'border-blue-600 text-blue-600 bg-blue-50' 
                     : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -39,8 +38,11 @@ export function ViewNavigation({ currentLanguage }: ViewNavigationProps) {
                   ${isRTL ? 'flex-row-reverse' : ''}
                 `}
               >
-                <Icon className="w-5 h-5" />
-                <span className="font-medium">{item.label}</span>
+                {item.isMeeting
+                  ? <MeetingIcon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" isActive={isActive} />
+                  : item.icon && <item.icon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                }
+                <span className="font-medium text-xs sm:text-sm leading-tight text-center">{item.label}</span>
               </Link>
             );
           })}

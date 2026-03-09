@@ -52,10 +52,10 @@ export function UpcomingEventsView() {
   };
 
   return (
-    <div className={`container mx-auto px-4 py-8 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className={`mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">{t.upcomingEvents}</h2>
-        <p className="text-gray-600">
+    <div className={`container mx-auto px-3 sm:px-4 py-4 sm:py-8 ${isRTL ? 'rtl' : 'ltr'}`}>
+      <div className={`mb-6 sm:mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{t.upcomingEvents}</h2>
+        <p className="text-sm sm:text-base text-gray-600">
           {language === 'he' && 'כנסים מיוחדים ואירועים קרובים של קבלה לעם'}
           {language === 'en' && 'Special congresses and upcoming events from Kabbalah for the People'}
           {language === 'ru' && 'Специальные конгрессы и предстоящие мероприятия от Каббала народу'}

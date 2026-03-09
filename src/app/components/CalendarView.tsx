@@ -74,13 +74,6 @@ export function CalendarView() {
     es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
   };
 
-  const dayNames = {
-    he: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-    en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-    es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-  };
-
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
   };
@@ -206,25 +199,33 @@ export function CalendarView() {
       .filter(item => item.span > 0);
   };
 
+  const shortDayNames = {
+    he: ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'],
+    en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+    es: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+  };
+
   return (
-    <div className={`container mx-auto px-4 py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className={`container mx-auto px-2 sm:px-4 py-4 sm:py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           <Button
             variant="outline"
             size="icon"
             onClick={() => navigateMonth('prev')}
+            className="shrink-0"
           >
-            {isRTL ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+            {isRTL ? <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />}
           </Button>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
             {/* Month selector */}
             <select
               value={currentMonth}
               onChange={(e) => setCurrentMonth(Number(e.target.value))}
               className={`
-                px-3 py-1.5 border border-gray-300 rounded-md text-base font-semibold
+                px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 rounded-md text-sm sm:text-base font-semibold
                 bg-white hover:bg-gray-50 cursor-pointer
                 focus:outline-none focus:ring-2 focus:ring-blue-500
                 ${isRTL ? 'text-right' : 'text-left'}
@@ -242,7 +243,7 @@ export function CalendarView() {
               value={currentYear}
               onChange={(e) => setCurrentYear(Number(e.target.value))}
               className={`
-                px-3 py-1.5 border border-gray-300 rounded-md text-base font-semibold
+                px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 rounded-md text-sm sm:text-base font-semibold
                 bg-white hover:bg-gray-50 cursor-pointer
                 focus:outline-none focus:ring-2 focus:ring-blue-500
                 ${isRTL ? 'text-right' : 'text-left'}
@@ -260,19 +261,20 @@ export function CalendarView() {
             variant="outline"
             size="icon"
             onClick={() => navigateMonth('next')}
+            className="shrink-0"
           >
-            {isRTL ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+            {isRTL ? <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /> : <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />}
           </Button>
         </div>
 
         <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
           {/* Day headers */}
-          <div className="grid grid-cols-7 border-b border-gray-200">
-            {dayNames[language].map((day, index) => (
+          <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-50">
+            {shortDayNames[language].map((day, index) => (
               <div
                 key={index}
                 className={`
-                  text-center font-semibold text-gray-700 py-3 text-sm
+                  text-center font-semibold text-gray-700 py-2 sm:py-3 text-xs sm:text-sm
                   ${isRTL ? 'border-l border-gray-200 last:border-l-0' : 'border-r border-gray-200 last:border-r-0'}
                 `}
               >
@@ -365,7 +367,7 @@ export function CalendarView() {
                                     truncate
                                   `}
                                 >
-                                  <span className="font-medium">{event.startTime}</span>
+                                  <span className="font-medium" dir="ltr">{event.startTime}</span>
                                   {' '}
                                   <span>{event.title[language]}</span>
                                 </div>

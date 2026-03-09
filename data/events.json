@@ -3903,6 +3903,19 @@
     "id": "ev-301",
     "type": "regular",
     "date": "2026-03-15",
+    "startTime": "18:30",
+    "endTime": "19:30",
+    "title": {
+      "he": "ישיבת חברים - וירטואלית",
+      "en": "Gathering of Friends - Virtual",
+      "ru": "Собрание товарищей - Виртуальная",
+      "es": "Reunión de amigos - Virtual"
+    }
+  },
+  {
+    "id": "ev-302",
+    "type": "regular",
+    "date": "2026-03-15",
     "startTime": "17:30",
     "endTime": "18:30",
     "title": {
@@ -3913,7 +3926,7 @@
     }
   },
   {
-    "id": "ev-302",
+    "id": "ev-303",
     "type": "regular",
     "date": "2026-03-16",
     "startTime": "2:50",
@@ -3926,7 +3939,7 @@
     }
   },
   {
-    "id": "ev-303",
+    "id": "ev-304",
     "type": "regular",
     "date": "2026-03-16",
     "startTime": "12:00",
@@ -3939,7 +3952,7 @@
     }
   },
   {
-    "id": "ev-304",
+    "id": "ev-305",
     "type": "regular",
     "date": "2026-03-16",
     "startTime": "17:30",
@@ -3952,7 +3965,7 @@
     }
   },
   {
-    "id": "ev-305",
+    "id": "ev-306",
     "type": "regular",
     "date": "2026-03-16",
     "startTime": "18:50",
@@ -3965,7 +3978,7 @@
     }
   },
   {
-    "id": "ev-306",
+    "id": "ev-307",
     "type": "regular",
     "date": "2026-03-16",
     "startTime": "19:00",
@@ -3978,7 +3991,7 @@
     }
   },
   {
-    "id": "ev-307",
+    "id": "ev-308",
     "type": "regular",
     "date": "2026-03-17",
     "startTime": "2:40",
@@ -3988,25 +4001,25 @@
       "en": "Lesson Preparation",
       "ru": "Подготовка к уроку",
       "es": "Preparación para la Lección"
-    }
-  },
-  {
-    "id": "ev-308",
-    "type": "regular",
-    "date": "2026-03-17",
-    "startTime": "2:50",
-    "endTime": "5:30",
-    "title": {
-      "he": "שיעור בוקר",
-      "en": "Morning Lesson",
-      "ru": "Утренний урок",
-      "es": "Lección matinal"
     }
   },
   {
     "id": "ev-309",
     "type": "regular",
     "date": "2026-03-17",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-310",
+    "type": "regular",
+    "date": "2026-03-17",
     "startTime": "12:00",
     "endTime": "13:00",
     "title": {
@@ -4017,7 +4030,7 @@
     }
   },
   {
-    "id": "ev-310",
+    "id": "ev-311",
     "type": "regular",
     "date": "2026-03-17",
     "startTime": "17:30",
@@ -4030,7 +4043,7 @@
     }
   },
   {
-    "id": "ev-311",
+    "id": "ev-312",
     "type": "regular",
     "date": "2026-03-18",
     "startTime": "2:40",
@@ -4040,25 +4053,25 @@
       "en": "Lesson Preparation",
       "ru": "Подготовка к уроку",
       "es": "Preparación para la Lección"
-    }
-  },
-  {
-    "id": "ev-312",
-    "type": "regular",
-    "date": "2026-03-18",
-    "startTime": "2:50",
-    "endTime": "5:30",
-    "title": {
-      "he": "שיעור בוקר",
-      "en": "Morning Lesson",
-      "ru": "Утренний урок",
-      "es": "Lección matinal"
     }
   },
   {
     "id": "ev-313",
     "type": "regular",
     "date": "2026-03-18",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-314",
+    "type": "regular",
+    "date": "2026-03-18",
     "startTime": "12:00",
     "endTime": "13:00",
     "title": {
@@ -4069,7 +4082,7 @@
     }
   },
   {
-    "id": "ev-314",
+    "id": "ev-315",
     "type": "regular",
     "date": "2026-03-18",
     "startTime": "17:30",
@@ -4082,7 +4095,7 @@
     }
   },
   {
-    "id": "ev-315",
+    "id": "ev-316",
     "type": "regular",
     "date": "2026-03-19",
     "startTime": "2:40",
@@ -4095,7 +4108,7 @@
     }
   },
   {
-    "id": "ev-316",
+    "id": "ev-317",
     "type": "regular",
     "date": "2026-03-19",
     "startTime": "2:50",
@@ -4108,7 +4121,7 @@
     }
   },
   {
-    "id": "ev-317",
+    "id": "ev-318",
     "type": "regular",
     "date": "2026-03-19",
     "startTime": "12:00",
@@ -4121,7 +4134,7 @@
     }
   },
   {
-    "id": "ev-318",
+    "id": "ev-319",
     "type": "regular",
     "date": "2026-03-19",
     "startTime": "17:30",
@@ -4134,7 +4147,7 @@
     }
   },
   {
-    "id": "ev-319",
+    "id": "ev-320",
     "type": "regular",
     "date": "2026-03-20",
     "startTime": "2:40",
@@ -4147,7 +4160,7 @@
     }
   },
   {
-    "id": "ev-320",
+    "id": "ev-321",
     "type": "regular",
     "date": "2026-03-20",
     "startTime": "2:50",
@@ -4160,7 +4173,7 @@
     }
   },
   {
-    "id": "ev-321",
+    "id": "ev-322",
     "type": "regular",
     "date": "2026-03-20",
     "startTime": "5:35",
@@ -4173,7 +4186,7 @@
     }
   },
   {
-    "id": "ev-322",
+    "id": "ev-323",
     "type": "regular",
     "date": "2026-03-20",
     "startTime": "12:00",
@@ -4186,7 +4199,7 @@
     }
   },
   {
-    "id": "ev-323",
+    "id": "ev-324",
     "type": "regular",
     "date": "2026-03-20",
     "startTime": "14:30",
@@ -4199,7 +4212,7 @@
     }
   },
   {
-    "id": "ev-324",
+    "id": "ev-325",
     "type": "regular",
     "date": "2026-03-21",
     "startTime": "2:40",
@@ -4212,7 +4225,7 @@
     }
   },
   {
-    "id": "ev-325",
+    "id": "ev-326",
     "type": "regular",
     "date": "2026-03-21",
     "startTime": "2:50",
@@ -4225,7 +4238,7 @@
     }
   },
   {
-    "id": "ev-326",
+    "id": "ev-327",
     "type": "regular",
     "date": "2026-03-21",
     "startTime": "5:40",
@@ -4238,7 +4251,7 @@
     }
   },
   {
-    "id": "ev-327",
+    "id": "ev-328",
     "type": "regular",
     "date": "2026-03-21",
     "startTime": "15:45",
@@ -4251,7 +4264,7 @@
     }
   },
   {
-    "id": "ev-328",
+    "id": "ev-329",
     "type": "regular",
     "date": "2026-03-21",
     "startTime": "16:00",
@@ -4264,7 +4277,7 @@
     }
   },
   {
-    "id": "ev-329",
+    "id": "ev-330",
     "type": "regular",
     "date": "2026-03-21",
     "startTime": "17:30",
@@ -4274,19 +4287,6 @@
       "en": "Meal",
       "ru": "Трапеза",
       "es": "Comida"
-    }
-  },
-  {
-    "id": "ev-330",
-    "type": "regular",
-    "date": "2026-03-22",
-    "startTime": "2:40",
-    "endTime": "2:50",
-    "title": {
-      "he": "הכנה לשיעור",
-      "en": "Lesson Preparation",
-      "ru": "Подготовка к уроку",
-      "es": "Preparación para la Lección"
     }
   },
   {
@@ -4296,6 +4296,19 @@
     "startTime": "2:40",
     "endTime": "2:50",
     "title": {
+      "he": "הכנה לשיעור",
+      "en": "Lesson Preparation",
+      "ru": "Подготовка к уроку",
+      "es": "Preparación para la Lección"
+    }
+  },
+  {
+    "id": "ev-332",
+    "type": "regular",
+    "date": "2026-03-22",
+    "startTime": "2:40",
+    "endTime": "2:50",
+    "title": {
       "he": "שיעור בוקר",
       "en": "Morning Lesson",
       "ru": "Утренний урок",
@@ -4303,7 +4316,7 @@
     }
   },
   {
-    "id": "ev-332",
+    "id": "ev-333",
     "type": "regular",
     "date": "2026-03-22",
     "startTime": "12:00",
@@ -4316,7 +4329,7 @@
     }
   },
   {
-    "id": "ev-333",
+    "id": "ev-334",
     "type": "regular",
     "date": "2026-03-22",
     "startTime": "16:00",
@@ -4329,7 +4342,7 @@
     }
   },
   {
-    "id": "ev-334",
+    "id": "ev-335",
     "type": "regular",
     "date": "2026-03-22",
     "startTime": "17:30",
@@ -4342,7 +4355,7 @@
     }
   },
   {
-    "id": "ev-335",
+    "id": "ev-336",
     "type": "regular",
     "date": "2026-03-23",
     "startTime": "2:40",
@@ -4355,7 +4368,7 @@
     }
   },
   {
-    "id": "ev-336",
+    "id": "ev-337",
     "type": "regular",
     "date": "2026-03-23",
     "startTime": "2:50",
@@ -4368,7 +4381,7 @@
     }
   },
   {
-    "id": "ev-337",
+    "id": "ev-338",
     "type": "regular",
     "date": "2026-03-23",
     "startTime": "12:00",
@@ -4381,7 +4394,7 @@
     }
   },
   {
-    "id": "ev-338",
+    "id": "ev-339",
     "type": "regular",
     "date": "2026-03-23",
     "startTime": "17:30",
@@ -4394,7 +4407,7 @@
     }
   },
   {
-    "id": "ev-339",
+    "id": "ev-340",
     "type": "regular",
     "date": "2026-03-23",
     "startTime": "18:50",
@@ -4407,7 +4420,7 @@
     }
   },
   {
-    "id": "ev-340",
+    "id": "ev-341",
     "type": "regular",
     "date": "2026-03-23",
     "startTime": "19:00",
@@ -4420,7 +4433,7 @@
     }
   },
   {
-    "id": "ev-341",
+    "id": "ev-342",
     "type": "regular",
     "date": "2026-03-24",
     "startTime": "2:40",
@@ -4430,25 +4443,25 @@
       "en": "Lesson Preparation",
       "ru": "Подготовка к уроку",
       "es": "Preparación para la Lección"
-    }
-  },
-  {
-    "id": "ev-342",
-    "type": "regular",
-    "date": "2026-03-24",
-    "startTime": "2:50",
-    "endTime": "5:30",
-    "title": {
-      "he": "שיעור בוקר",
-      "en": "Morning Lesson",
-      "ru": "Утренний урок",
-      "es": "Lección matinal"
     }
   },
   {
     "id": "ev-343",
     "type": "regular",
     "date": "2026-03-24",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-344",
+    "type": "regular",
+    "date": "2026-03-24",
     "startTime": "12:00",
     "endTime": "13:00",
     "title": {
@@ -4459,7 +4472,7 @@
     }
   },
   {
-    "id": "ev-344",
+    "id": "ev-345",
     "type": "regular",
     "date": "2026-03-24",
     "startTime": "17:30",
@@ -4472,7 +4485,7 @@
     }
   },
   {
-    "id": "ev-345",
+    "id": "ev-346",
     "type": "regular",
     "date": "2026-03-25",
     "startTime": "2:40",
@@ -4482,25 +4495,25 @@
       "en": "Lesson Preparation",
       "ru": "Подготовка к уроку",
       "es": "Preparación para la Lección"
-    }
-  },
-  {
-    "id": "ev-346",
-    "type": "regular",
-    "date": "2026-03-25",
-    "startTime": "2:50",
-    "endTime": "5:30",
-    "title": {
-      "he": "שיעור בוקר",
-      "en": "Morning Lesson",
-      "ru": "Утренний урок",
-      "es": "Lección matinal"
     }
   },
   {
     "id": "ev-347",
     "type": "regular",
     "date": "2026-03-25",
+    "startTime": "2:50",
+    "endTime": "5:30",
+    "title": {
+      "he": "שיעור בוקר",
+      "en": "Morning Lesson",
+      "ru": "Утренний урок",
+      "es": "Lección matinal"
+    }
+  },
+  {
+    "id": "ev-348",
+    "type": "regular",
+    "date": "2026-03-25",
     "startTime": "12:00",
     "endTime": "13:00",
     "title": {
@@ -4511,7 +4524,7 @@
     }
   },
   {
-    "id": "ev-348",
+    "id": "ev-349",
     "type": "regular",
     "date": "2026-03-25",
     "startTime": "17:30",
@@ -4524,7 +4537,7 @@
     }
   },
   {
-    "id": "ev-349",
+    "id": "ev-350",
     "type": "regular",
     "date": "2026-03-26",
     "startTime": "2:40",
@@ -4537,7 +4550,7 @@
     }
   },
   {
-    "id": "ev-350",
+    "id": "ev-351",
     "type": "regular",
     "date": "2026-03-26",
     "startTime": "2:50",
@@ -4550,7 +4563,7 @@
     }
   },
   {
-    "id": "ev-351",
+    "id": "ev-352",
     "type": "regular",
     "date": "2026-03-26",
     "startTime": "12:00",
@@ -4563,7 +4576,7 @@
     }
   },
   {
-    "id": "ev-352",
+    "id": "ev-353",
     "type": "regular",
     "date": "2026-03-26",
     "startTime": "17:30",
@@ -4576,7 +4589,7 @@
     }
   },
   {
-    "id": "ev-353",
+    "id": "ev-354",
     "type": "regular",
     "date": "2026-03-27",
     "startTime": "2:40",
@@ -4589,7 +4602,7 @@
     }
   },
   {
-    "id": "ev-354",
+    "id": "ev-355",
     "type": "regular",
     "date": "2026-03-27",
     "startTime": "2:50",
@@ -4602,7 +4615,7 @@
     }
   },
   {
-    "id": "ev-355",
+    "id": "ev-356",
     "type": "regular",
     "date": "2026-03-27",
     "startTime": "5:35",
@@ -4615,7 +4628,7 @@
     }
   },
   {
-    "id": "ev-356",
+    "id": "ev-357",
     "type": "regular",
     "date": "2026-03-27",
     "startTime": "12:00",
@@ -4628,7 +4641,7 @@
     }
   },
   {
-    "id": "ev-357",
+    "id": "ev-358",
     "type": "regular",
     "date": "2026-03-27",
     "startTime": "14:30",
@@ -4641,7 +4654,7 @@
     }
   },
   {
-    "id": "ev-358",
+    "id": "ev-359",
     "type": "regular",
     "date": "2026-03-28",
     "startTime": "2:40",
@@ -4654,7 +4667,7 @@
     }
   },
   {
-    "id": "ev-359",
+    "id": "ev-360",
     "type": "regular",
     "date": "2026-03-28",
     "startTime": "2:50",
@@ -4667,7 +4680,7 @@
     }
   },
   {
-    "id": "ev-360",
+    "id": "ev-361",
     "type": "regular",
     "date": "2026-03-28",
     "startTime": "5:40",
@@ -4680,7 +4693,7 @@
     }
   },
   {
-    "id": "ev-361",
+    "id": "ev-362",
     "type": "regular",
     "date": "2026-03-28",
     "startTime": "15:45",
@@ -4693,7 +4706,7 @@
     }
   },
   {
-    "id": "ev-362",
+    "id": "ev-363",
     "type": "regular",
     "date": "2026-03-28",
     "startTime": "16:00",
@@ -4706,7 +4719,7 @@
     }
   },
   {
-    "id": "ev-363",
+    "id": "ev-364",
     "type": "regular",
     "date": "2026-03-28",
     "startTime": "17:30",
@@ -4719,7 +4732,7 @@
     }
   },
   {
-    "id": "ev-364",
+    "id": "ev-365",
     "type": "regular",
     "date": "2026-03-29",
     "startTime": "2:40",
@@ -4732,7 +4745,7 @@
     }
   },
   {
-    "id": "ev-365",
+    "id": "ev-366",
     "type": "regular",
     "date": "2026-03-29",
     "startTime": "2:40",
@@ -4745,7 +4758,7 @@
     }
   },
   {
-    "id": "ev-366",
+    "id": "ev-367",
     "type": "regular",
     "date": "2026-03-29",
     "startTime": "12:00",
@@ -4758,7 +4771,7 @@
     }
   },
   {
-    "id": "ev-367",
+    "id": "ev-368",
     "type": "regular",
     "date": "2026-03-29",
     "startTime": "16:00",
@@ -4771,7 +4784,7 @@
     }
   },
   {
-    "id": "ev-368",
+    "id": "ev-369",
     "type": "regular",
     "date": "2026-03-29",
     "startTime": "17:30",
@@ -4784,7 +4797,7 @@
     }
   },
   {
-    "id": "ev-369",
+    "id": "ev-370",
     "type": "regular",
     "date": "2026-03-30",
     "startTime": "2:40",
@@ -4797,7 +4810,7 @@
     }
   },
   {
-    "id": "ev-370",
+    "id": "ev-371",
     "type": "regular",
     "date": "2026-03-30",
     "startTime": "2:50",
@@ -4810,7 +4823,7 @@
     }
   },
   {
-    "id": "ev-371",
+    "id": "ev-372",
     "type": "regular",
     "date": "2026-03-30",
     "startTime": "12:00",
@@ -4823,7 +4836,7 @@
     }
   },
   {
-    "id": "ev-372",
+    "id": "ev-373",
     "type": "regular",
     "date": "2026-03-30",
     "startTime": "17:30",
@@ -4836,7 +4849,7 @@
     }
   },
   {
-    "id": "ev-373",
+    "id": "ev-374",
     "type": "regular",
     "date": "2026-03-30",
     "startTime": "18:50",
@@ -4849,7 +4862,7 @@
     }
   },
   {
-    "id": "ev-374",
+    "id": "ev-375",
     "type": "regular",
     "date": "2026-03-30",
     "startTime": "19:00",
@@ -4862,7 +4875,7 @@
     }
   },
   {
-    "id": "ev-375",
+    "id": "ev-376",
     "type": "regular",
     "date": "2026-03-31",
     "startTime": "2:40",
@@ -4875,7 +4888,7 @@
     }
   },
   {
-    "id": "ev-376",
+    "id": "ev-377",
     "type": "regular",
     "date": "2026-03-31",
     "startTime": "2:50",
@@ -4888,7 +4901,7 @@
     }
   },
   {
-    "id": "ev-377",
+    "id": "ev-378",
     "type": "regular",
     "date": "2026-03-31",
     "startTime": "12:00",
@@ -4901,7 +4914,7 @@
     }
   },
   {
-    "id": "ev-378",
+    "id": "ev-379",
     "type": "regular",
     "date": "2026-03-31",
     "startTime": "17:30",
@@ -4914,7 +4927,7 @@
     }
   },
   {
-    "id": "ev-379",
+    "id": "ev-380",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "",
@@ -4927,7 +4940,7 @@
     }
   },
   {
-    "id": "ev-380",
+    "id": "ev-381",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "",
@@ -4940,7 +4953,7 @@
     }
   },
   {
-    "id": "ev-381",
+    "id": "ev-382",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "",
@@ -4953,7 +4966,7 @@
     }
   },
   {
-    "id": "ev-382",
+    "id": "ev-383",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "2:40",
@@ -4966,7 +4979,7 @@
     }
   },
   {
-    "id": "ev-383",
+    "id": "ev-384",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "2:50",
@@ -4979,7 +4992,7 @@
     }
   },
   {
-    "id": "ev-384",
+    "id": "ev-385",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "11:00",
@@ -4992,7 +5005,7 @@
     }
   },
   {
-    "id": "ev-385",
+    "id": "ev-386",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "12:00",
@@ -5005,7 +5018,7 @@
     }
   },
   {
-    "id": "ev-386",
+    "id": "ev-387",
     "type": "regular",
     "date": "2026-04-01",
     "startTime": "14:30",
@@ -5018,7 +5031,7 @@
     }
   },
   {
-    "id": "ev-387",
+    "id": "ev-388",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "",
@@ -5031,7 +5044,7 @@
     }
   },
   {
-    "id": "ev-388",
+    "id": "ev-389",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "5:45",
@@ -5044,7 +5057,7 @@
     }
   },
   {
-    "id": "ev-389",
+    "id": "ev-390",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "6:00",
@@ -5057,7 +5070,7 @@
     }
   },
   {
-    "id": "ev-390",
+    "id": "ev-391",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "8:00",
@@ -5070,7 +5083,7 @@
     }
   },
   {
-    "id": "ev-391",
+    "id": "ev-392",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "9:00",
@@ -5083,7 +5096,7 @@
     }
   },
   {
-    "id": "ev-392",
+    "id": "ev-393",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "15:45",
@@ -5096,7 +5109,7 @@
     }
   },
   {
-    "id": "ev-393",
+    "id": "ev-394",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "16:00",
@@ -5109,7 +5122,7 @@
     }
   },
   {
-    "id": "ev-394",
+    "id": "ev-395",
     "type": "regular",
     "date": "2026-04-02",
     "startTime": "17:30",
@@ -5122,7 +5135,7 @@
     }
   },
   {
-    "id": "ev-395",
+    "id": "ev-396",
     "type": "regular",
     "date": "2026-04-03",
     "startTime": "2:40",
@@ -5135,7 +5148,7 @@
     }
   },
   {
-    "id": "ev-396",
+    "id": "ev-397",
     "type": "regular",
     "date": "2026-04-03",
     "startTime": "2:50",
@@ -5148,7 +5161,7 @@
     }
   },
   {
-    "id": "ev-397",
+    "id": "ev-398",
     "type": "regular",
     "date": "2026-04-03",
     "startTime": "5:35",
@@ -5161,7 +5174,7 @@
     }
   },
   {
-    "id": "ev-398",
+    "id": "ev-399",
     "type": "regular",
     "date": "2026-04-03",
     "startTime": "12:00",
@@ -5174,7 +5187,7 @@
     }
   },
   {
-    "id": "ev-399",
+    "id": "ev-400",
     "type": "regular",
     "date": "2026-04-03",
     "startTime": "14:30",
@@ -5187,7 +5200,7 @@
     }
   },
   {
-    "id": "ev-400",
+    "id": "ev-401",
     "type": "regular",
     "date": "2026-04-04",
     "startTime": "2:40",
@@ -5200,7 +5213,7 @@
     }
   },
   {
-    "id": "ev-401",
+    "id": "ev-402",
     "type": "regular",
     "date": "2026-04-04",
     "startTime": "2:50",
@@ -5213,7 +5226,7 @@
     }
   },
   {
-    "id": "ev-402",
+    "id": "ev-403",
     "type": "regular",
     "date": "2026-04-04",
     "startTime": "5:40",
@@ -5226,7 +5239,7 @@
     }
   },
   {
-    "id": "ev-403",
+    "id": "ev-404",
     "type": "regular",
     "date": "2026-04-04",
     "startTime": "15:45",
@@ -5239,7 +5252,7 @@
     }
   },
   {
-    "id": "ev-404",
+    "id": "ev-405",
     "type": "regular",
     "date": "2026-04-04",
     "startTime": "16:00",
@@ -5252,7 +5265,7 @@
     }
   },
   {
-    "id": "ev-405",
+    "id": "ev-406",
     "type": "regular",
     "date": "2026-04-04",
     "startTime": "17:30",
@@ -5265,7 +5278,7 @@
     }
   },
   {
-    "id": "ev-406",
+    "id": "ev-407",
     "type": "regular",
     "date": "2026-04-05",
     "startTime": "2:40",
@@ -5278,7 +5291,7 @@
     }
   },
   {
-    "id": "ev-407",
+    "id": "ev-408",
     "type": "regular",
     "date": "2026-04-05",
     "startTime": "2:40",
@@ -5291,7 +5304,7 @@
     }
   },
   {
-    "id": "ev-408",
+    "id": "ev-409",
     "type": "regular",
     "date": "2026-04-05",
     "startTime": "12:00",
@@ -5304,7 +5317,7 @@
     }
   },
   {
-    "id": "ev-409",
+    "id": "ev-410",
     "type": "regular",
     "date": "2026-04-05",
     "startTime": "16:00",
@@ -5317,7 +5330,7 @@
     }
   },
   {
-    "id": "ev-410",
+    "id": "ev-411",
     "type": "regular",
     "date": "2026-04-05",
     "startTime": "18:00",
@@ -5330,7 +5343,7 @@
     }
   },
   {
-    "id": "ev-411",
+    "id": "ev-412",
     "type": "regular",
     "date": "2026-04-06",
     "startTime": "2:40",
@@ -5343,7 +5356,7 @@
     }
   },
   {
-    "id": "ev-412",
+    "id": "ev-413",
     "type": "regular",
     "date": "2026-04-06",
     "startTime": "2:50",
@@ -5356,7 +5369,7 @@
     }
   },
   {
-    "id": "ev-413",
+    "id": "ev-414",
     "type": "regular",
     "date": "2026-04-06",
     "startTime": "12:00",
@@ -5369,7 +5382,7 @@
     }
   },
   {
-    "id": "ev-414",
+    "id": "ev-415",
     "type": "regular",
     "date": "2026-04-06",
     "startTime": "18:00",
@@ -5382,7 +5395,7 @@
     }
   },
   {
-    "id": "ev-415",
+    "id": "ev-416",
     "type": "regular",
     "date": "2026-04-07",
     "startTime": "",
@@ -5395,7 +5408,7 @@
     }
   },
   {
-    "id": "ev-416",
+    "id": "ev-417",
     "type": "regular",
     "date": "2026-04-07",
     "startTime": "2:40",
@@ -5408,7 +5421,7 @@
     }
   },
   {
-    "id": "ev-417",
+    "id": "ev-418",
     "type": "regular",
     "date": "2026-04-07",
     "startTime": "2:50",
@@ -5421,7 +5434,7 @@
     }
   },
   {
-    "id": "ev-418",
+    "id": "ev-419",
     "type": "regular",
     "date": "2026-04-07",
     "startTime": "12:00",
@@ -5434,7 +5447,7 @@
     }
   },
   {
-    "id": "ev-419",
+    "id": "ev-420",
     "type": "regular",
     "date": "2026-04-07",
     "startTime": "14:30",
@@ -5447,7 +5460,7 @@
     }
   },
   {
-    "id": "ev-420",
+    "id": "ev-421",
     "type": "regular",
     "date": "2026-04-08",
     "startTime": "5:45",
@@ -5460,7 +5473,7 @@
     }
   },
   {
-    "id": "ev-421",
+    "id": "ev-422",
     "type": "regular",
     "date": "2026-04-08",
     "startTime": "6:00",
@@ -5473,7 +5486,7 @@
     }
   },
   {
-    "id": "ev-422",
+    "id": "ev-423",
     "type": "regular",
     "date": "2026-04-08",
     "startTime": "8:00",
@@ -5486,22 +5499,9 @@
     }
   },
   {
-    "id": "ev-423",
-    "type": "regular",
-    "date": "2026-04-08",
-    "startTime": "9:00",
-    "endTime": "10:00",
-    "title": {
-      "he": "סעודה",
-      "en": "Meal",
-      "ru": "Трапеза",
-      "es": "Comida"
-    }
-  },
-  {
     "id": "ev-424",
     "type": "regular",
-    "date": "2026-04-09",
+    "date": "2026-04-08",
     "startTime": "9:00",
     "endTime": "10:00",
     "title": {
@@ -5514,6 +5514,19 @@
   {
     "id": "ev-425",
     "type": "regular",
+    "date": "2026-04-09",
+    "startTime": "9:00",
+    "endTime": "10:00",
+    "title": {
+      "he": "סעודה",
+      "en": "Meal",
+      "ru": "Трапеза",
+      "es": "Comida"
+    }
+  },
+  {
+    "id": "ev-426",
+    "type": "regular",
     "date": "2026-04-08",
     "startTime": "15:45",
     "endTime": "16:00",
@@ -5525,7 +5538,7 @@
     }
   },
   {
-    "id": "ev-426",
+    "id": "ev-427",
     "type": "regular",
     "date": "2026-04-08",
     "startTime": "16:00",
@@ -5538,7 +5551,7 @@
     }
   },
   {
-    "id": "ev-427",
+    "id": "ev-428",
     "type": "regular",
     "date": "2026-04-08",
     "startTime": "",
@@ -5551,7 +5564,7 @@
     }
   },
   {
-    "id": "ev-428",
+    "id": "ev-429",
     "type": "regular",
     "date": "2026-04-08",
     "startTime": "20:00",
@@ -5564,7 +5577,7 @@
     }
   },
   {
-    "id": "ev-429",
+    "id": "ev-430",
     "type": "regular",
     "date": "2025-12-12",
     "startTime": "",
@@ -5577,7 +5590,7 @@
     }
   },
   {
-    "id": "ev-430",
+    "id": "ev-431",
     "type": "conference",
     "date": "2025-12-14",
     "endDate": "2025-12-22",
@@ -5591,7 +5604,7 @@
     }
   },
   {
-    "id": "ev-431",
+    "id": "ev-432",
     "type": "regular",
     "date": "2025-12-28",
     "startTime": "",
@@ -5604,7 +5617,7 @@
     }
   },
   {
-    "id": "ev-432",
+    "id": "ev-433",
     "type": "regular",
     "date": "2026-01-28",
     "startTime": "",
@@ -5617,7 +5630,7 @@
     }
   },
   {
-    "id": "ev-433",
+    "id": "ev-434",
     "type": "conference",
     "date": "2026-02-16",
     "endDate": "2026-02-23",
@@ -5631,7 +5644,7 @@
     }
   },
   {
-    "id": "ev-434",
+    "id": "ev-435",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "2:40",
@@ -5644,7 +5657,7 @@
     }
   },
   {
-    "id": "ev-435",
+    "id": "ev-436",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "2:50",
@@ -5657,7 +5670,7 @@
     }
   },
   {
-    "id": "ev-436",
+    "id": "ev-437",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "5:30",
@@ -5670,7 +5683,7 @@
     }
   },
   {
-    "id": "ev-437",
+    "id": "ev-438",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "12:00",
@@ -5683,7 +5696,7 @@
     }
   },
   {
-    "id": "ev-438",
+    "id": "ev-439",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "13:00",
@@ -5696,7 +5709,7 @@
     }
   },
   {
-    "id": "ev-439",
+    "id": "ev-440",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "17:00",
@@ -5709,7 +5722,7 @@
     }
   },
   {
-    "id": "ev-440",
+    "id": "ev-441",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "18:30",
@@ -5722,7 +5735,7 @@
     }
   },
   {
-    "id": "ev-441",
+    "id": "ev-442",
     "type": "regular",
     "date": "2026-02-16",
     "startTime": "18:30",
@@ -5735,7 +5748,7 @@
     }
   },
   {
-    "id": "ev-442",
+    "id": "ev-443",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "2:40",
@@ -5748,7 +5761,7 @@
     }
   },
   {
-    "id": "ev-443",
+    "id": "ev-444",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "2:50",
@@ -5761,7 +5774,7 @@
     }
   },
   {
-    "id": "ev-444",
+    "id": "ev-445",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "5:30",
@@ -5774,7 +5787,7 @@
     }
   },
   {
-    "id": "ev-445",
+    "id": "ev-446",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "12:00",
@@ -5787,7 +5800,7 @@
     }
   },
   {
-    "id": "ev-446",
+    "id": "ev-447",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "13:00",
@@ -5800,7 +5813,7 @@
     }
   },
   {
-    "id": "ev-447",
+    "id": "ev-448",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "15:00",
@@ -5813,7 +5826,7 @@
     }
   },
   {
-    "id": "ev-448",
+    "id": "ev-449",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "17:00",
@@ -5826,7 +5839,7 @@
     }
   },
   {
-    "id": "ev-449",
+    "id": "ev-450",
     "type": "regular",
     "date": "2026-02-17",
     "startTime": "18:30",
@@ -5839,7 +5852,7 @@
     }
   },
   {
-    "id": "ev-450",
+    "id": "ev-451",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "2:40",
@@ -5852,7 +5865,7 @@
     }
   },
   {
-    "id": "ev-451",
+    "id": "ev-452",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "2:50",
@@ -5865,7 +5878,7 @@
     }
   },
   {
-    "id": "ev-452",
+    "id": "ev-453",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "5:30",
@@ -5878,7 +5891,7 @@
     }
   },
   {
-    "id": "ev-453",
+    "id": "ev-454",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "12:00",
@@ -5891,7 +5904,7 @@
     }
   },
   {
-    "id": "ev-454",
+    "id": "ev-455",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "13:00",
@@ -5904,7 +5917,7 @@
     }
   },
   {
-    "id": "ev-455",
+    "id": "ev-456",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "13:00",
@@ -5917,7 +5930,7 @@
     }
   },
   {
-    "id": "ev-456",
+    "id": "ev-457",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "15:00",
@@ -5930,7 +5943,7 @@
     }
   },
   {
-    "id": "ev-457",
+    "id": "ev-458",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "17:00",
@@ -5943,7 +5956,7 @@
     }
   },
   {
-    "id": "ev-458",
+    "id": "ev-459",
     "type": "regular",
     "date": "2026-02-18",
     "startTime": "18:00",
@@ -5956,7 +5969,7 @@
     }
   },
   {
-    "id": "ev-459",
+    "id": "ev-460",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "6:00",
@@ -5969,7 +5982,7 @@
     }
   },
   {
-    "id": "ev-460",
+    "id": "ev-461",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "3:50",
@@ -5982,7 +5995,7 @@
     }
   },
   {
-    "id": "ev-461",
+    "id": "ev-462",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "4:00",
@@ -5995,7 +6008,7 @@
     }
   },
   {
-    "id": "ev-462",
+    "id": "ev-463",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "5:30",
@@ -6008,7 +6021,7 @@
     }
   },
   {
-    "id": "ev-463",
+    "id": "ev-464",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "12:00",
@@ -6021,7 +6034,7 @@
     }
   },
   {
-    "id": "ev-464",
+    "id": "ev-465",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "13:00",
@@ -6034,7 +6047,7 @@
     }
   },
   {
-    "id": "ev-465",
+    "id": "ev-466",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "16:00",
@@ -6047,7 +6060,7 @@
     }
   },
   {
-    "id": "ev-466",
+    "id": "ev-467",
     "type": "regular",
     "date": "2026-02-22",
     "startTime": "18:00",
@@ -6060,7 +6073,7 @@
     }
   },
   {
-    "id": "ev-467",
+    "id": "ev-468",
     "type": "regular",
     "date": "2026-02-23",
     "startTime": "2:40",
@@ -6073,7 +6086,7 @@
     }
   },
   {
-    "id": "ev-468",
+    "id": "ev-469",
     "type": "regular",
     "date": "2026-02-23",
     "startTime": "2:50",
@@ -6086,7 +6099,7 @@
     }
   },
   {
-    "id": "ev-469",
+    "id": "ev-470",
     "type": "regular",
     "date": "2026-02-23",
     "startTime": "5:30",
@@ -6099,7 +6112,7 @@
     }
   },
   {
-    "id": "ev-470",
+    "id": "ev-471",
     "type": "regular",
     "date": "2026-02-23",
     "startTime": "12:00",
@@ -6112,7 +6125,7 @@
     }
   },
   {
-    "id": "ev-471",
+    "id": "ev-472",
     "type": "regular",
     "date": "2026-02-23",
     "startTime": "13:00",
@@ -6125,7 +6138,7 @@
     }
   },
   {
-    "id": "ev-472",
+    "id": "ev-473",
     "type": "regular",
     "date": "2026-02-23",
     "startTime": "17:00",
@@ -6138,7 +6151,7 @@
     }
   },
   {
-    "id": "ev-473",
+    "id": "ev-474",
     "type": "conference",
     "date": "2026-02-19",
     "endDate": "2026-02-21",
@@ -6152,7 +6165,7 @@
     }
   },
   {
-    "id": "ev-474",
+    "id": "ev-475",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "7:00",
@@ -6171,7 +6184,7 @@
     }
   },
   {
-    "id": "ev-475",
+    "id": "ev-476",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "8:00",
@@ -6184,7 +6197,7 @@
     }
   },
   {
-    "id": "ev-476",
+    "id": "ev-477",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "8:30",
@@ -6197,7 +6210,7 @@
     }
   },
   {
-    "id": "ev-477",
+    "id": "ev-478",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "9:00",
@@ -6210,7 +6223,7 @@
     }
   },
   {
-    "id": "ev-478",
+    "id": "ev-479",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "11:00",
@@ -6223,7 +6236,7 @@
     }
   },
   {
-    "id": "ev-479",
+    "id": "ev-480",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "12:00",
@@ -6236,7 +6249,7 @@
     }
   },
   {
-    "id": "ev-480",
+    "id": "ev-481",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "13:00",
@@ -6249,7 +6262,7 @@
     }
   },
   {
-    "id": "ev-481",
+    "id": "ev-482",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "14:00",
@@ -6262,7 +6275,7 @@
     }
   },
   {
-    "id": "ev-482",
+    "id": "ev-483",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "14:30",
@@ -6275,7 +6288,7 @@
     }
   },
   {
-    "id": "ev-483",
+    "id": "ev-484",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "16:00",
@@ -6288,7 +6301,7 @@
     }
   },
   {
-    "id": "ev-484",
+    "id": "ev-485",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "17:00",
@@ -6301,7 +6314,7 @@
     }
   },
   {
-    "id": "ev-485",
+    "id": "ev-486",
     "type": "regular",
     "date": "2026-02-19",
     "startTime": "18:00",
@@ -6314,7 +6327,7 @@
     }
   },
   {
-    "id": "ev-486",
+    "id": "ev-487",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "7:00",
@@ -6327,7 +6340,7 @@
     }
   },
   {
-    "id": "ev-487",
+    "id": "ev-488",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "8:00",
@@ -6340,7 +6353,7 @@
     }
   },
   {
-    "id": "ev-488",
+    "id": "ev-489",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "8:30",
@@ -6353,7 +6366,7 @@
     }
   },
   {
-    "id": "ev-489",
+    "id": "ev-490",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "9:00",
@@ -6366,7 +6379,7 @@
     }
   },
   {
-    "id": "ev-490",
+    "id": "ev-491",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "11:00",
@@ -6379,7 +6392,7 @@
     }
   },
   {
-    "id": "ev-491",
+    "id": "ev-492",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "12:00",
@@ -6392,7 +6405,7 @@
     }
   },
   {
-    "id": "ev-492",
+    "id": "ev-493",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "13:00",
@@ -6405,7 +6418,7 @@
     }
   },
   {
-    "id": "ev-493",
+    "id": "ev-494",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "14:00",
@@ -6418,7 +6431,7 @@
     }
   },
   {
-    "id": "ev-494",
+    "id": "ev-495",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "15:00",
@@ -6431,7 +6444,7 @@
     }
   },
   {
-    "id": "ev-495",
+    "id": "ev-496",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "17:00",
@@ -6444,7 +6457,7 @@
     }
   },
   {
-    "id": "ev-496",
+    "id": "ev-497",
     "type": "regular",
     "date": "2026-02-20",
     "startTime": "18:00",
@@ -6457,7 +6470,7 @@
     }
   },
   {
-    "id": "ev-497",
+    "id": "ev-498",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "7:00",
@@ -6470,7 +6483,7 @@
     }
   },
   {
-    "id": "ev-498",
+    "id": "ev-499",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "8:00",
@@ -6483,7 +6496,7 @@
     }
   },
   {
-    "id": "ev-499",
+    "id": "ev-500",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "8:30",
@@ -6496,7 +6509,7 @@
     }
   },
   {
-    "id": "ev-500",
+    "id": "ev-501",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "9:00",
@@ -6509,7 +6522,7 @@
     }
   },
   {
-    "id": "ev-501",
+    "id": "ev-502",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "11:00",
@@ -6522,7 +6535,7 @@
     }
   },
   {
-    "id": "ev-502",
+    "id": "ev-503",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "12:00",
@@ -6535,7 +6548,7 @@
     }
   },
   {
-    "id": "ev-503",
+    "id": "ev-504",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "13:00",
@@ -6548,7 +6561,7 @@
     }
   },
   {
-    "id": "ev-504",
+    "id": "ev-505",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "14:00",
@@ -6561,7 +6574,7 @@
     }
   },
   {
-    "id": "ev-505",
+    "id": "ev-506",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "14:30",
@@ -6574,7 +6587,7 @@
     }
   },
   {
-    "id": "ev-506",
+    "id": "ev-507",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "16:00",
@@ -6587,7 +6600,7 @@
     }
   },
   {
-    "id": "ev-507",
+    "id": "ev-508",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "17:00",
@@ -6600,7 +6613,7 @@
     }
   },
   {
-    "id": "ev-508",
+    "id": "ev-509",
     "type": "regular",
     "date": "2026-02-21",
     "startTime": "18:30",
@@ -6613,7 +6626,7 @@
     }
   },
   {
-    "id": "ev-509",
+    "id": "ev-510",
     "type": "conference",
     "date": "2026-05-28",
     "endDate": "2026-05-31",
@@ -6627,7 +6640,7 @@
     }
   },
   {
-    "id": "ev-510",
+    "id": "ev-511",
     "type": "conference",
     "date": "2026-10-29",
     "endDate": "2026-10-31",
