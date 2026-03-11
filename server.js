@@ -6,7 +6,7 @@ import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = 3001;
+const PORT = 5173;
 const CACHE_FILE = join(__dirname, 'data', 'events.json');
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 const SHEET_ID = '1ewi5NfWbl7qRM4Sn4r4eN7lgA4czgU1w9CyWhIBGBcs';
@@ -122,6 +122,7 @@ async function getEvents() {
 }
 
 app.use(express.json());
+app.use(express.static(join(__dirname, 'dist')));
 
 app.get('/api/events', async (req, res) => {
   try {
@@ -130,6 +131,10 @@ app.get('/api/events', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
 // Warm cache on startup
