@@ -9,10 +9,17 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('he');
+  const [language, setLanguage] = useState<Language>(
+    () => (localStorage.getItem('language') as Language) || 'he'
+  );
+
+  const handleSetLanguage = (lang: Language) => {
+    localStorage.setItem('language', lang);
+    setLanguage(lang);
+  };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
