@@ -22,10 +22,15 @@ export interface Event {
   location?: string;
 }
 
+function toMinutes(time: string): number {
+  const [h, m] = time.split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
+
 export function getEventsByDate(allEvents: Event[], date: string): Event[] {
   return allEvents
     .filter(e => e.date === date)
-    .sort((a, b) => a.startTime.localeCompare(b.startTime));
+    .sort((a, b) => toMinutes(a.startTime) - toMinutes(b.startTime));
 }
 
 export function getEventById(allEvents: Event[], id: string): Event | undefined {

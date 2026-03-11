@@ -1,4 +1,3 @@
-import { Globe } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -15,20 +14,17 @@ interface LanguageSelectorProps {
 
 export function LanguageSelector({ currentLanguage, onLanguageChange }: LanguageSelectorProps) {
   return (
-    <div className="flex items-center gap-2">
-      <Globe className="w-5 h-5" />
-      <Select value={currentLanguage} onValueChange={(value) => onLanguageChange(value as Language)}>
-        <SelectTrigger className="w-[140px]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {Object.entries(languageNames).map(([code, name]) => (
-            <SelectItem key={code} value={code}>
-              {name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Select value={currentLanguage} onValueChange={(value) => onLanguageChange(value as Language)}>
+      <SelectTrigger className="w-[140px]" dir="ltr">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent dir="ltr">
+        {Object.entries(languageNames).map(([code, name]) => (
+          <SelectItem key={code} value={code}>
+            {name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

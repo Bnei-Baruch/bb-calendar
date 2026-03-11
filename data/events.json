@@ -4928,8 +4928,9 @@
   },
   {
     "id": "ev-380",
-    "type": "regular",
+    "type": "conference",
     "date": "2026-04-01",
+    "endDate": "2026-04-08",
     "startTime": "",
     "endTime": "",
     "title": {

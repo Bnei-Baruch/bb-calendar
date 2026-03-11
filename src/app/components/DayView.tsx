@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams, useOutletContext } from 'react-router';
 import { ChevronLeft, ChevronRight, Clock, CalendarIcon } from 'lucide-react';
+import { he as heLocale, enUS, ru, es } from 'date-fns/locale';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
@@ -20,7 +21,7 @@ export function DayView() {
   const { events: allEvents, loading } = useEvents();
   const dateParam = searchParams.get('date') || format(new Date(), 'yyyy-MM-dd');
   const currentDate = parseISO(dateParam);
-  const events = getEventsByDate(allEvents, dateParam);
+  const allDayEvents = getEventsByDate(allEvents, dateParam);
 
   const navigateDay = (direction: 'prev' | 'next') => {
     const newDate = direction === 'prev' 
@@ -35,6 +36,12 @@ export function DayView() {
 
   const handleEventClick = (eventId: string) => {
     navigate(`/event/${eventId}?from=day&date=${dateParam}`);
+  };
+
+  const padTime = (time: string) => {
+    if (!time) return time;
+    const [h, m] = time.split(':');
+    return `${h.padStart(2, '0')}:${m || '00'}`;
   };
 
   // Format date based on language
@@ -63,6 +70,20 @@ export function DayView() {
     }
     return `${dayName}, ${month} ${day}, ${year}`;
   };
+
+  // Find multi-day event spanning the current date — if multiple overlap, pick the most recently started
+  const parentEvent = allEvents
+    .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateParam && e.endDate >= dateParam)
+    .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
+
+  // Exclude the parent event itself from the cards list
+  const events = parentEvent
+    ? allDayEvents.filter(e => e.id !== parentEvent.id)
+    : allDayEvents;
+
+  const dayNumber = parentEvent
+    ? Math.round((parseISO(dateParam).getTime() - parseISO(parentEvent.date).getTime()) / 86400000) + 1
+    : null;
 
   const getEventTypeColor = (type: string) => {
     const borderSide = isRTL ? 'border-r-4' : 'border-l-4';
@@ -115,6 +136,7 @@ export function DayView() {
                       }
                       setOpen(false);
                     }}
+                    locale={language === 'he' ? heLocale : language === 'ru' ? ru : language === 'es' ? es : enUS}
                     initialFocus
                   />
                 </PopoverContent>
@@ -132,6 +154,23 @@ export function DayView() {
           </Button>
         </div>
 
+        {parentEvent && (
+          <div
+            className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 sm:p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow mb-5"
+            onClick={() => handleEventClick(parentEvent.id)}
+          >
+            <h2 className="text-xl sm:text-2xl font-bold text-center">
+              {parentEvent.title[language]}
+              {dayNumber && ` - ${t.day} ${dayNumber}`}
+            </h2>
+            {parentEvent.description && (
+              <p className="text-center text-blue-100 mt-2 text-sm sm:text-base">
+                {parentEvent.description[language]}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="space-y-5">
           {loading ? (
             <Card className="p-8 text-center text-gray-400">טוען...</Card>
@@ -140,32 +179,57 @@ export function DayView() {
               {t.noEvents}
             </Card>
           ) : (
-            events.map((event) => (
-              <Card
-                key={event.id}
-                className={`border-0 ${getEventTypeColor(event.type)} p-4 cursor-pointer hover:shadow-md transition-shadow`}
-                onClick={() => handleEventClick(event.id)}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-600 min-w-[120px]">
-                    <Clock className="w-4 h-4" />
-                    <span className="font-medium" dir="ltr">
-                      {event.startTime} - {event.endTime}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg text-blue-900">
-                      {event.title[language]}
-                    </h3>
-                    {event.description && (
-                      <p className="text-sm text-gray-600 mt-1">
-                        {event.description[language]}
-                      </p>
+            <>
+              {(() => {
+                const timeless = events.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
+                const timed = events.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
+                return (
+                  <>
+                    {timeless.length > 0 && (
+                      <div className={`bg-blue-50 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-5 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
+                        {timeless.map((e) => (
+                          <div key={e.id} className="cursor-pointer" onClick={() => handleEventClick(e.id)}>
+                            <p className={`text-blue-900 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
+                            {e.description && (
+                              <p className={`text-blue-700 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     )}
-                  </div>
-                </div>
-              </Card>
-            ))
+                    {timed.map((event) => (
+                      <Card
+                        key={event.id}
+                        className={`border-0 ${getEventTypeColor(event.type)} p-4 cursor-pointer hover:shadow-md transition-shadow`}
+                        onClick={() => handleEventClick(event.id)}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="flex items-center gap-2 text-sm text-gray-600 min-w-[120px]">
+                            <Clock className="w-4 h-4" />
+                            <span className="font-medium" dir="ltr">
+                              {isRTL
+                                ? `${padTime(event.endTime)} - ${padTime(event.startTime)}`
+                                : `${padTime(event.startTime)} - ${padTime(event.endTime)}`
+                              }
+                            </span>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-lg text-blue-900">
+                              {event.title[language]}
+                            </h3>
+                            {event.description && (
+                              <p className="text-sm text-gray-600 mt-1">
+                                {event.description[language]}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </>
+                );
+              })()}
+            </>
           )}
         </div>
       </div>

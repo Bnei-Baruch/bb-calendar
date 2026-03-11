@@ -52,7 +52,7 @@ export function UpcomingEventsView() {
   };
 
   return (
-    <div className={`container mx-auto px-3 sm:px-4 py-4 sm:py-8 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`container mx-auto px-3 sm:px-4 py-4 sm:py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <div className={`mb-6 sm:mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{t.upcomingEvents}</h2>
         <p className="text-sm sm:text-base text-gray-600">
@@ -106,20 +106,23 @@ export function UpcomingEventsView() {
                   </h3>
                 </div>
 
-                <div className={`flex items-center gap-2 text-gray-700 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <div className="flex items-center gap-2 text-gray-700 mb-2">
                   <Calendar className="w-4 h-4 text-blue-600" />
                   <span dir="ltr">{getEventDateRange(event)}</span>
                 </div>
 
                 {(!event.endDate || event.endDate === event.date) && (
-                  <div className={`flex items-center gap-2 text-gray-700 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className="flex items-center gap-2 text-gray-700 mb-2">
                     <Clock className="w-4 h-4 text-blue-600" />
-                    <span dir="ltr">{event.startTime} - {event.endTime}</span>
+                    {isRTL
+                      ? <span>{event.endTime} - {event.startTime}</span>
+                      : <span dir="ltr">{event.startTime} - {event.endTime}</span>
+                    }
                   </div>
                 )}
 
                 {event.location && (
-                  <div className={`flex items-center gap-2 text-gray-700 mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className="flex items-center gap-2 text-gray-700 mb-3">
                     <MapPin className="w-4 h-4 text-blue-600" />
                     <span>{event.location}</span>
                   </div>

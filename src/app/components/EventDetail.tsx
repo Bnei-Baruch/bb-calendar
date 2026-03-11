@@ -33,9 +33,18 @@ export function EventDetail() {
   // For multi-day events: collect all events within the date range, grouped by day
   const eventsByDate: Record<string, typeof allEvents> = {};
   if (event && isMultiDay) {
-    const toMin = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + (m || 0); };
+    // Pre-populate all days in range so every day shows even if empty
+    let d = event.date;
+    while (d <= event.endDate!) {
+      eventsByDate[d] = [];
+      const next = new Date(d);
+      next.setDate(next.getDate() + 1);
+      d = next.toISOString().split('T')[0];
+    }
+
+    const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
     allEvents
-      .filter(e => e.date >= event.date && e.date <= event.endDate!)
+      .filter(e => e.date >= event.date && e.date <= event.endDate! && e.id !== event.id)
       .forEach(e => {
         if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
         eventsByDate[e.date].push(e);
@@ -210,9 +219,8 @@ export function EventDetail() {
               </h3>
               <div className="space-y-6">
                 {sortedDates.map(date => {
-                  const dateEvents = eventsByDate[date].sort((a, b) => 
-                    a.startTime.localeCompare(b.startTime)
-                  );
+                  const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+                  const dateEvents = eventsByDate[date].sort((a, b) => toMin(a.startTime) - toMin(b.startTime));
                   
                   return (
                     <div key={date}>
@@ -234,64 +242,40 @@ export function EventDetail() {
                         )}
                       </div>
                       <div className="space-y-2">
-                        {dateEvents.map(evt => {
-                          const isAllDay = evt.startTime === evt.endTime;
-                          const isCurrentEvent = evt.id === event.id;
-                          
+                        {(() => {
+                          const timeless = dateEvents.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
+                          const timed = dateEvents.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
                           return (
-                            <div
-                              key={evt.id}
-                              className={`
-                                flex items-start gap-4 p-3 rounded-lg transition-all
-                                ${isCurrentEvent ? 'bg-blue-100 border-2 border-blue-500' : 'hover:bg-gray-50'}
-                              `}
-                            >
-                              {isRTL ? (
-                                <>
-                                  <div className="flex items-center gap-2 min-w-[140px] flex-row-reverse">
-                                    <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                                      {isAllDay ? (
-                                        language === 'he' ? 'כל היום' :
-                                        language === 'en' ? 'All day' :
-                                        language === 'ru' ? 'Весь день' :
-                                        'Todo el día'
-                                      ) : (
-                                        `${evt.startTime} - ${evt.endTime}`
+                            <>
+                              {timeless.length > 0 && (
+                                <div className={`bg-blue-50 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-3 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
+                                  {timeless.map(evt => (
+                                    <div key={evt.id}>
+                                      <p className={`text-blue-900 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{evt.title[language]}</p>
+                                      {evt.description && (
+                                        <p className={`text-blue-700 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{evt.description[language]}</p>
                                       )}
-                                    </span>
-                                    <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                                  </div>
-                                  <div className="flex-1 text-right">
-                                    <p className={`text-gray-900 ${isCurrentEvent ? 'font-semibold' : ''}`}>
-                                      {evt.title[language]}
-                                    </p>
-                                  </div>
-                                </>
-                              ) : (
-                                <>
-                                  <div className="flex items-center gap-2 min-w-[140px]">
-                                    <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                                    <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                                      {isAllDay ? (
-                                        language === 'he' ? 'כל היום' :
-                                        language === 'en' ? 'All day' :
-                                        language === 'ru' ? 'Весь день' :
-                                        'Todo el día'
-                                      ) : (
-                                        `${evt.startTime} - ${evt.endTime}`
-                                      )}
-                                    </span>
-                                  </div>
-                                  <div className="flex-1 text-left">
-                                    <p className={`text-gray-900 ${isCurrentEvent ? 'font-semibold' : ''}`}>
-                                      {evt.title[language]}
-                                    </p>
-                                  </div>
-                                </>
+                                    </div>
+                                  ))}
+                                </div>
                               )}
-                            </div>
+                              {timed.map(evt => (
+                                <div
+                                  key={evt.id}
+                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all"
+                                >
+                                  <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                                  <span className="text-sm font-medium text-gray-700 whitespace-nowrap" dir="ltr">
+                                    {isRTL
+                                      ? `${evt.endTime} - ${evt.startTime}`
+                                      : `${evt.startTime} - ${evt.endTime}`}
+                                  </span>
+                                  <p className="flex-1 text-gray-900">{evt.title[language]}</p>
+                                </div>
+                              ))}
+                            </>
                           );
-                        })}
+                        })()}
                       </div>
                     </div>
                   );
