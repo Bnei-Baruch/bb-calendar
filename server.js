@@ -6,7 +6,7 @@ import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = 5173;
+const PORT = 3001;
 const CACHE_FILE = join(__dirname, 'data', 'events.json');
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 const SHEET_ID = '1ewi5NfWbl7qRM4Sn4r4eN7lgA4czgU1w9CyWhIBGBcs';
@@ -14,6 +14,34 @@ const KEY_FILE = join(__dirname, 'bb-calendar-488901-6a4730c846cc.json');
 const SHEET_TAB = 'לו"ז';
 
 let lastFetched = 0;
+let studyLinksCache = {};
+let studyLastFetched = 0;
+
+async function fetchStudyLinks() {
+  const now = Date.now();
+  if (now - studyLastFetched < CACHE_TTL_MS && Object.keys(studyLinksCache).length > 0) {
+    return studyLinksCache;
+  }
+  try {
+    const res = await fetch('https://study.kli.one/api/events?public=true&language=he');
+    const data = await res.json();
+    const map = {};
+    for (const e of (data.events || [])) {
+      const date = e.date.split('T')[0];
+      const link = 'https://study.kli.one/?event=' + e.id;
+      map['time|' + date + '|' + e.start_time] = link;
+      if (e.titles && e.titles.he) {
+        map['title|' + date + '|' + e.titles.he.trim()] = link;
+      }
+    }
+    studyLinksCache = map;
+    studyLastFetched = now;
+    console.log('[study] Cached ' + Object.keys(map).length + ' study link entries');
+  } catch (err) {
+    console.error('[study] Fetch failed:', err.message);
+  }
+  return studyLinksCache;
+}
 
 function parseDate(dateStr) {
   if (!dateStr) return null;
@@ -122,19 +150,20 @@ async function getEvents() {
 }
 
 app.use(express.json());
-app.use(express.static(join(__dirname, 'dist')));
 
 app.get('/api/events', async (req, res) => {
   try {
-    const events = await getEvents();
-    res.json(events);
+    const [events, studyLinks] = await Promise.all([getEvents(), fetchStudyLinks()]);
+    const enriched = events.map(e => {
+      const byTime = studyLinks['time|' + e.date + '|' + e.startTime];
+      const byTitle = studyLinks['title|' + e.date + '|' + (e.title.he || '').trim()];
+      const studyLink = byTime || byTitle;
+      return studyLink ? Object.assign({}, e, { studyLink }) : e;
+    });
+    res.json(enriched);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
-
-app.get('/{*path}', (req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 
 // Warm cache on startup

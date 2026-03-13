@@ -113,7 +113,10 @@ export function CalendarView() {
     const parentEventIds = new Set(multiDayEvents.map(md => md.id));
     return dayEvents
       .filter(evt => !evt.parentEventId && !parentEventIds.has(evt.id)) // Filter out both child and parent events
-      .sort((a, b) => a.startTime.localeCompare(b.startTime))
+      .sort((a, b) => {
+        const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+        return toMin(a.startTime) - toMin(b.startTime);
+      })
       .slice(0, 3);
   };
 

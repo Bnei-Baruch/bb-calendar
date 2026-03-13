@@ -20,6 +20,7 @@ export interface Event {
     es: string;
   };
   location?: string;
+  studyLink?: string;
 }
 
 function toMinutes(time: string): number {
