@@ -366,11 +366,11 @@ export function CalendarView() {
                                   className={`
                                     text-xs p-1 rounded border cursor-pointer hover:opacity-80 transition-opacity
                                     ${getEventColor(event)}
-                                    ${isRTL ? 'text-right' : 'text-left'}
                                     truncate
                                   `}
+                                  dir="ltr"
                                 >
-                                  <span className="font-medium" dir="ltr">{event.startTime}</span>
+                                  <span className="font-medium">{event.startTime}</span>
                                   {' '}
                                   <span>{event.title[language]}</span>
                                 </div>
