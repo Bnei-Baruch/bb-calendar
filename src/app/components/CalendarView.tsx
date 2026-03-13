@@ -144,7 +144,7 @@ export function CalendarView() {
       case 'holiday':
         return 'bg-green-500 text-white border-green-600';
       default:
-        return 'bg-blue-100 text-blue-800 border-blue-300';
+        return 'bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-700';
     }
   };
 
@@ -228,8 +228,8 @@ export function CalendarView() {
               value={currentMonth}
               onChange={(e) => setCurrentMonth(Number(e.target.value))}
               className={`
-                px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 rounded-md text-sm sm:text-base font-semibold
-                bg-white hover:bg-gray-50 cursor-pointer
+                px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm sm:text-base font-semibold
+                bg-white dark:bg-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer
                 focus:outline-none focus:ring-2 focus:ring-blue-500
                 ${isRTL ? 'text-right' : 'text-left'}
               `}
@@ -246,8 +246,8 @@ export function CalendarView() {
               value={currentYear}
               onChange={(e) => setCurrentYear(Number(e.target.value))}
               className={`
-                px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 rounded-md text-sm sm:text-base font-semibold
-                bg-white hover:bg-gray-50 cursor-pointer
+                px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm sm:text-base font-semibold
+                bg-white dark:bg-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer
                 focus:outline-none focus:ring-2 focus:ring-blue-500
                 ${isRTL ? 'text-right' : 'text-left'}
               `}
@@ -270,15 +270,15 @@ export function CalendarView() {
           </Button>
         </div>
 
-        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
           {/* Day headers */}
-          <div className="grid grid-cols-7 border-b border-gray-200 bg-gray-50">
+          <div className="grid grid-cols-7 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
             {shortDayNames[language].map((day, index) => (
               <div
                 key={index}
                 className={`
-                  text-center font-semibold text-gray-700 py-2 sm:py-3 text-xs sm:text-sm
-                  ${isRTL ? 'border-l border-gray-200 last:border-l-0' : 'border-r border-gray-200 last:border-r-0'}
+                  text-center font-semibold text-gray-700 dark:text-gray-300 py-2 sm:py-3 text-xs sm:text-sm
+                  ${isRTL ? 'border-l border-gray-200 dark:border-gray-700 last:border-l-0' : 'border-r border-gray-200 dark:border-gray-700 last:border-r-0'}
                 `}
               >
                 {day}
@@ -292,7 +292,7 @@ export function CalendarView() {
               const multiDayEventsInWeek = getMultiDayEventsForWeek(week);
               
               return (
-                <div key={weekIndex} className="border-b border-gray-200 last:border-b-0 relative">
+                <div key={weekIndex} className="border-b border-gray-200 dark:border-gray-700 last:border-b-0 relative">
                   {/* Multi-day event bars - absolutely positioned */}
                   {multiDayEventsInWeek.map((item, barIndex) => {
                     const dayDate = week[item.startCol];
@@ -341,15 +341,15 @@ export function CalendarView() {
                         key={dayIndex}
                         className={`
                           min-h-[120px] p-2
-                          ${isRTL ? 'border-l border-gray-200 last:border-l-0' : 'border-r border-gray-200 last:border-r-0'}
-                          ${day ? 'cursor-pointer hover:bg-gray-50 transition-colors' : 'bg-gray-50'}
-                          ${isToday(day) ? 'bg-blue-50' : ''}
+                          ${isRTL ? 'border-l border-gray-200 dark:border-gray-700 last:border-l-0' : 'border-r border-gray-200 dark:border-gray-700 last:border-r-0'}
+                          ${day ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors' : 'bg-gray-50 dark:bg-gray-800/50'}
+                          ${isToday(day) ? 'bg-blue-50 dark:bg-blue-900/20' : ''}
                         `}
                         onClick={() => day && handleDayClick(day)}
                       >
                         {day && (
                           <div className="h-full flex flex-col">
-                            <div className={`text-sm font-semibold mb-2 ${isRTL ? 'text-right' : 'text-left'} ${isToday(day) ? 'text-blue-600' : 'text-gray-700'}`}>
+                            <div className={`text-sm font-semibold mb-2 ${isRTL ? 'text-right' : 'text-left'} ${isToday(day) ? 'text-blue-600' : 'text-gray-700 dark:text-gray-300'}`}>
                               {day}
                             </div>
                             
@@ -368,7 +368,7 @@ export function CalendarView() {
                                     ${getEventColor(event)}
                                     truncate
                                   `}
-                                  dir="ltr"
+                                  dir={isRTL ? 'rtl' : 'ltr'}
                                 >
                                   <span className="font-medium">{event.startTime}</span>
                                   {' '}
@@ -376,7 +376,7 @@ export function CalendarView() {
                                 </div>
                               ))}
                               {getMoreEventsCount(day) > 0 && (
-                                <div className={`text-xs text-gray-600 font-medium ${isRTL ? 'text-right' : 'text-left'}`}>
+                                <div className={`text-xs text-gray-600 dark:text-gray-400 font-medium ${isRTL ? 'text-right' : 'text-left'}`}>
                                   +{getMoreEventsCount(day)} {language === 'he' ? 'נוספים' : language === 'en' ? 'more' : language === 'ru' ? 'еще' : 'más'}
                                 </div>
                               )}

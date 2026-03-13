@@ -239,7 +239,7 @@ export function EventDetail() {
         <Card className="p-8">
           <div className="flex items-start justify-between mb-6">
             <div className="flex-1">
-              <h1 className={`text-3xl font-bold mb-4 ${isRTL ? 'text-right' : ''}`}>
+              <h1 className={`text-3xl font-bold mb-4 dark:text-gray-100 ${isRTL ? 'text-right' : ''}`}>
                 {event.title[language]}
               </h1>
             </div>
@@ -247,20 +247,20 @@ export function EventDetail() {
               <div className="relative shrink-0 ms-4">
                 <button
                   onClick={() => setShareOpen(v => !v)}
-                  className="h-9 w-auto px-3 inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 transition-colors cursor-pointer shadow-sm text-sm text-gray-700"
+                  className="h-9 w-auto px-3 inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm text-sm text-gray-700 dark:text-gray-300"
                 >
                   <Share2 className="h-4 w-4" />
                   <span>{isRTL ? 'שתף' : 'Share'}</span>
                 </button>
                 {shareOpen && (
-                  <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[180px]`}>
+                  <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 min-w-[180px]`} dir={isRTL ? 'rtl' : 'ltr'}>
                     {shareOptions.map((opt, i) =>
                       opt.href ? (
-                        <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm text-gray-700" onClick={() => setShareOpen(false)}>
+                        <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300" onClick={() => setShareOpen(false)}>
                           {opt.icon}<span>{opt.label}</span>
                         </a>
                       ) : (
-                        <button key={i} onClick={opt.onClick} className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-sm text-gray-700">
+                        <button key={i} onClick={opt.onClick} className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300">
                           {opt.icon}<span>{opt.label}</span>
                         </button>
                       )
@@ -272,7 +272,7 @@ export function EventDetail() {
           </div>
 
           <div className="space-y-4">
-            <div className={`flex items-center gap-3 text-gray-700 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+            <div className={`flex items-center gap-3 text-gray-700 dark:text-gray-300 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
               {isRTL ? (
                 <>
                   <span className="text-lg">{getEventDateRange()}</span>
@@ -290,7 +290,7 @@ export function EventDetail() {
           {event.description && (
             <div className="mt-8 pt-6 border-t">
               <h3 className={`font-semibold text-lg mb-3 ${isRTL ? 'text-right' : ''}`}>{t.description}</h3>
-              <p className={`text-gray-700 leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+              <p className={`text-gray-700 dark:text-gray-300 leading-relaxed ${isRTL ? 'text-right' : ''}`}>
                 {event.description[language]}
               </p>
             </div>
@@ -311,10 +311,10 @@ export function EventDetail() {
                   
                   return (
                     <div key={date}>
-                      <div className={`flex items-center gap-3 mb-4 pb-2 border-b-2 border-gray-200 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+                      <div className={`flex items-center gap-3 mb-4 pb-2 border-b-2 border-purple-300 dark:border-purple-700 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
                         {isRTL ? (
                           <>
-                            <h4 className="font-bold text-lg text-gray-800">
+                            <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100">
                               {formatDateByLanguage(date)}
                             </h4>
                             <Calendar className="w-5 h-5 text-purple-600" />
@@ -322,7 +322,7 @@ export function EventDetail() {
                         ) : (
                           <>
                             <Calendar className="w-5 h-5 text-purple-600" />
-                            <h4 className="font-bold text-lg text-gray-800">
+                            <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100">
                               {formatDateByLanguage(date)}
                             </h4>
                           </>
@@ -335,12 +335,12 @@ export function EventDetail() {
                           return (
                             <>
                               {timeless.length > 0 && (
-                                <div className={`bg-blue-50 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-3 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
+                                <div className={`bg-blue-50 dark:bg-blue-900/20 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-3 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
                                   {timeless.map(evt => (
                                     <div key={evt.id}>
-                                      <p className={`text-blue-900 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{evt.title[language]}</p>
+                                      <p className={`text-blue-900 dark:text-blue-200 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{evt.title[language]}</p>
                                       {evt.description && (
-                                        <p className={`text-blue-700 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{evt.description[language]}</p>
+                                        <p className={`text-blue-700 dark:text-blue-300 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{evt.description[language]}</p>
                                       )}
                                     </div>
                                   ))}
@@ -349,15 +349,15 @@ export function EventDetail() {
                               {timed.map(evt => (
                                 <div
                                   key={evt.id}
-                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-all"
+                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
                                 >
-                                  <Clock className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                                  <span className="text-sm font-medium text-gray-700 whitespace-nowrap" dir="ltr">
+                                  <Clock className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+                                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap" dir="ltr">
                                     {isRTL
                                       ? `${evt.endTime} - ${evt.startTime}`
                                       : `${evt.startTime} - ${evt.endTime}`}
                                   </span>
-                                  <p className="flex-1 text-gray-900">{evt.title[language]}</p>
+                                  <p className="flex-1 text-gray-900 dark:text-gray-100">{evt.title[language]}</p>
                                   {evt.studyLink && (
                                     <a
                                       href={evt.studyLink}

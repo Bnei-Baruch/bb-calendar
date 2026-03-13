@@ -1,4 +1,6 @@
 import { Link } from 'react-router';
+import { useState, useEffect } from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { LanguageSelector } from './LanguageSelector';
 import { Language, useTranslation } from '../utils/i18n';
 
@@ -32,8 +34,18 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
 
   const currentLogoText = logoContent[currentLanguage];
 
+  const [dark, setDark] = useState(() => {
+    const stored = localStorage.getItem('darkMode');
+    return stored ? stored === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('darkMode', String(dark));
+  }, [dark]);
+
   return (
-    <header className="bg-gradient-to-b from-white to-gray-50/50 border-b border-gray-200/80 shadow-sm backdrop-blur-sm">
+    <header className="bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900 border-b border-gray-200/80 dark:border-gray-700 shadow-sm backdrop-blur-sm">
       <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-5">
         <div className={`flex items-center justify-between relative ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
@@ -64,10 +76,10 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
               
               {/* Text */}
               <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
-                <div className="text-blue-900 text-base sm:text-xl md:text-2xl font-bold leading-tight transition-colors duration-300 group-hover:text-blue-700">
+                <div className="text-blue-900 dark:text-blue-300 text-base sm:text-xl md:text-2xl font-bold leading-tight transition-colors duration-300 group-hover:text-blue-700 dark:group-hover:text-blue-400">
                   {currentLogoText.mainText}
                 </div>
-                <div className="text-blue-800/80 text-xs sm:text-sm leading-tight">
+                <div className="text-blue-800/80 dark:text-blue-400/80 text-xs sm:text-sm leading-tight">
                   {currentLogoText.subText}
                 </div>
               </div>
@@ -77,14 +89,21 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
           {/* Title - Centered - Hidden on small screens, shown on large */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:block px-4">
             <Link to="/">
-              <h1 className="text-lg xl:text-2xl font-bold text-blue-900 transition-all duration-300 hover:text-blue-700 whitespace-nowrap">
+              <h1 className="text-lg xl:text-2xl font-bold text-blue-900 dark:text-blue-300 transition-all duration-300 hover:text-blue-700 dark:hover:text-blue-400 whitespace-nowrap">
                 {t.appName}
               </h1>
             </Link>
           </div>
 
-          {/* Language Selector */}
-          <div className="z-10">
+          {/* Language Selector + Dark mode toggle */}
+          <div className="z-10 flex items-center gap-2">
+            <button
+              onClick={() => setDark(d => !d)}
+              className="h-9 w-9 flex items-center justify-center rounded-md border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {dark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-gray-600" />}
+            </button>
             <LanguageSelector 
               currentLanguage={currentLanguage} 
               onLanguageChange={onLanguageChange} 
@@ -95,7 +114,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
         {/* Mobile Title - Below logo, only on small screens */}
         <div className="lg:hidden mt-2 text-center">
           <Link to="/">
-            <h1 className="text-sm sm:text-base font-bold text-blue-900">
+            <h1 className="text-sm sm:text-base font-bold text-blue-900 dark:text-blue-300">
               {t.appName}
             </h1>
           </Link>

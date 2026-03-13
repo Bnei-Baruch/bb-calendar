@@ -54,8 +54,8 @@ export function UpcomingEventsView() {
   return (
     <div className={`container mx-auto px-3 sm:px-4 py-4 sm:py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <div className={`mb-6 sm:mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{t.upcomingEvents}</h2>
-        <p className="text-sm sm:text-base text-gray-600">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t.upcomingEvents}</h2>
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
           {language === 'he' && 'כנסים מיוחדים ואירועים קרובים של קבלה לעם'}
           {language === 'en' && 'Special congresses and upcoming events from Kabbalah for the People'}
           {language === 'ru' && 'Специальные конгрессы и предстоящие мероприятия от Каббала народу'}
@@ -80,7 +80,7 @@ export function UpcomingEventsView() {
               key={event.id}
               to={`/event/${event.id}?from=upcoming`}
               className={`
-                block bg-white rounded-lg border-2 border-gray-200 
+                block bg-white dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700
                 hover:border-blue-500 hover:shadow-lg transition-all
                 overflow-hidden group
                 ${isRTL ? 'text-right' : 'text-left'}
@@ -88,31 +88,31 @@ export function UpcomingEventsView() {
             >
               <div className={`
                 p-6 space-y-4
-                ${event.type === 'conference' ? 'bg-gradient-to-br from-blue-50 to-purple-50' : 'bg-gradient-to-br from-orange-50 to-yellow-50'}
+                ${event.type === 'conference' ? 'bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20' : 'bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20'}
               `}>
                 <div>
                   <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold mb-2 ${
                     event.type === 'conference'
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'bg-orange-100 text-orange-800'
+                      ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300'
+                      : 'bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300'
                   }`}>
                     {event.type === 'conference'
                       ? (language === 'he' ? 'כנס' : language === 'en' ? 'Congress' : language === 'ru' ? 'Конгресс' : 'Congreso')
                       : (language === 'he' ? 'חג' : language === 'en' ? 'Holiday' : language === 'ru' ? 'Праздник' : 'Fiesta')
                     }
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {event.title[language]}
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-2 text-gray-700 mb-2">
+                <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 mb-2">
                   <Calendar className="w-4 h-4 text-blue-600" />
                   <span dir="ltr">{getEventDateRange(event)}</span>
                 </div>
 
                 {(!event.endDate || event.endDate === event.date) && (
-                  <div className="flex items-center gap-2 text-gray-700 mb-2">
+                  <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 mb-2">
                     <Clock className="w-4 h-4 text-blue-600" />
                     {isRTL
                       ? <span>{event.endTime} - {event.startTime}</span>
@@ -122,14 +122,14 @@ export function UpcomingEventsView() {
                 )}
 
                 {event.location && (
-                  <div className="flex items-center gap-2 text-gray-700 mb-3">
+                  <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 mb-3">
                     <MapPin className="w-4 h-4 text-blue-600" />
                     <span>{event.location}</span>
                   </div>
                 )}
 
                 {event.description && (
-                  <p className="text-gray-600 text-sm line-clamp-2 mt-2">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mt-2">
                     {event.description[language]}
                   </p>
                 )}
@@ -137,8 +137,8 @@ export function UpcomingEventsView() {
                 {event.endDate && event.endDate !== event.date && (() => {
                   const days = getDays(event);
                   return (
-                    <div className={`inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full text-sm ${isRTL ? 'flex-row-reverse' : ''}`}>
-                      <span className="font-semibold text-purple-700">
+                    <div className={`inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-gray-600 rounded-full text-sm ${isRTL ? 'flex-row-reverse' : ''}`}>
+                      <span className="font-semibold text-purple-700 dark:text-purple-200">
                         {days} {language === 'he' ? 'ימים' : language === 'en' ? 'days' : language === 'ru' ? 'дней' : 'días'}
                       </span>
                     </div>

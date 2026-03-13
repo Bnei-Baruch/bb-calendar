@@ -7,7 +7,7 @@ export default function Root() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
       <ViewNavigation currentLanguage={language} />
       <Outlet context={{ language }} />

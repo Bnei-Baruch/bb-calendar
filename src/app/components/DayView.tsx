@@ -89,11 +89,11 @@ export function DayView() {
     const borderSide = isRTL ? 'border-r-4' : 'border-l-4';
     switch (type) {
       case 'conference':
-        return `${borderSide} border-purple-700 bg-purple-50`;
+        return `${borderSide} border-purple-700 bg-purple-50 dark:bg-purple-900/20`;
       case 'holiday':
-        return `${borderSide} border-green-700 bg-green-50`;
+        return `${borderSide} border-green-700 bg-green-50 dark:bg-green-900/20`;
       default:
-        return `${borderSide} border-blue-900 bg-blue-50`;
+        return `${borderSide} border-blue-900 bg-blue-50 dark:bg-blue-900/20`;
     }
   };
 
@@ -163,9 +163,9 @@ export function DayView() {
             variant="outline"
             size="icon"
             onClick={() => navigateDay('prev')}
-            className="h-9 w-9 sm:h-11 sm:w-11 border border-blue-200 bg-blue-50 hover:bg-blue-100 shadow-sm hover:shadow-md shrink-0"
+            className="h-9 w-9 sm:h-11 sm:w-11 border border-blue-200 dark:border-blue-500 bg-blue-50 dark:bg-blue-700 hover:bg-blue-100 dark:hover:bg-blue-600 shadow-sm hover:shadow-md shrink-0"
           >
-            {isRTL ? <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" /> : <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />}
+            {isRTL ? <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600 dark:text-white" /> : <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600 dark:text-white" />}
           </Button>
 
           <div className="text-center flex-1 min-w-0">
@@ -204,9 +204,9 @@ export function DayView() {
             variant="outline"
             size="icon"
             onClick={() => navigateDay('next')}
-            className="h-9 w-9 sm:h-11 sm:w-11 border border-blue-200 bg-blue-50 hover:bg-blue-100 shadow-sm hover:shadow-md shrink-0"
+            className="h-9 w-9 sm:h-11 sm:w-11 border border-blue-200 dark:border-blue-500 bg-blue-50 dark:bg-blue-700 hover:bg-blue-100 dark:hover:bg-blue-600 shadow-sm hover:shadow-md shrink-0"
           >
-            {isRTL ? <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" /> : <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />}
+            {isRTL ? <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600 dark:text-white" /> : <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600 dark:text-white" />}
           </Button>
         </div>
 
@@ -214,7 +214,7 @@ export function DayView() {
           <div className="relative">
             <button
               onClick={() => setShareOpen(v => !v)}
-              className="h-9 w-auto px-3 inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50 transition-colors cursor-pointer shadow-sm text-sm text-gray-700 shrink-0"
+              className="h-9 w-auto px-3 inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm text-sm text-gray-700 dark:text-gray-300 shrink-0"
             >
               <Share2 className="h-4 w-4" />
               <span>{isRTL ? 'שתף' : 'Share'}</span>
@@ -222,14 +222,14 @@ export function DayView() {
             {shareOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShareOpen(false)} />
-                <div className="absolute z-20 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]" dir={isRTL ? 'rtl' : 'ltr'} style={isRTL ? {right:0} : {left:0}}>
+                <div className="absolute z-20 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 min-w-[160px]" dir={isRTL ? 'rtl' : 'ltr'} style={isRTL ? {right:0} : {left:0}}>
                   {shareOptions.map((opt, i) =>
                     opt.href ? (
-                      <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-sm text-gray-700 whitespace-nowrap" onClick={() => setShareOpen(false)}>
+                      <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap" onClick={() => setShareOpen(false)}>
                         {opt.icon}<span>{opt.label}</span>
                       </a>
                     ) : (
-                      <button key={i} className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-sm text-gray-700 whitespace-nowrap w-full ${isRTL ? 'text-right' : 'text-left'}`} onClick={opt.onClick}>
+                      <button key={i} className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap w-full ${isRTL ? 'text-right' : 'text-left'}`} onClick={opt.onClick}>
                         {opt.icon}<span>{opt.label}</span>
                       </button>
                     )
@@ -272,12 +272,12 @@ export function DayView() {
                 return (
                   <>
                     {timeless.length > 0 && (
-                      <div className={`bg-blue-50 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-5 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
+                      <div className={`bg-blue-50 dark:bg-blue-900/20 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-5 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
                         {timeless.map((e) => (
                           <div key={e.id} className="cursor-pointer" onClick={() => handleEventClick(e.id)}>
-                            <p className={`text-blue-900 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
+                            <p className={`text-blue-900 dark:text-blue-200 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
                             {e.description && (
-                              <p className={`text-blue-700 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
+                              <p className={`text-blue-700 dark:text-blue-300 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
                             )}
                           </div>
                         ))}
@@ -290,7 +290,7 @@ export function DayView() {
                         onClick={() => handleEventClick(event.id)}
                       >
                         <div className="flex items-start gap-4">
-                          <div className="flex items-center gap-2 text-sm text-gray-600 min-w-[120px]">
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">
                             <Clock className="w-4 h-4" />
                             <span className="font-medium" dir="ltr">
                               {isRTL
@@ -300,11 +300,11 @@ export function DayView() {
                             </span>
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-semibold text-lg text-blue-900">
+                            <h3 className="font-semibold text-lg text-blue-900 dark:text-blue-200">
                               {event.title[language]}
                             </h3>
                             {event.description && (
-                              <p className="text-sm text-gray-600 mt-1">
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                                 {event.description[language]}
                               </p>
                             )}
