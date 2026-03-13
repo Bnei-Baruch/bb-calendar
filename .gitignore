@@ -4,4 +4,4 @@ dist/
 *.json.swp
 bb-calendar-488901-6a4730c846cc.json
 DEPLOY.md
-events.json
+data/events.json
