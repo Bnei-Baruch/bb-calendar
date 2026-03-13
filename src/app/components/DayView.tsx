@@ -222,14 +222,14 @@ export function DayView() {
             {shareOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setShareOpen(false)} />
-                <div className="absolute z-20 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px] ltr" dir="ltr" style={isRTL ? {right:0} : {left:0}}>
+                <div className="absolute z-20 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px]" dir={isRTL ? 'rtl' : 'ltr'} style={isRTL ? {right:0} : {left:0}}>
                   {shareOptions.map((opt, i) =>
                     opt.href ? (
                       <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-sm text-gray-700 whitespace-nowrap" onClick={() => setShareOpen(false)}>
                         {opt.icon}<span>{opt.label}</span>
                       </a>
                     ) : (
-                      <button key={i} className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-sm text-gray-700 whitespace-nowrap w-full text-left" onClick={opt.onClick}>
+                      <button key={i} className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-sm text-gray-700 whitespace-nowrap w-full ${isRTL ? 'text-right' : 'text-left'}`} onClick={opt.onClick}>
                         {opt.icon}<span>{opt.label}</span>
                       </button>
                     )
