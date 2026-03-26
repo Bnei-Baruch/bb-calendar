@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useOutletContext, useLocation, useSearchParams } from 'react-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowRight, Clock, Calendar, MapPin, BookOpen, Share2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -19,6 +19,8 @@ export function EventDetail() {
 
   const { events: allEvents } = useEvents();
   const [shareOpen, setShareOpen] = useState(false);
+
+  useEffect(() => { window.scrollTo(0, 0); }, [eventId]);
 
   if (!eventId) {
     return null;
