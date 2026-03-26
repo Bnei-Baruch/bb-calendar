@@ -27,6 +27,8 @@ export const translations = {
     noUpcomingHolidays: 'אין חגים קרובים',
     holidaysSubtitle: 'חגים ומועדים קרובים בישראל',
     congressesSubtitle: 'כנסים מיוחדים ואירועים קרובים של קבלה לעם',
+    todayViewShort: 'השבוע',
+    upcomingShort: 'כנסים',
   },
   en: {
     appName: 'Events and Broadcasts Calendar',
@@ -53,6 +55,8 @@ export const translations = {
     noUpcomingHolidays: 'No upcoming holidays',
     holidaysSubtitle: 'Upcoming holidays and festivals in Israel',
     congressesSubtitle: 'Special congresses and upcoming events from Kabbalah for the People',
+    todayViewShort: 'Weekly',
+    upcomingShort: 'Events',
   },
   ru: {
     appName: 'Календарь событий и трансляций',
@@ -79,6 +83,8 @@ export const translations = {
     noUpcomingHolidays: 'Нет предстоящих праздников',
     holidaysSubtitle: 'Ближайшие праздники и торжества в Израиле',
     congressesSubtitle: 'Специальные конгрессы и предстоящие мероприятия от Каббала народу',
+    todayViewShort: 'Неделя',
+    upcomingShort: 'Конгрессы',
   },
   es: {
     appName: 'Calendario de Eventos y Transmisiones',
@@ -105,6 +111,8 @@ export const translations = {
     noUpcomingHolidays: 'No hay próximas festividades',
     holidaysSubtitle: 'Próximas festividades y celebraciones en Israel',
     congressesSubtitle: 'Congresos especiales y próximos eventos de Cabalá para el Pueblo',
+    todayViewShort: 'Semana',
+    upcomingShort: 'Congresos',
   },
 };
 

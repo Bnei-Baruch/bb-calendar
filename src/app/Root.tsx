@@ -10,7 +10,9 @@ export default function Root() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header currentLanguage={language} onLanguageChange={setLanguage} />
       <ViewNavigation currentLanguage={language} />
-      <Outlet context={{ language }} />
+      <div className="pb-16 sm:pb-0">
+        <Outlet context={{ language }} />
+      </div>
     </div>
   );
 }
