@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { useState, useEffect, useRef } from 'react';
-import { Moon, Sun, Grid2x2 } from 'lucide-react';
+import { Moon, Sun, LayoutGrid } from 'lucide-react';
 import { LanguageSelector } from './LanguageSelector';
 import { Language, useTranslation } from '../utils/i18n';
 
@@ -47,11 +47,11 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
       sublabel: 'study.kli.one', href: 'https://study.kli.one',
     },
     {
-      label: { he: 'מערכת ערבות', en: 'Arvut System', ru: 'Система Арвут', es: 'Sistema Arvut' },
+      label: { he: 'מערכת הערבות', en: 'Arvut System', ru: 'Система Арвут', es: 'Sistema Arvut' },
       sublabel: 'arvut.kli.one', href: 'https://arvut.kli.one',
     },
     {
-      label: { he: 'כנס', en: 'Convention', ru: 'Конвенция', es: 'Convención' },
+      label: { he: 'אתר הכנס', en: 'Convention', ru: 'Конвенция', es: 'Convención' },
       sublabel: 'convention.kli.one', href: 'https://convention.kli.one',
     },
     {
@@ -63,7 +63,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
       sublabel: 'pay.kli.one', href: 'https://pay.kli.one',
     },
     {
-      label: { he: 'בית וירטואלי', en: 'Virtual Home', ru: 'Виртуальный дом', es: 'Hogar Virtual' },
+      label: { he: 'הבית הוירטואלי', en: 'Virtual Home', ru: 'Виртуальный дом', es: 'Hogar Virtual' },
       sublabel: 'kli.one', href: 'https://kli.one',
     },
   ];
@@ -140,7 +140,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
           </div>
 
           {/* Language Selector + Dark mode toggle + Links */}
-          <div className="z-10 flex items-center gap-2">
+          <div className={`z-10 flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
             {/* Useful links */}
             <div className="relative" ref={linksRef}>
               <button
@@ -149,7 +149,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
                 aria-label="Useful links"
                 title={usefulLinksTitle[currentLanguage]}
               >
-                <Grid2x2 className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                <LayoutGrid className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </button>
               {linksOpen && (
                 <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[200px]`} dir={isRTL ? 'rtl' : 'ltr'}>

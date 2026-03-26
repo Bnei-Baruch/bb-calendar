@@ -115,6 +115,61 @@ export function DayView() {
 
   const [open, setOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [dayShareOpen, setDayShareOpen] = useState<string | null>(null);
+
+  const buildDayScheduleText = (dateStr: string) => {
+    const date = parseISO(dateStr);
+    const appTitle = { he: 'לוח אירועים', en: 'Events Calendar', ru: 'Календарь событий', es: 'Calendario de Eventos' }[language];
+    const siteLabel = { he: 'לאתר לוח אירועים', en: 'Events Calendar website', ru: 'Сайт календаря событий', es: 'Sitio web del calendario de eventos' }[language];
+    const lines: string[] = [`*${appTitle}*`, `*${formatDayHeader(date)}*`, '──────────'];
+    const dayEvents = getEventsByDate(allEvents, dateStr);
+    const parentEvent = allEvents
+      .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
+      .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
+    const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
+    if (parentEvent) {
+      const dayNumber = Math.round((parseISO(dateStr).getTime() - parseISO(parentEvent.date).getTime()) / 86400000) + 1;
+      lines.push(`${parentEvent.title[language]} - ${t.day} ${dayNumber}`);
+    }
+    if (events.length === 0 && !parentEvent) {
+      lines.push(t.noEvents);
+    } else {
+      const timeless = events.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
+      const timed = events.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
+      timeless.forEach(e => lines.push(e.title[language]));
+      timed.forEach(e => lines.push(`${padTime(e.startTime)} - ${padTime(e.endTime)}  ${e.title[language]}`));
+    }
+    lines.push('', `${siteLabel}: https://cal.kli.one`);
+    return lines.join('\n');
+  };
+
+  const makeDayShareOptions = (dateStr: string) => [
+    {
+      label: isRTL ? 'שתף בווטסאפ' : 'Share on WhatsApp',
+      icon: <svg viewBox="0 0 24 24" className="w-5 h-5 fill-green-500"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.104.549 4.076 1.504 5.786L0 24l6.395-1.682A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.032-1.388l-.36-.214-3.732.981.998-3.648-.235-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>,
+      href: `https://wa.me/?text=${encodeURIComponent(buildDayScheduleText(dateStr))}`,
+    },
+    {
+      label: isRTL ? 'שתף בטלגרם' : 'Share on Telegram',
+      icon: <svg viewBox="0 0 24 24" className="w-5 h-5 fill-blue-500"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.19 13.772l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.958.787z"/></svg>,
+      href: `https://t.me/share/url?url=${encodeURIComponent('https://cal.kli.one')}&text=${encodeURIComponent(buildDayScheduleText(dateStr))}`,
+    },
+    {
+      label: isRTL ? 'העתק טקסט' : 'Copy text',
+      icon: <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>,
+      onClick: () => {
+        const ta = document.createElement('textarea');
+        ta.value = buildDayScheduleText(dateStr);
+        ta.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        setDayShareOpen(null);
+      },
+    },
+  ];
 
   const buildWeekScheduleText = () => {
     const appTitle = { he: 'לוח אירועים', en: 'Events Calendar', ru: 'Календарь событий', es: 'Calendario de Eventos' }[language];
@@ -313,15 +368,43 @@ export function DayView() {
                   className={`rounded-xl shadow-sm ${color.bg} ${isRTL ? 'border-r-4' : 'border-l-4'} ${color.border} p-4`}
                 >
                   {/* Day header */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <h3 className={`text-base sm:text-lg font-bold ${color.text}`}>
-                      {formatDayHeader(date)}
-                    </h3>
-                    {todayFlag && (
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full text-white ${color.badge}`}>
-                        {t.today}
-                      </span>
-                    )}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <h3 className={`text-base sm:text-lg font-bold ${color.text}`}>
+                        {formatDayHeader(date)}
+                      </h3>
+                      {todayFlag && (
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full text-white ${color.badge}`}>
+                          {t.today}
+                        </span>
+                      )}
+                    </div>
+                    <div className="relative shrink-0">
+                      <button
+                        onClick={e => { e.stopPropagation(); setDayShareOpen(dayShareOpen === dateStr ? null : dateStr); }}
+                        className="h-7 px-2 inline-flex items-center gap-1.5 rounded-md border border-current/20 bg-white/50 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20 transition-colors text-xs font-medium"
+                      >
+                        <Share2 className={`w-3.5 h-3.5 ${color.text}`} />
+                      </button>
+                      {dayShareOpen === dateStr && (
+                        <>
+                          <div className="fixed inset-0 z-10" onClick={() => setDayShareOpen(null)} />
+                          <div className={`absolute z-20 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 min-w-[160px]`} dir={isRTL ? 'rtl' : 'ltr'} style={isRTL ? {left:0} : {right:0}}>
+                            {makeDayShareOptions(dateStr).map((opt, i) =>
+                              opt.href ? (
+                                <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap" onClick={() => setDayShareOpen(null)}>
+                                  {opt.icon}<span>{opt.label}</span>
+                                </a>
+                              ) : (
+                                <button key={i} className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap w-full ${isRTL ? 'text-right' : 'text-left'}`} onClick={opt.onClick}>
+                                  {opt.icon}<span>{opt.label}</span>
+                                </button>
+                              )
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </div>
 
                   {/* Parent (multi-day) event banner */}
