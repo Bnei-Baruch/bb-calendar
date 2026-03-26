@@ -164,15 +164,16 @@ export function EventDetail() {
   };
 
   const buildScheduleText = () => {
-    const sep = isRTL ? '\u202E━━━━━━━━━━' : '━━━━━━━━━━';
-    const lines: string[] = [event.title[language], ''];
+    const appTitle = { he: 'לוח אירועים', en: 'Events Calendar', ru: 'Календарь событий', es: 'Calendario de Eventos' }[language];
+    const siteLabel = { he: 'לאתר לוח אירועים', en: 'Events Calendar website', ru: 'Сайт календаря событий', es: 'Sitio web del calendario de eventos' }[language];
+    const lines: string[] = [`*${appTitle}*`, `*${event.title[language]}*`, ''];
     if (isMultiDay && event.endDate) lines.push(getEventDateRange());
     else lines.push(formatDateByLanguage(event.date));
     if (event.description?.[language]) { lines.push(''); lines.push(event.description[language]!); }
     sortedDates.forEach(date => {
       lines.push('');
-      lines.push(sep);
-      lines.push(formatDateByLanguage(date));
+      lines.push(`*${formatDateByLanguage(date)}*`);
+      lines.push('──────────');
       const toMin = (tt: string) => { if (!tt) return -1; const [h, m] = tt.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
       const dateEvents = [...eventsByDate[date]].sort((a, b) => toMin(a.startTime) - toMin(b.startTime));
       const timeless = dateEvents.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
@@ -183,6 +184,8 @@ export function EventDetail() {
         lines.push(`${time}  ${e.title[language]}`);
       });
     });
+    lines.push('');
+    lines.push(`${siteLabel}: https://cal.kli.one`);
     return lines.join('\n');
   };
 
@@ -224,6 +227,8 @@ export function EventDetail() {
           onClick={() => {
             if (from === 'upcoming') {
               navigate('/upcoming');
+            } else if (from === 'holidays') {
+              navigate('/holidays');
             } else if (from === 'year') {
               navigate('/calendar');
             } else {

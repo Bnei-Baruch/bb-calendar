@@ -4,6 +4,7 @@ import { DayView } from './components/DayView';
 import { CalendarView } from './components/CalendarView';
 import { EventDetail } from './components/EventDetail';
 import { UpcomingEventsView } from './components/UpcomingEventsView';
+import { HolidaysView } from './components/HolidaysView';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: 'upcoming',
         Component: UpcomingEventsView,
+      },
+      {
+        path: 'holidays',
+        Component: HolidaysView,
       },
       {
         path: 'event/:eventId',
