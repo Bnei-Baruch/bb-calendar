@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router';
-import { Calendar, CalendarDays, Scroll } from 'lucide-react';
+import { Calendar, CalendarDays, Scroll, MessageSquare } from 'lucide-react';
 import { MeetingIcon } from './icons/MeetingIcon';
 import { Language, useTranslation } from '../utils/i18n';
 
@@ -16,7 +16,8 @@ export function ViewNavigation({ currentLanguage }: ViewNavigationProps) {
     { path: '/',         label: t.todayView,     shortLabel: t.todayViewShort, icon: Calendar,     isMeeting: false, pill: 'bg-blue-600 text-white shadow-sm',  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60', bottomActive: 'text-blue-600 dark:text-blue-400',   bottomInactive: 'text-gray-400 dark:text-gray-500' },
     { path: '/upcoming', label: t.upcomingEvents, shortLabel: t.upcomingShort,  icon: null,         isMeeting: true,  pill: 'bg-blue-600 text-white shadow-sm',  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60', bottomActive: 'text-blue-600 dark:text-blue-400',   bottomInactive: 'text-gray-400 dark:text-gray-500' },
     { path: '/holidays', label: t.holidays,       shortLabel: t.holidays,       icon: Scroll,       isMeeting: false, pill: 'bg-amber-500 text-white shadow-sm', inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60', bottomActive: 'text-amber-500 dark:text-amber-400', bottomInactive: 'text-gray-400 dark:text-gray-500' },
-    { path: '/calendar', label: t.calendarView,   shortLabel: t.calendarView,   icon: CalendarDays, isMeeting: false, pill: 'bg-blue-600 text-white shadow-sm',  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60', bottomActive: 'text-blue-600 dark:text-blue-400',   bottomInactive: 'text-gray-400 dark:text-gray-500' },
+    { path: '/calendar', label: t.calendarView,   shortLabel: t.calendarView,   icon: CalendarDays,    isMeeting: false, pill: 'bg-blue-600 text-white shadow-sm',  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60', bottomActive: 'text-blue-600 dark:text-blue-400',   bottomInactive: 'text-gray-400 dark:text-gray-500' },
+    { path: '/posts',    label: t.posts,         shortLabel: t.postsShort,     icon: MessageSquare,   isMeeting: false, pill: 'bg-sky-500 text-white shadow-sm',   inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200/60 dark:hover:bg-gray-700/60', bottomActive: 'text-sky-500 dark:text-sky-400',     bottomInactive: 'text-gray-400 dark:text-gray-500' },
   ];
 
   return (
@@ -60,7 +61,7 @@ export function ViewNavigation({ currentLanguage }: ViewNavigationProps) {
                 to={item.path}
                 className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors ${isActive ? item.bottomActive : item.bottomInactive}`}
               >
-                <div className={`p-1.5 rounded-lg transition-colors ${isActive ? (item.path === '/holidays' ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-blue-100 dark:bg-blue-900/30') : ''}`}>
+                <div className={`p-1.5 rounded-lg transition-colors ${isActive ? (item.path === '/holidays' ? 'bg-amber-100 dark:bg-amber-900/30' : item.path === '/posts' ? 'bg-sky-100 dark:bg-sky-900/30' : 'bg-blue-100 dark:bg-blue-900/30') : ''}`}>
                   {item.isMeeting
                     ? <MeetingIcon className="w-5 h-5" isActive={isActive} />
                     : item.icon && <item.icon className="w-5 h-5" />

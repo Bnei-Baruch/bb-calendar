@@ -29,6 +29,8 @@ export const translations = {
     congressesSubtitle: 'כנסים מיוחדים ואירועים קרובים של קבלה לעם',
     todayViewShort: 'השבוע',
     upcomingShort: 'כנסים',
+    posts: 'הודעות',
+    postsShort: 'הודעות',
   },
   en: {
     appName: 'Events Calendar',
@@ -57,6 +59,8 @@ export const translations = {
     congressesSubtitle: 'Special congresses and upcoming events from Kabbalah for the People',
     todayViewShort: 'Weekly',
     upcomingShort: 'Events',
+    posts: 'Posts',
+    postsShort: 'Posts',
   },
   ru: {
     appName: 'Календарь событий',
@@ -85,6 +89,8 @@ export const translations = {
     congressesSubtitle: 'Специальные конгрессы и предстоящие мероприятия от Каббала народу',
     todayViewShort: 'Неделя',
     upcomingShort: 'Конгрессы',
+    posts: 'Посты',
+    postsShort: 'Посты',
   },
   es: {
     appName: 'Calendario de Eventos',
@@ -113,6 +119,8 @@ export const translations = {
     congressesSubtitle: 'Congresos especiales y próximos eventos de Cabalá para el Pueblo',
     todayViewShort: 'Semana',
     upcomingShort: 'Congresos',
+    posts: 'Publicaciones',
+    postsShort: 'Posts',
   },
 };
 

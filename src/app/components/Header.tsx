@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import { useState, useEffect } from 'react';
-import { Moon, Sun } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Moon, Sun, Grid2x2 } from 'lucide-react';
 import { LanguageSelector } from './LanguageSelector';
 import { Language, useTranslation } from '../utils/i18n';
 
@@ -33,6 +33,50 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
   };
 
   const currentLogoText = logoContent[currentLanguage];
+
+  const [linksOpen, setLinksOpen] = useState(false);
+  const linksRef = useRef<HTMLDivElement>(null);
+
+  const usefulLinksTitle: Record<Language, string> = {
+    he: 'קישורים שימושיים', en: 'Useful Links', ru: 'Полезные ссылки', es: 'Enlaces útiles',
+  };
+
+  const usefulLinks = [
+    {
+      label: { he: 'חומרי לימוד', en: 'Study Materials', ru: 'Учебные материалы', es: 'Materiales de Estudio' },
+      sublabel: 'study.kli.one', href: 'https://study.kli.one',
+    },
+    {
+      label: { he: 'מערכת ערבות', en: 'Arvut System', ru: 'Система Арвут', es: 'Sistema Arvut' },
+      sublabel: 'arvut.kli.one', href: 'https://arvut.kli.one',
+    },
+    {
+      label: { he: 'כנס', en: 'Convention', ru: 'Конвенция', es: 'Convención' },
+      sublabel: 'convention.kli.one', href: 'https://convention.kli.one',
+    },
+    {
+      label: { he: 'קבלה מדיה', en: 'Kabbalah Media', ru: 'Каббала Медиа', es: 'Kabbalah Media' },
+      sublabel: 'kabbalahmedia.info', href: 'https://kabbalahmedia.info',
+    },
+    {
+      label: { he: 'תשלומי בב', en: 'BB Payments', ru: 'Платежи BB', es: 'Pagos BB' },
+      sublabel: 'pay.kli.one', href: 'https://pay.kli.one',
+    },
+    {
+      label: { he: 'בית וירטואלי', en: 'Virtual Home', ru: 'Виртуальный дом', es: 'Hogar Virtual' },
+      sublabel: 'kli.one', href: 'https://kli.one',
+    },
+  ];
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (linksRef.current && !linksRef.current.contains(e.target as Node)) {
+        setLinksOpen(false);
+      }
+    }
+    if (linksOpen) document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [linksOpen]);
 
   const [dark, setDark] = useState(() => {
     const stored = localStorage.getItem('darkMode');
@@ -95,18 +139,56 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
             </Link>
           </div>
 
-          {/* Language Selector + Dark mode toggle */}
+          {/* Language Selector + Dark mode toggle + Links */}
           <div className="z-10 flex items-center gap-2">
+            {/* Useful links */}
+            <div className="relative" ref={linksRef}>
+              <button
+                onClick={() => setLinksOpen(v => !v)}
+                className="h-9 w-9 flex items-center justify-center rounded-md border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                aria-label="Useful links"
+                title={usefulLinksTitle[currentLanguage]}
+              >
+                <Grid2x2 className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+              </button>
+              {linksOpen && (
+                <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[200px]`} dir={isRTL ? 'rtl' : 'ltr'}>
+                  <div className="px-3 pb-1 pt-0.5 text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">
+                    {usefulLinksTitle[currentLanguage]}
+                  </div>
+                  {usefulLinks.map((link, i) => (
+                    <a
+                      key={i}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setLinksOpen(false)}
+                      className="flex items-center px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      <div>
+                        <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">{link.label[currentLanguage]}</div>
+                        <div className="text-xs text-gray-400 dark:text-gray-500">{link.sublabel}</div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => setDark(d => !d)}
               className="h-9 w-9 flex items-center justify-center rounded-md border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               aria-label="Toggle dark mode"
+              title={dark
+                ? (currentLanguage === 'he' ? 'מצב בהיר' : currentLanguage === 'ru' ? 'Светлый режим' : currentLanguage === 'es' ? 'Modo claro' : 'Light mode')
+                : (currentLanguage === 'he' ? 'מצב כהה' : currentLanguage === 'ru' ? 'Тёмный режим' : currentLanguage === 'es' ? 'Modo oscuro' : 'Dark mode')
+              }
             >
-              {dark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-gray-600" />}
+              {dark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-gray-600 dark:text-gray-400" />}
             </button>
-            <LanguageSelector 
-              currentLanguage={currentLanguage} 
-              onLanguageChange={onLanguageChange} 
+            <LanguageSelector
+              currentLanguage={currentLanguage}
+              onLanguageChange={onLanguageChange}
             />
           </div>
         </div>
