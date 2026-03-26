@@ -31,7 +31,7 @@ export const translations = {
     upcomingShort: 'כנסים',
   },
   en: {
-    appName: 'Events and Broadcasts Calendar',
+    appName: 'Events Calendar',
     todayView: "Weekly Events",
     calendarView: 'Calendar',
     upcomingEvents: 'Conventions & Events',
@@ -59,7 +59,7 @@ export const translations = {
     upcomingShort: 'Events',
   },
   ru: {
-    appName: 'Календарь событий и трансляций',
+    appName: 'Календарь событий',
     todayView: 'События недели',
     calendarView: 'Вид календаря',
     upcomingEvents: 'Конгрессы и события',
@@ -87,7 +87,7 @@ export const translations = {
     upcomingShort: 'Конгрессы',
   },
   es: {
-    appName: 'Calendario de Eventos y Transmisiones',
+    appName: 'Calendario de Eventos',
     todayView: 'Eventos de la Semana',
     calendarView: 'Vista de Calendario',
     upcomingEvents: 'Congresos y Eventos',
