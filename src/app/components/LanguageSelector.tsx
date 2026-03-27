@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Select,
   SelectContent,
@@ -15,13 +16,14 @@ interface LanguageSelectorProps {
 export function LanguageSelector({ currentLanguage, onLanguageChange }: LanguageSelectorProps) {
   return (
     <Select value={currentLanguage} onValueChange={(value) => onLanguageChange(value as Language)}>
-      <SelectTrigger className="w-[140px]" dir="ltr">
-        <SelectValue />
+      <SelectTrigger className="w-[64px]" dir="ltr">
+        <span className="font-semibold text-sm tracking-wide uppercase">{currentLanguage}</span>
       </SelectTrigger>
       <SelectContent dir="ltr">
         {Object.entries(languageNames).map(([code, name]) => (
           <SelectItem key={code} value={code}>
-            {name}
+            <span className="font-semibold uppercase mr-2">{code}</span>
+            <span className="text-gray-500 dark:text-gray-400 text-sm">{name}</span>
           </SelectItem>
         ))}
       </SelectContent>

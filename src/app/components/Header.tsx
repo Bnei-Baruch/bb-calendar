@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router';
 import { useState, useEffect, useRef } from 'react';
 import { Moon, Sun, LayoutGrid } from 'lucide-react';
@@ -152,7 +153,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
                 <LayoutGrid className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </button>
               {linksOpen && (
-                <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[200px]`} dir={isRTL ? 'rtl' : 'ltr'}>
+                <div className={`absolute bottom-full mb-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[200px]`} dir={isRTL ? 'rtl' : 'ltr'}>
                   <div className="px-3 pb-1 pt-0.5 text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">
                     {usefulLinksTitle[currentLanguage]}
                   </div>
