@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import Root from './Root';
 import { DayView } from './components/DayView';
 import { CalendarView } from './components/CalendarView';
@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: 'event/:eventId',
         Component: EventDetail,
+      },
+      {
+        path: '*',
+        Component: () => Navigate({ to: '/', replace: true }),
       },
     ],
   },
