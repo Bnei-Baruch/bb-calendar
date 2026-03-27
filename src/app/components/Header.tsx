@@ -90,7 +90,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
   }, [dark]);
 
   return (
-    <header className="bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900 border-b border-gray-200/80 dark:border-gray-700 shadow-sm backdrop-blur-sm">
+    <header className="relative z-50 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-900 border-b border-gray-200/80 dark:border-gray-700 shadow-sm backdrop-blur-sm">
       <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-5">
         <div className={`flex items-center justify-between relative ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
@@ -143,7 +143,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
           {/* Language Selector + Dark mode toggle + Links */}
           <div className={`z-10 flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
             {/* Useful links */}
-            <div className="relative" ref={linksRef}>
+            <div className="relative z-[9999]" ref={linksRef}>
               <button
                 onClick={() => setLinksOpen(v => !v)}
                 className="h-9 w-9 flex items-center justify-center rounded-md border border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -153,7 +153,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
                 <LayoutGrid className="w-4 h-4 text-gray-600 dark:text-gray-400" />
               </button>
               {linksOpen && (
-                <div className={`absolute bottom-full mb-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[200px]`} dir={isRTL ? 'rtl' : 'ltr'}>
+                <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-[9999] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[200px]`} dir={isRTL ? 'rtl' : 'ltr'}>
                   <div className="px-3 pb-1 pt-0.5 text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">
                     {usefulLinksTitle[currentLanguage]}
                   </div>
