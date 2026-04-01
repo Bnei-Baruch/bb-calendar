@@ -1,3 +1,4 @@
+import React from 'react';
 import { RouterProvider } from 'react-router';
 import { LanguageProvider } from './context/LanguageContext';
 import { EventsProvider } from './context/EventsContext';

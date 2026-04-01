@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Moon, Sun, LayoutGrid } from 'lucide-react';
 import { LanguageSelector } from './LanguageSelector';
 import { Language, useTranslation } from '../utils/i18n';
+import keycloak from '../../keycloak';
 
 interface HeaderProps {
   currentLanguage: Language;
@@ -37,6 +38,23 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
 
   const [linksOpen, setLinksOpen] = useState(false);
   const linksRef = useRef<HTMLDivElement>(null);
+  const [userOpen, setUserOpen] = useState(false);
+  const userRef = useRef<HTMLDivElement>(null);
+
+  const userName = [keycloak.tokenParsed?.given_name, keycloak.tokenParsed?.family_name].filter(Boolean).join(' ')
+    || keycloak.tokenParsed?.preferred_username || '';
+  const userInitial = userName.charAt(0).toUpperCase();
+
+  const userMenuItems: { label: Record<Language, string>; href?: string; onClick?: () => void }[] = [
+    {
+      label: { he: 'איזור אישי', en: 'Personal Area', ru: 'Личный кабинет', es: 'Área personal' },
+      href: keycloak.createAccountUrl(),
+    },
+    {
+      label: { he: 'יציאה', en: 'Log out', ru: 'Выйти', es: 'Cerrar sesión' },
+      onClick: () => keycloak.logout(),
+    },
+  ];
 
   const usefulLinksTitle: Record<Language, string> = {
     he: 'קישורים שימושיים', en: 'Useful Links', ru: 'Полезные ссылки', es: 'Enlaces útiles',
@@ -78,6 +96,16 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
     if (linksOpen) document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [linksOpen]);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (userRef.current && !userRef.current.contains(e.target as Node)) {
+        setUserOpen(false);
+      }
+    }
+    if (userOpen) document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [userOpen]);
 
   const [dark, setDark] = useState(() => {
     const stored = localStorage.getItem('darkMode');
@@ -191,6 +219,38 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
             />
+
+            {/* User avatar dropdown — only when authenticated */}
+            {keycloak.authenticated && <div className="relative" ref={userRef}>
+              <button
+                onClick={() => setUserOpen(v => !v)}
+                className="w-9 h-9 rounded-full bg-blue-700 dark:bg-blue-600 flex items-center justify-center text-white font-bold text-sm hover:bg-blue-800 dark:hover:bg-blue-500 transition-colors shadow-sm"
+                title={userName}
+              >
+                {userInitial}
+              </button>
+              {userOpen && (
+                <div className={`absolute top-full mt-2 ${isRTL ? 'left-0' : 'right-0'} z-[9999] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg py-2 min-w-[180px]`} dir={isRTL ? 'rtl' : 'ltr'}>
+                  <div className="px-4 py-2 font-bold text-gray-800 dark:text-gray-100 border-b border-gray-100 dark:border-gray-700 mb-1">
+                    {userName}
+                  </div>
+                  {userMenuItems.map((item, i) =>
+                    item.href ? (
+                      <a key={i} href={item.href} target="_blank" rel="noopener noreferrer"
+                        onClick={() => setUserOpen(false)}
+                        className="block px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        {item.label[currentLanguage]}
+                      </a>
+                    ) : (
+                      <button key={i} onClick={() => { setUserOpen(false); item.onClick?.(); }}
+                        className="w-full text-start px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                        {item.label[currentLanguage]}
+                      </button>
+                    )
+                  )}
+                </div>
+              )}
+            </div>}
           </div>
         </div>
         
