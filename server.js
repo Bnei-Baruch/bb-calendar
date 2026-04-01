@@ -280,6 +280,55 @@ app.get('/api/posts/media/:id', (req, res) => {
   res.sendFile(filePath);
 });
 
+// In-memory cache for audio resolution (content units don't change)
+const audioResolveCache = new Map();
+
+function parseMSec(timeStr) {
+  if (!timeStr) return null;
+  const m = timeStr.match(/^(?:(\d+)m)?(?:(\d+)s)?$/);
+  if (!m) return null;
+  return (parseInt(m[1] || '0') * 60) + parseInt(m[2] || '0');
+}
+
+app.get('/api/resolve-audio', async (req, res) => {
+  const { url } = req.query;
+  if (!url || typeof url !== 'string') return res.status(400).json({ error: 'url required' });
+
+  if (audioResolveCache.has(url)) return res.json(audioResolveCache.get(url));
+
+  try {
+    const urlObj = new URL(url);
+    const match = urlObj.pathname.match(/\/cu\/([A-Za-z0-9]+)/);
+    if (!match) return res.status(404).json({ error: 'No unit ID in URL' });
+    const unitId = match[1];
+
+    const apiResp = await fetch(
+      `https://kabbalahmedia.info/backend/content_units?id=${unitId}&with_files=true`
+    );
+    if (!apiResp.ok) throw new Error(`API error: ${apiResp.status}`);
+    const data = await apiResp.json();
+
+    const unit = data.content_units?.[0];
+    if (!unit) return res.status(404).json({ error: 'Unit not found' });
+
+    const audioFile = unit.files?.find(f => f.language === 'he' && f.type === 'audio' && !f.is_hls);
+    if (!audioFile) return res.status(404).json({ error: 'No Hebrew audio found' });
+
+    const result = {
+      audioUrl: `https://cdn.kabbalahmedia.info/${audioFile.id}`,
+      name: unit.name || audioFile.name,
+      duration: audioFile.duration,
+      startSec: parseMSec(urlObj.searchParams.get('sstart')),
+      endSec: parseMSec(urlObj.searchParams.get('send')),
+    };
+
+    audioResolveCache.set(url, result);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/posts', async (_req, res) => {
   try {
     const posts = await fetchTelegramPosts();

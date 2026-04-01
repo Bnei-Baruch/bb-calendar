@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useOutletContext } from 'react-router';
-import { MessageSquare, ExternalLink, Copy, Check, Share2 } from 'lucide-react';
+import { MessageSquare, ExternalLink, Copy, Check, Share2, Play, Pause, Loader2 } from 'lucide-react';
 
 import { Language } from '../utils/i18n';
 
@@ -38,6 +38,107 @@ const DAY_BADGE_COLORS = [
 ];
 
 const URL_REGEX = /(https?:\/\/[^\s]+)/g;
+
+function isKabbalahMediaUrl(url: string): boolean {
+  try { return new URL(url).hostname.includes('kabbalahmedia.info'); } catch { return false; }
+}
+
+interface AudioInfo {
+  audioUrl: string;
+  name: string;
+  duration: number;
+  startSec: number | null;
+  endSec: number | null;
+}
+
+function KabbalahAudioPill({ url, copiedLabel }: { url: string; copiedLabel: string }) {
+  const [audioInfo, setAudioInfo] = useState<AudioInfo | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const handlePlay = async () => {
+    const audio = audioRef.current;
+    if (audio && audioInfo) {
+      if (playing) { audio.pause(); } else { audio.play(); }
+      return;
+    }
+    setLoading(true);
+    setFetchError(false);
+    try {
+      const resp = await fetch(`/api/resolve-audio?url=${encodeURIComponent(url)}`);
+      if (!resp.ok) throw new Error('failed');
+      const info: AudioInfo = await resp.json();
+      setAudioInfo(info);
+      // auto-play handled by useEffect after audioRef mounts
+    } catch {
+      setFetchError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !audioInfo) return;
+    const onLoaded = () => {
+      if (audioInfo.startSec != null) audio.currentTime = audioInfo.startSec;
+      audio.play().catch(() => {});
+    };
+    const onTimeUpdate = () => {
+      if (audioInfo.endSec != null && audio.currentTime >= audioInfo.endSec) {
+        audio.pause();
+      }
+    };
+    audio.addEventListener('loadedmetadata', onLoaded);
+    audio.addEventListener('timeupdate', onTimeUpdate);
+    audio.addEventListener('play', () => setPlaying(true));
+    audio.addEventListener('pause', () => setPlaying(false));
+    audio.addEventListener('ended', () => setPlaying(false));
+    if (audio.readyState >= 2) onLoaded();
+    return () => { audio.pause(); };
+  }, [audioInfo]);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(url).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1800); });
+  };
+
+  return (
+    <span style={{ display: 'inline-block', verticalAlign: 'top' }} className="my-1 mx-0.5">
+      <span className="inline-flex items-center gap-1.5 rounded-xl bg-purple-50 dark:bg-purple-900/30 border border-purple-300 dark:border-purple-600 text-purple-700 dark:text-purple-300 text-sm font-semibold px-3 py-1.5">
+        <button
+          onClick={handlePlay}
+          disabled={loading}
+          className="p-1 rounded-lg bg-purple-100 dark:bg-purple-800 hover:bg-purple-200 dark:hover:bg-purple-700 transition-colors shrink-0"
+          title="Play Hebrew audio"
+        >
+          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> :
+           fetchError ? <span className="text-xs text-red-400">✕</span> :
+           playing ? <Pause className="w-4 h-4" /> :
+           <Play className="w-4 h-4" />}
+        </button>
+        <a href={url} target="_blank" rel="noopener noreferrer" className="truncate max-w-[160px] hover:underline" title={url}>
+          kabbalahmedia.info
+        </a>
+        <a href={url} target="_blank" rel="noopener noreferrer" className="p-1 rounded-lg bg-purple-100 dark:bg-purple-800 hover:bg-purple-200 dark:hover:bg-purple-700 transition-colors shrink-0">
+          <ExternalLink className="w-4 h-4" />
+        </a>
+        <button onClick={handleCopy} className="p-1 rounded-lg bg-purple-100 dark:bg-purple-800 hover:bg-purple-200 dark:hover:bg-purple-700 transition-colors shrink-0">
+          {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+        </button>
+      </span>
+      {audioInfo && (
+        <div className="mt-1.5">
+          <audio ref={audioRef} src={audioInfo.audioUrl} controls preload="metadata"
+            className="w-full h-9 rounded-lg" style={{ minWidth: 220 }} />
+        </div>
+      )}
+    </span>
+  );
+}
 
 function getDomain(url: string): string {
   try {
@@ -114,15 +215,7 @@ function ShareButton({ text, isRTL, shareLabel, whatsappLabel, telegramLabel, co
       label: copyLabel,
       icon: <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>,
       onClick: () => {
-        const ta = document.createElement('textarea');
-        ta.value = shareText;
-        ta.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
-        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
-        document.body.appendChild(ta);
-        ta.focus(); ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        setOpen(false);
+        navigator.clipboard.writeText(shareText).finally(() => setOpen(false));
       },
     },
   ];
@@ -168,9 +261,10 @@ function PostText({ text, copiedLabel }: { text: string; copiedLabel: string }) 
     <span>
       {parts.map((part, i) => {
         URL_REGEX.lastIndex = 0;
-        return URL_REGEX.test(part)
-          ? <LinkPill key={i} url={part} copiedLabel={copiedLabel} />
-          : <span key={i} className="whitespace-pre-wrap">{part}</span>;
+        if (!URL_REGEX.test(part)) return <span key={i} className="whitespace-pre-wrap">{part}</span>;
+        return isKabbalahMediaUrl(part)
+          ? <KabbalahAudioPill key={i} url={part} copiedLabel={copiedLabel} />
+          : <LinkPill key={i} url={part} copiedLabel={copiedLabel} />;
       })}
     </span>
   );
