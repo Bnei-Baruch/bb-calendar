@@ -285,9 +285,9 @@ const audioResolveCache = new Map();
 
 function parseMSec(timeStr) {
   if (!timeStr) return null;
-  const m = timeStr.match(/^(?:(\d+)m)?(?:(\d+)s)?$/);
+  const m = timeStr.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/);
   if (!m) return null;
-  return (parseInt(m[1] || '0') * 60) + parseInt(m[2] || '0');
+  return (parseInt(m[1] || '0') * 3600) + (parseInt(m[2] || '0') * 60) + parseInt(m[3] || '0');
 }
 
 app.get('/api/resolve-audio', async (req, res) => {

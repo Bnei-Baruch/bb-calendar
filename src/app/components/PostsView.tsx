@@ -51,13 +51,28 @@ interface AudioInfo {
   endSec: number | null;
 }
 
+function fmtSec(s: number): string {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = Math.floor(s % 60);
+  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
+
 function KabbalahAudioPill({ url, copiedLabel }: { url: string; copiedLabel: string }) {
   const [audioInfo, setAudioInfo] = useState<AudioInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [currentSec, setCurrentSec] = useState(0);
   const [copied, setCopied] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const startSec = audioInfo?.startSec ?? 0;
+  const endSec = audioInfo?.endSec ?? audioInfo?.duration ?? 0;
+  const rangeDuration = endSec - startSec;
+  const relativePos = Math.max(0, currentSec - startSec);
+  const progress = rangeDuration > 0 ? Math.min(1, relativePos / rangeDuration) : 0;
 
   const handlePlay = async () => {
     const audio = audioRef.current;
@@ -72,7 +87,6 @@ function KabbalahAudioPill({ url, copiedLabel }: { url: string; copiedLabel: str
       if (!resp.ok) throw new Error('failed');
       const info: AudioInfo = await resp.json();
       setAudioInfo(info);
-      // auto-play handled by useEffect after audioRef mounts
     } catch {
       setFetchError(true);
     } finally {
@@ -83,23 +97,36 @@ function KabbalahAudioPill({ url, copiedLabel }: { url: string; copiedLabel: str
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !audioInfo) return;
+    const start = audioInfo.startSec ?? 0;
+    const end = audioInfo.endSec ?? audioInfo.duration;
     const onLoaded = () => {
-      if (audioInfo.startSec != null) audio.currentTime = audioInfo.startSec;
+      audio.currentTime = start;
       audio.play().catch(() => {});
     };
     const onTimeUpdate = () => {
-      if (audioInfo.endSec != null && audio.currentTime >= audioInfo.endSec) {
-        audio.pause();
-      }
+      setCurrentSec(audio.currentTime);
+      if (audio.currentTime >= end) { audio.pause(); audio.currentTime = start; }
     };
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+    const onEnded = () => { setPlaying(false); audio.currentTime = start; };
     audio.addEventListener('loadedmetadata', onLoaded);
     audio.addEventListener('timeupdate', onTimeUpdate);
-    audio.addEventListener('play', () => setPlaying(true));
-    audio.addEventListener('pause', () => setPlaying(false));
-    audio.addEventListener('ended', () => setPlaying(false));
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('ended', onEnded);
     if (audio.readyState >= 2) onLoaded();
     return () => { audio.pause(); };
   }, [audioInfo]);
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = audioRef.current;
+    if (!audio || !audioInfo) return;
+    const start = audioInfo.startSec ?? 0;
+    const t = start + parseFloat(e.target.value) * rangeDuration;
+    audio.currentTime = t;
+    setCurrentSec(t);
+  };
 
   const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -131,9 +158,19 @@ function KabbalahAudioPill({ url, copiedLabel }: { url: string; copiedLabel: str
         </button>
       </span>
       {audioInfo && (
-        <div className="mt-1.5">
-          <audio ref={audioRef} src={audioInfo.audioUrl} controls preload="metadata"
-            className="w-full h-9 rounded-lg" style={{ minWidth: 220 }} />
+        <div className="mt-1.5 flex items-center gap-2 px-1" style={{ minWidth: 220 }}>
+          <audio ref={audioRef} src={audioInfo.audioUrl} preload="metadata" className="hidden" />
+          <span className="text-xs tabular-nums text-purple-600 dark:text-purple-400 shrink-0">
+            {fmtSec(relativePos)}
+          </span>
+          <input
+            type="range" min={0} max={1} step={0.001} value={progress}
+            onChange={handleSeek}
+            className="flex-1 h-1.5 rounded-full accent-purple-500 cursor-pointer"
+          />
+          <span className="text-xs tabular-nums text-purple-600 dark:text-purple-400 shrink-0">
+            {fmtSec(rangeDuration)}
+          </span>
         </div>
       )}
     </span>
