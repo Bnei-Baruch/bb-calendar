@@ -59,7 +59,7 @@ function fmtSec(s: number): string {
   return `${m}:${String(sec).padStart(2,'0')}`;
 }
 
-function KabbalahAudioPill({ url, copiedLabel }: { url: string; copiedLabel: string }) {
+function KabbalahAudioPill({ url }: { url: string; copiedLabel: string }) {
   const [audioInfo, setAudioInfo] = useState<AudioInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
@@ -345,16 +345,28 @@ export function PostsView() {
   const isRTL = language === 'he';
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    fetch('/api/posts')
-      .then(r => r.json())
-      .then(data => {
-        if (Array.isArray(data)) setPosts(data);
-        else setError(data.error || 'Unknown error');
-      })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
+    const load = () => {
+      fetch('/api/posts')
+        .then(r => r.json())
+        .then(data => {
+          if (Array.isArray(data)) { setPosts(data); setError(null); }
+          else setError(data.error || 'Unknown error');
+        })
+        .catch(err => setError(err.message))
+        .finally(() => setLoading(false));
+    };
+
+    load();
+
+    const interval = setInterval(load, 10 * 60 * 1000);
+
+    const onVisible = () => { if (document.visibilityState === 'visible') load(); };
+    document.addEventListener('visibilitychange', onVisible);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, []);
 
   const groups = groupByDay(posts);

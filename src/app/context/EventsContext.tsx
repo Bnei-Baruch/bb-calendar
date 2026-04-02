@@ -8,15 +8,30 @@ interface EventsContextValue {
 
 const EventsContext = createContext<EventsContextValue>({ events: [], loading: true });
 
+const POLL_MS = 10 * 60 * 1000;
+
 export function EventsProvider({ children }: { children: ReactNode }) {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/events')
-      .then(r => r.json())
-      .then(data => { setEvents(data); setLoading(false); })
-      .catch(() => setLoading(false));
+    const load = () =>
+      fetch('/api/events')
+        .then(r => r.json())
+        .then(data => { setEvents(data); setLoading(false); })
+        .catch(() => setLoading(false));
+
+    load();
+
+    const interval = setInterval(load, POLL_MS);
+
+    const onVisible = () => { if (document.visibilityState === 'visible') load(); };
+    document.addEventListener('visibilitychange', onVisible);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, []);
 
   return <EventsContext.Provider value={{ events, loading }}>{children}</EventsContext.Provider>;
