@@ -29,29 +29,35 @@ const KEY_FILE = join(__dirname, 'bb-calendar-488901-6a4730c846cc.json');
 const SHEET_TAB = 'לו"ז';
 
 let lastFetched = 0;
-let studyLinksCache = {};
+let studyLinksCache = [];
 let studyLastFetched = 0;
+
+function timeToMin(t) {
+  if (!t) return -1;
+  const [h, m] = t.replace(/^0/, '').split(':').map(Number);
+  return h * 60 + (m || 0);
+}
 
 async function fetchStudyLinks() {
   const now = Date.now();
-  if (now - studyLastFetched < CACHE_TTL_MS && Object.keys(studyLinksCache).length > 0) {
+  if (now - studyLastFetched < CACHE_TTL_MS && studyLinksCache.length > 0) {
     return studyLinksCache;
   }
   try {
     const res = await fetch('https://study.kli.one/api/events?public=true&language=he');
     const data = await res.json();
-    const map = {};
+    const list = [];
     for (const e of (data.events || [])) {
-      const date = e.date.split('T')[0];
-      const link = 'https://study.kli.one/?event=' + e.id;
-      map['time|' + date + '|' + e.start_time] = link;
-      if (e.titles && e.titles.he) {
-        map['title|' + date + '|' + e.titles.he.trim()] = link;
-      }
+      list.push({
+        date: e.date.split('T')[0],
+        startMin: timeToMin(e.start_time),
+        endMin: timeToMin(e.end_time),
+        link: 'https://study.kli.one/?event=' + e.id,
+      });
     }
-    studyLinksCache = map;
+    studyLinksCache = list;
     studyLastFetched = now;
-    console.log('[study] Cached ' + Object.keys(map).length + ' study link entries');
+    console.log('[study] Cached ' + list.length + ' study events');
   } catch (err) {
     console.error('[study] Fetch failed:', err.message);
   }
@@ -261,10 +267,11 @@ app.get('/api/events', async (req, res) => {
   try {
     const [events, studyLinks] = await Promise.all([getEvents(), fetchStudyLinks()]);
     const enriched = events.map(e => {
-      const byTime = studyLinks['time|' + e.date + '|' + e.startTime];
-      const byTitle = studyLinks['title|' + e.date + '|' + (e.title.he || '').trim()];
-      const studyLink = byTime || byTitle;
-      return studyLink ? Object.assign({}, e, { studyLink }) : e;
+      const eMin = timeToMin(e.startTime);
+      const match = studyLinks.find(s =>
+        s.date === e.date && eMin >= s.startMin && (s.endMin < 0 || eMin < s.endMin)
+      );
+      return match ? Object.assign({}, e, { studyLink: match.link }) : e;
     });
     res.json(enriched);
   } catch (err) {
