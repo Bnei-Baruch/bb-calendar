@@ -8,14 +8,34 @@ import { Event } from '../data/events';
 const HOLIDAY_KEYWORDS_HE = [
   'פסח', 'סוכות', 'ראש השנה', 'יום כיפור', 'שבועות', 'פורים', 'חנוכה',
   'ל"ג בעומר', 'לג בעומר', 'שמחת תורה', 'שמיני עצרת', 'הושענא רבה',
-  'תשעה באב', 'ט"ו בשבט', 'טו בשבט', 'ראש חודש', 'חול המועד',
+  'תשעה באב', 'ט"ו בשבט', 'טו בשבט', 'ראש חודש',
   'ליל הסדר', 'שביעי של פסח', 'אחרון של פסח', 'לוז פסח', 'לו"ז פסח',
+  'יום השואה', 'שואה ולגבורה', 'יום הזיכרון', 'יום הזכרון',
+  'יום העצמאות', 'יום ירושלים', 'ערב יום העצמאות',
 ];
 const HOLIDAY_KEYWORDS_EN = [
   'passover', 'sukkot', 'rosh hashana', 'yom kippur', 'shavuot', 'purim',
   'hanukkah', 'chanukah', "lag b'omer", 'lag baomer', 'simchat torah',
-  'shemini atzeret', "tisha b'av", "tu b'shvat", 'rosh chodesh', 'chol hamoed',
+  'shemini atzeret', "tisha b'av", "tu b'shvat", 'rosh chodesh',
+  'holocaust', 'remembrance day', 'independence day', 'jerusalem day',
+  'memorial day',
 ];
+
+const MEMORIAL_KEYWORDS_HE = [
+  'שואה', 'יום הזיכרון', 'יום הזכרון', 'יום ירושלים', 'יום העצמאות',
+];
+const MEMORIAL_KEYWORDS_EN = [
+  'holocaust', 'remembrance day', 'memorial day', 'independence day', 'jerusalem day',
+];
+
+export function isMemorialDay(event: Event): boolean {
+  const he = (event.title.he || '').toLowerCase();
+  const en = (event.title.en || '').toLowerCase();
+  return (
+    MEMORIAL_KEYWORDS_HE.some(kw => he.includes(kw.toLowerCase())) ||
+    MEMORIAL_KEYWORDS_EN.some(kw => en.includes(kw))
+  );
+}
 
 export function isHoliday(event: Event): boolean {
   if (event.type === 'holiday') return true;
@@ -37,11 +57,31 @@ export function HolidaysView() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  // Collect date ranges of multi-day holidays to suppress single-day sub-events within them
+  const multiDayRanges = allEvents
+    .filter(e => isHoliday(e) && e.endDate && e.endDate !== e.date)
+    .map(e => ({ start: e.date, end: e.endDate! }));
+
+  const isInsideMultiDay = (date: string) =>
+    multiDayRanges.some(r => date >= r.start && date <= r.end);
+
+  // Deduplicate: one representative event per date (the first matching one per day)
+  const seenDates = new Set<string>();
   const holidays = allEvents
     .filter(event => {
-      const eventDate = new Date(event.date);
-      eventDate.setHours(0, 0, 0, 0);
-      return eventDate >= today && event.endDate && event.endDate !== event.date && isHoliday(event);
+      if (!isHoliday(event)) return false;
+      // Show if the holiday hasn't ended yet (use endDate if available, else start date)
+      const relevantDate = new Date(event.endDate || event.date);
+      relevantDate.setHours(0, 0, 0, 0);
+      if (relevantDate < today) return false;
+      // For multi-day events always include
+      if (event.endDate && event.endDate !== event.date) return true;
+      // Skip single-day events that fall within an already-shown multi-day holiday
+      if (isInsideMultiDay(event.date)) return false;
+      // Deduplicate per start date
+      if (seenDates.has(event.date)) return false;
+      seenDates.add(event.date);
+      return true;
     })
     .sort((a, b) => a.date.localeCompare(b.date));
 
@@ -83,6 +123,10 @@ export function HolidaysView() {
         <div className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
           {holidays.map((event) => {
             const days = getDays(event);
+            const memorial = isMemorialDay(event);
+            const tagLabel = memorial
+              ? { he: 'יום לאומי', en: 'National Day', ru: 'Нац. день', es: 'Día Nacional' }
+              : { he: 'חג', en: 'Holiday', ru: 'Праздник', es: 'Fiesta' };
             return (
               <Link
                 key={event.id}
@@ -106,7 +150,7 @@ export function HolidaysView() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">
-                      {language === 'he' ? 'חג' : language === 'en' ? 'Holiday' : language === 'ru' ? 'Праздник' : 'Fiesta'}
+                      {tagLabel[language]}
                     </span>
                     {days > 1 && (
                       <span className="text-xs text-gray-500 dark:text-gray-400">

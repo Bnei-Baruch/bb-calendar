@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { Language, useTranslation } from '../utils/i18n';
 import { getMonthEvents, Event } from '../data/events';
 import { useEvents } from '../context/EventsContext';
+import { isHoliday, isMemorialDay } from './HolidaysView';
 import { format, parseISO, eachDayOfInterval } from 'date-fns';
 
 interface MultiDayEvent {
@@ -118,15 +119,27 @@ export function CalendarView() {
     const dateStr = format(new Date(currentYear, currentMonth, day), 'yyyy-MM-dd');
     const dayEvents = monthEvents.get(dateStr) || [];
     return dayEvents
-      .filter(evt => !evt.parentEventId && !parentEventIds.has(evt.id))
+      .filter(evt => !parentEventIds.has(evt.id))
       .sort((a, b) => {
         const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
         return toMin(a.startTime) - toMin(b.startTime);
       });
   };
 
-  const getEventsForDay = (day: number): Event[] => getAllEventsForDay(day).slice(0, 3);
-  const getMoreEventsCount = (day: number): number => Math.max(0, getAllEventsForDay(day).length - 3);
+  const getSingleDayHolidaysForWeek = (week: (number | null)[]) => {
+    return week
+      .map((day, colIndex) => {
+        if (!day) return null;
+        const dateStr = format(new Date(currentYear, currentMonth, day), 'yyyy-MM-dd');
+        const dayEvents = monthEvents.get(dateStr) || [];
+        const holiday = dayEvents.find(e => isHoliday(e) && (!e.endDate || e.endDate === e.date));
+        return holiday ? { event: holiday, colIndex } : null;
+      })
+      .filter(Boolean) as { event: Event; colIndex: number }[];
+  };
+
+  const getEventsForDay = (day: number): Event[] => getAllEventsForDay(day).filter(e => !isHoliday(e)).slice(0, 3);
+  const getMoreEventsCount = (day: number): number => Math.max(0, getAllEventsForDay(day).filter(e => !isHoliday(e)).length - 3);
 
   const isToday = (day: number | null): boolean => {
     if (!day) return false;
@@ -254,6 +267,19 @@ export function CalendarView() {
           <div>
             {weeks.map((week, weekIndex) => {
               const multiDayEventsInWeek = getMultiDayEventsForWeek(week);
+              const singleDayHolidaysInWeek = getSingleDayHolidaysForWeek(week);
+
+              const getSpacerBarsForCell = (day: number, dayIndex: number) => {
+                const dateStr = format(new Date(currentYear, currentMonth, day), 'yyyy-MM-dd');
+                const multiCount = multiDayEventsInWeek.filter(item =>
+                  dateStr >= item.event.startDate && dateStr <= item.event.endDate
+                ).length;
+                const hasHoliday = singleDayHolidaysInWeek.some(item => item.colIndex === dayIndex);
+                if (hasHoliday) {
+                  return multiDayEventsInWeek.length + 1;
+                }
+                return multiCount;
+              };
               return (
                 <div key={weekIndex} className="border-b border-gray-200 dark:border-gray-700 last:border-b-0 relative">
                   {/* Multi-day event bars */}
@@ -278,9 +304,37 @@ export function CalendarView() {
                             : (isFirst ? 'rounded-l-md' : '') + ' ' + (isLast ? 'rounded-r-md' : '')}
                         `}
                         style={{
-                          top: `${32 + barIndex * 28}px`,
+                          top: `${44 + barIndex * 28}px`,
                           [isRTL ? 'right' : 'left']: `calc(${leftPct}% + 8px)`,
                           width: `calc(${widthPct}% - 16px)`,
+                        }}
+                      >
+                        <span className="truncate">{item.event.title[language]}</span>
+                      </div>
+                    );
+                  })}
+
+                  {/* Single-day holiday bars — all at the same vertical level */}
+                  {singleDayHolidaysInWeek.map((item, idx) => {
+                    const barIndex = multiDayEventsInWeek.length; // same row for all
+                    const memorial = isMemorialDay(item.event);
+                    const leftPct = (item.colIndex / 7) * 100;
+                    const widthPct = (1 / 7) * 100;
+                    return (
+                      <div
+                        key={`h-${idx}`}
+                        onClick={(e) => { e.stopPropagation(); handleEventClick(item.event.id, e); }}
+                        className={`
+                          absolute cursor-pointer hover:opacity-90 transition-opacity z-10
+                          h-6 flex items-center px-2 text-xs font-semibold rounded-md
+                          ${memorial
+                            ? 'bg-sky-200 dark:bg-sky-800/60 text-sky-900 dark:text-sky-100'
+                            : 'bg-amber-200 dark:bg-amber-800/60 text-amber-900 dark:text-amber-100'}
+                        `}
+                        style={{
+                          top: `${44 + barIndex * 28}px`,
+                          [isRTL ? 'right' : 'left']: `calc(${leftPct}% + 4px)`,
+                          width: `calc(${widthPct}% - 8px)`,
                         }}
                       >
                         <span className="truncate">{item.event.title[language]}</span>
@@ -318,9 +372,9 @@ export function CalendarView() {
                                 )}
                               </div>
 
-                              {/* Spacer for multi-day bars */}
-                              {multiDayEventsInWeek.length > 0 && (
-                                <div style={{ height: `${multiDayEventsInWeek.length * 28}px` }} />
+                              {/* Spacer for bars affecting this cell */}
+                              {day && getSpacerBarsForCell(day, dayIndex) > 0 && (
+                                <div style={{ height: `${12 + getSpacerBarsForCell(day, dayIndex) * 28}px` }} />
                               )}
 
                               <div className="flex-1 space-y-1 overflow-hidden">
