@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { Language, useTranslation } from '../utils/i18n';
-import { getMonthEvents, Event } from '../data/events';
+import { getMonthEvents, getIsraelToday, Event } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { isHoliday, isMemorialDay } from './HolidaysView';
 import { format, parseISO, eachDayOfInterval } from 'date-fns';
@@ -53,8 +53,8 @@ export function CalendarView() {
   const isRTL = language === 'he';
 
   const { events: allEvents } = useEvents();
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(() => parseInt(getIsraelToday().slice(0, 4)));
+  const [currentMonth, setCurrentMonth] = useState(() => parseInt(getIsraelToday().slice(5, 7)) - 1);
   const [popupDay, setPopupDay] = useState<number | null>(null);
 
   const monthEvents = getMonthEvents(allEvents, currentYear, currentMonth + 1);
@@ -72,9 +72,9 @@ export function CalendarView() {
   const multiDayEvents = getMultiDayEvents();
 
   const goToToday = () => {
-    const now = new Date();
-    setCurrentMonth(now.getMonth());
-    setCurrentYear(now.getFullYear());
+    const today = getIsraelToday();
+    setCurrentMonth(parseInt(today.slice(5, 7)) - 1);
+    setCurrentYear(parseInt(today.slice(0, 4)));
   };
 
   const navigateMonth = (direction: 'prev' | 'next') => {
@@ -141,13 +141,14 @@ export function CalendarView() {
   const getEventsForDay = (day: number): Event[] => getAllEventsForDay(day).filter(e => !isHoliday(e)).slice(0, 3);
   const getMoreEventsCount = (day: number): number => Math.max(0, getAllEventsForDay(day).filter(e => !isHoliday(e)).length - 3);
 
+  const israelToday = getIsraelToday();
   const isToday = (day: number | null): boolean => {
     if (!day) return false;
-    const today = new Date();
-    return day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear();
+    const [ty, tm, td] = israelToday.split('-').map(Number);
+    return day === td && currentMonth === tm - 1 && currentYear === ty;
   };
 
-  const isCurrentMonth = currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear();
+  const isCurrentMonth = currentMonth === parseInt(israelToday.slice(5, 7)) - 1 && currentYear === parseInt(israelToday.slice(0, 4));
 
   const getEventColor = (event: Event | MultiDayEvent): string => {
     switch (event.type) {

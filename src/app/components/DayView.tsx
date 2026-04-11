@@ -6,7 +6,7 @@ import { Card } from './ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Calendar } from './ui/calendar';
 import { Language, useTranslation } from '../utils/i18n';
-import { getEventsByDate } from '../data/events';
+import { getEventsByDate, getIsraelToday } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ export function DayView() {
   const isRTL = language === 'he';
 
   const { events: allEvents, loading } = useEvents();
-  const dateParam = searchParams.get('date') || format(new Date(), 'yyyy-MM-dd');
+  const dateParam = searchParams.get('date') || getIsraelToday();
   const currentDate = parseISO(dateParam);
 
   // 7-day window starting from currentDate
@@ -36,7 +36,7 @@ export function DayView() {
   };
 
   const goToToday = () => {
-    setSearchParams({ date: format(new Date(), 'yyyy-MM-dd') });
+    setSearchParams({ date: getIsraelToday() });
   };
 
   const handleEventClick = (eventId: string) => {

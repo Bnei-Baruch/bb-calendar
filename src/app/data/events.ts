@@ -38,6 +38,13 @@ export function getEventById(allEvents: Event[], id: string): Event | undefined 
   return allEvents.find(e => e.id === id);
 }
 
+export function getIsraelToday(): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date());
+}
+
 export function getMonthEvents(allEvents: Event[], year: number, month: number): Map<string, Event[]> {
   const monthStr = String(month).padStart(2, '0');
   const prefix = `${year}-${monthStr}`;

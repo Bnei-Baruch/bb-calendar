@@ -308,12 +308,12 @@ function PostText({ text, copiedLabel }: { text: string; copiedLabel: string }) 
 }
 
 function formatTime(isoDate: string): string {
-  return new Date(isoDate).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+  return new Date(isoDate).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jerusalem' });
 }
 
 function formatDayHeader(isoDate: string, language: Language): string {
   const locale = language === 'he' ? 'he-IL' : language === 'ru' ? 'ru-RU' : language === 'es' ? 'es-ES' : 'en-US';
-  return new Date(isoDate).toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
+  return new Date(isoDate).toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Asia/Jerusalem' });
 }
 
 function getDayKey(isoDate: string): string {

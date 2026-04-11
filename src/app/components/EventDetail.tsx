@@ -74,7 +74,8 @@ export function EventDetail() {
   }
 
   const formatDateByLanguage = (dateStr: string) => {
-    const date = new Date(dateStr);
+    const [y, mo, da] = dateStr.split('-').map(Number);
+    const date = new Date(y, mo - 1, da);
     const dayNames = {
       he: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
       en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -101,7 +102,8 @@ export function EventDetail() {
   };
   
   const formatShortDateByLanguage = (dateStr: string) => {
-    const date = new Date(dateStr);
+    const [y, mo, da] = dateStr.split('-').map(Number);
+    const date = new Date(y, mo - 1, da);
     const monthNames = {
       he: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
       en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

@@ -3,7 +3,7 @@ import { Link, useOutletContext } from 'react-router';
 import { Calendar, MapPin } from 'lucide-react';
 import { Language, useTranslation } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
-import { Event } from '../data/events';
+import { Event, getIsraelToday } from '../data/events';
 
 const HOLIDAY_KEYWORDS_HE = [
   'פסח', 'סוכות', 'ראש השנה', 'יום כיפור', 'שבועות', 'פורים', 'חנוכה',
@@ -54,8 +54,7 @@ export function HolidaysView() {
 
   const { events: allEvents } = useEvents();
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const todayStr = getIsraelToday();
 
   // Collect date ranges of multi-day holidays to suppress single-day sub-events within them
   const multiDayRanges = allEvents
@@ -71,9 +70,8 @@ export function HolidaysView() {
     .filter(event => {
       if (!isHoliday(event)) return false;
       // Show if the holiday hasn't ended yet (use endDate if available, else start date)
-      const relevantDate = new Date(event.endDate || event.date);
-      relevantDate.setHours(0, 0, 0, 0);
-      if (relevantDate < today) return false;
+      const relevantDateStr = event.endDate || event.date;
+      if (relevantDateStr < todayStr) return false;
       // For multi-day events always include
       if (event.endDate && event.endDate !== event.date) return true;
       // Skip single-day events that fall within an already-shown multi-day holiday
@@ -86,7 +84,8 @@ export function HolidaysView() {
     .sort((a, b) => a.date.localeCompare(b.date));
 
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+    const [y, mo, da] = dateStr.split('-').map(Number);
+    const date = new Date(y, mo - 1, da);
     return new Intl.DateTimeFormat(language === 'he' ? 'he-IL' : language, {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     }).format(date);

@@ -3,7 +3,7 @@ import { Link, useOutletContext } from 'react-router';
 import { Calendar, MapPin } from 'lucide-react';
 import { Language, useTranslation } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
-import { Event } from '../data/events';
+import { Event, getIsraelToday } from '../data/events';
 import { isHoliday } from './HolidaysView';
 
 export function UpcomingEventsView() {
@@ -13,19 +13,17 @@ export function UpcomingEventsView() {
 
   const { events: allEvents } = useEvents();
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const todayStr = getIsraelToday();
 
   const congresses = allEvents
     .filter(event => {
-      const eventDate = new Date(event.date);
-      eventDate.setHours(0, 0, 0, 0);
-      return eventDate >= today && event.endDate && event.endDate !== event.date && !isHoliday(event);
+      return event.date >= todayStr && event.endDate && event.endDate !== event.date && !isHoliday(event);
     })
     .sort((a, b) => a.date.localeCompare(b.date));
 
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+    const [y, mo, da] = dateStr.split('-').map(Number);
+    const date = new Date(y, mo - 1, da);
     return new Intl.DateTimeFormat(language === 'he' ? 'he-IL' : language, {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     }).format(date);
