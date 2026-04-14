@@ -68,7 +68,7 @@ export function ViewNavigation({ currentLanguage }: ViewNavigationProps) {
                     : item.icon && <item.icon className="w-5 h-5" />
                   }
                 </div>
-                <span className="text-[10px] font-semibold leading-tight">{item.shortLabel}</span>
+                <span className="text-[10px] font-semibold leading-tight text-center">{item.shortLabel}</span>
               </Link>
             );
           })}
