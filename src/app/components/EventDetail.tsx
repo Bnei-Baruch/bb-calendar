@@ -34,12 +34,13 @@ export function EventDetail() {
 
   const isMultiDay = !!(event?.endDate && event.endDate !== event.date);
 
-  // For multi-day events: collect all events within the date range, grouped by day
+  // Collect all events within the date range, grouped by day (works for both single and multi-day)
   const eventsByDate: Record<string, typeof allEvents> = {};
-  if (event && isMultiDay) {
+  if (event) {
+    const endRange = isMultiDay ? event.endDate! : event.date;
     // Pre-populate all days in range so every day shows even if empty
     let d = event.date;
-    while (d <= event.endDate!) {
+    while (d <= endRange) {
       eventsByDate[d] = [];
       const next = new Date(d);
       next.setDate(next.getDate() + 1);
@@ -50,7 +51,7 @@ export function EventDetail() {
     allEvents
       .filter(e =>
         e.date >= event.date &&
-        e.date <= event.endDate! &&
+        e.date <= endRange &&
         e.id !== event.id &&
         !(e.endDate && e.endDate !== e.date)
       )
