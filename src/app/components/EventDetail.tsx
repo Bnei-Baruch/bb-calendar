@@ -48,7 +48,12 @@ export function EventDetail() {
 
     const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
     allEvents
-      .filter(e => e.date >= event.date && e.date <= event.endDate! && e.id !== event.id)
+      .filter(e =>
+        e.date >= event.date &&
+        e.date <= event.endDate! &&
+        e.id !== event.id &&
+        !(e.endDate && e.endDate !== e.date)
+      )
       .forEach(e => {
         if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
         eventsByDate[e.date].push(e);
