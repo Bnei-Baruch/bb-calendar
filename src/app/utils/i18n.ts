@@ -33,6 +33,9 @@ export const translations = {
     posts: 'הודעות',
     postsShort: 'הודעות',
     registerMeal: 'הרשמה',
+    addToCalendar: 'הוסף ליומן',
+    googleCalendar: 'Google יומן',
+    icsCalendar: 'Apple / Outlook (.ics)',
   },
   en: {
     appName: 'Events Calendar',
@@ -65,6 +68,9 @@ export const translations = {
     posts: 'Posts',
     postsShort: 'Posts',
     registerMeal: 'Register',
+    addToCalendar: 'Add to Calendar',
+    googleCalendar: 'Google Calendar',
+    icsCalendar: 'Apple / Outlook (.ics)',
   },
   ru: {
     appName: 'Календарь событий',
@@ -97,6 +103,9 @@ export const translations = {
     posts: 'Посты',
     postsShort: 'Посты',
     registerMeal: 'Регистрация',
+    addToCalendar: 'Добавить в календарь',
+    googleCalendar: 'Google Календарь',
+    icsCalendar: 'Apple / Outlook (.ics)',
   },
   es: {
     appName: 'Calendario de Eventos',
@@ -129,6 +138,9 @@ export const translations = {
     posts: 'Publicaciones',
     postsShort: 'Posts',
     registerMeal: 'Registrarse',
+    addToCalendar: 'Agregar al calendario',
+    googleCalendar: 'Google Calendar',
+    icsCalendar: 'Apple / Outlook (.ics)',
   },
 };
 

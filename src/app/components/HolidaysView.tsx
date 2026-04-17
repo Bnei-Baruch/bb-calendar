@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useOutletContext } from 'react-router';
 import { Calendar, MapPin } from 'lucide-react';
+import { AddToCalendarButton } from './AddToCalendarButton';
 import { Language, useTranslation } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
 import { Event, getIsraelToday } from '../data/events';
@@ -173,6 +174,8 @@ export function HolidaysView() {
                     </div>
                   )}
                 </div>
+
+                <AddToCalendarButton event={event} language={language} isRTL={isRTL} />
 
                 <div className="shrink-0 text-gray-300 dark:text-gray-600 group-hover:text-amber-400 transition-colors">
                   {isRTL

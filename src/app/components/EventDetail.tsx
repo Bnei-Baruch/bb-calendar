@@ -1,6 +1,7 @@
 import { useNavigate, useParams, useOutletContext, useLocation, useSearchParams } from 'react-router';
 import { useState, useEffect } from 'react';
 import { ArrowRight, Clock, Calendar, MapPin, BookOpen, Share2 } from 'lucide-react';
+import { AddToCalendarButton } from './AddToCalendarButton';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
@@ -258,8 +259,12 @@ export function EventDetail() {
                 {event.title[language]}
               </h1>
             </div>
+            <div className="flex items-center gap-2 shrink-0 ms-4">
+              {(event.type === 'conference' || event.type === 'holiday') && (
+                <AddToCalendarButton event={event} language={language} isRTL={isRTL} />
+              )}
             {sortedDates.length > 0 && (
-              <div className="relative shrink-0 ms-4">
+              <div className="relative shrink-0">
                 <button
                   onClick={() => setShareOpen(v => !v)}
                   className="h-9 w-auto px-3 inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm text-sm text-gray-700 dark:text-gray-300"
@@ -284,6 +289,7 @@ export function EventDetail() {
                 )}
               </div>
             )}
+            </div>
           </div>
 
           <div className="space-y-4">

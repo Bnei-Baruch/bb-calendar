@@ -5,6 +5,7 @@ import { Language, useTranslation } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
 import { Event, getIsraelToday } from '../data/events';
 import { isHoliday } from './HolidaysView';
+import { AddToCalendarButton } from './AddToCalendarButton';
 
 export function UpcomingEventsView() {
   const { language } = useOutletContext<{ language: Language }>();
@@ -107,6 +108,8 @@ export function UpcomingEventsView() {
                     </div>
                   )}
                 </div>
+
+                <AddToCalendarButton event={event} language={language} isRTL={isRTL} />
 
                 <div className="shrink-0 text-gray-300 dark:text-gray-600 group-hover:text-blue-400 transition-colors">
                   {isRTL

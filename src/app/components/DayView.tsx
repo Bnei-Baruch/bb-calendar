@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams, useOutletContext } from 'react-router';
 import { ChevronLeft, ChevronRight, Clock, CalendarIcon, BookOpen, Share2 } from 'lucide-react';
+import { AddToCalendarButton } from './AddToCalendarButton';
 import { he as heLocale, enUS, ru, es } from 'date-fns/locale';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -413,10 +414,13 @@ export function DayView() {
                       className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-3 sm:p-4 rounded-lg shadow cursor-pointer hover:shadow-md transition-shadow mb-3"
                       onClick={() => handleEventClick(parentEvent.id)}
                     >
-                      <h4 className="text-base sm:text-lg font-bold text-center">
-                        {parentEvent.title[language]}
-                        {dayNumber && ` - ${t.day} ${dayNumber}`}
-                      </h4>
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h4 className="text-base sm:text-lg font-bold flex-1 text-center">
+                          {parentEvent.title[language]}
+                          {dayNumber && ` - ${t.day} ${dayNumber}`}
+                        </h4>
+                        <AddToCalendarButton event={parentEvent} language={language} isRTL={isRTL} />
+                      </div>
                       {parentEvent.description && (
                         <p className="text-center text-blue-100 mt-1 text-sm">
                           {parentEvent.description[language]}
