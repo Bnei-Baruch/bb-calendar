@@ -38,26 +38,8 @@ export function generateICS(event: Event, language: Language): string {
   return lines.join('\r\n');
 }
 
-export function downloadICS(event: Event, language: Language): void {
-  const ics = generateICS(event, language);
-  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const filename = `${(event.title.en || event.id).replace(/[^a-z0-9]/gi, '_')}.ics`;
-
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  if (isIOS) {
-    // On iOS, window.open with a .ics blob triggers the native Calendar app
-    window.open(url, '_blank');
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
-  } else {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
+export function getICSUrl(event: Event, language: Language): string {
+  return `/api/ics/${event.id}?lang=${language}`;
 }
 
 export function getGoogleCalendarUrl(event: Event, language: Language): string {

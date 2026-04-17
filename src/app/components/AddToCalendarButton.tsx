@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { CalendarPlus } from 'lucide-react';
 import { Event } from '../data/events';
 import { Language, useTranslation } from '../utils/i18n';
-import { downloadICS, getGoogleCalendarUrl } from '../utils/calendar';
+import { getICSUrl, getGoogleCalendarUrl } from '../utils/calendar';
 
 interface Props {
   event: Event;
@@ -69,15 +69,16 @@ export function AddToCalendarButton({ event, language, isRTL }: Props) {
           </svg>
           {t.googleCalendar}
         </a>
-        <button
-          className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap w-full ${isRTL ? 'text-right' : 'text-left'}`}
-          onClick={e => { e.stopPropagation(); downloadICS(event, language); setOpen(false); }}
+        <a
+          href={getICSUrl(event, language)}
+          className={`flex items-center gap-2 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap`}
+          onClick={e => { e.stopPropagation(); setOpen(false); }}
         >
           <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
           </svg>
           {t.icsCalendar}
-        </button>
+        </a>
       </div>
     </>
   ) : null;

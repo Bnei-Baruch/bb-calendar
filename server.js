@@ -279,6 +279,52 @@ app.get('/api/events', async (req, res) => {
   }
 });
 
+app.get('/api/ics/:eventId', async (req, res) => {
+  try {
+    const events = await getEvents();
+    const event = events.find(e => e.id === req.params.eventId);
+    if (!event) return res.status(404).send('Event not found');
+
+    const lang = req.query.lang || 'en';
+    const title = (event.title[lang] || event.title.en || '').replace(/[\\;,]/g, '\\$&').replace(/\n/g, '\\n');
+    const description = ((event.description?.[lang] || event.description?.en || '')).replace(/[\\;,]/g, '\\$&').replace(/\n/g, '\\n');
+    const location = (event.location || '').replace(/[\\;,]/g, '\\$&');
+
+    const fmtDate = d => d.replace(/-/g, '');
+    const nextDay = d => {
+      const [y, m, day] = d.split('-').map(Number);
+      const dt = new Date(y, m - 1, day + 1);
+      return `${dt.getFullYear()}${String(dt.getMonth()+1).padStart(2,'0')}${String(dt.getDate()).padStart(2,'0')}`;
+    };
+    const start = fmtDate(event.date);
+    const endBase = event.endDate && event.endDate !== event.date ? event.endDate : event.date;
+    const end = nextDay(endBase);
+    const now = new Date().toISOString().replace(/[-:.]/g,'').slice(0,15) + 'Z';
+
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//KLI Calendar//cal.kli.one//EN',
+      'BEGIN:VEVENT',
+      `UID:${event.id}@cal.kli.one`,
+      `DTSTAMP:${now}`,
+      `DTSTART;VALUE=DATE:${start}`,
+      `DTEND;VALUE=DATE:${end}`,
+      `SUMMARY:${title}`,
+    ];
+    if (description) lines.push(`DESCRIPTION:${description}`);
+    if (location) lines.push(`LOCATION:${location}`);
+    lines.push('END:VEVENT', 'END:VCALENDAR');
+
+    const filename = `${(event.title.en || event.id).replace(/[^a-z0-9]/gi, '_')}.ics`;
+    res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send(lines.join('\r\n'));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/posts/media/:id', (req, res) => {
   const { id } = req.params;
   if (!/^\d+$/.test(id)) return res.status(400).end();
