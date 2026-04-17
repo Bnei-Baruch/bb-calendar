@@ -373,6 +373,16 @@ export function EventDetail() {
                                       : `${evt.startTime} - ${evt.endTime}`}
                                   </span>
                                   <p className="flex-1 text-gray-900 dark:text-gray-100">{evt.title[language]}</p>
+                                  {evt.title.en === 'Meal' && (
+                                    <a
+                                      href={`https://pay.kli.one/${language}/Calendar-Meals`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-xs font-semibold px-2 py-1 rounded-full shrink-0 transition-colors text-white bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
+                                    >
+                                      {t.registerMeal}
+                                    </a>
+                                  )}
                                   {evt.studyLink && (
                                     <a
                                       href={evt.studyLink}

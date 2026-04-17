@@ -32,6 +32,7 @@ export const translations = {
     calendarShort: 'לוח שנה',
     posts: 'הודעות',
     postsShort: 'הודעות',
+    registerMeal: 'הרשמה',
   },
   en: {
     appName: 'Events Calendar',
@@ -63,6 +64,7 @@ export const translations = {
     calendarShort: 'Calendar',
     posts: 'Posts',
     postsShort: 'Posts',
+    registerMeal: 'Register',
   },
   ru: {
     appName: 'Календарь событий',
@@ -94,6 +96,7 @@ export const translations = {
     calendarShort: 'Календарь',
     posts: 'Посты',
     postsShort: 'Посты',
+    registerMeal: 'Регистрация',
   },
   es: {
     appName: 'Calendario de Eventos',
@@ -125,6 +128,7 @@ export const translations = {
     upcomingShort: 'Congresos y Eventos',
     posts: 'Publicaciones',
     postsShort: 'Posts',
+    registerMeal: 'Registrarse',
   },
 };
 

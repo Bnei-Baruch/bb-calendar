@@ -468,6 +468,17 @@ export function DayView() {
                                 </p>
                               )}
                             </div>
+                            {event.title.en === 'Meal' && (
+                              <a
+                                href={`https://pay.kli.one/${language}/Calendar-Meals`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={e => e.stopPropagation()}
+                                className="text-xs font-semibold px-2 py-1 rounded-full shrink-0 transition-colors text-white bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
+                              >
+                                {t.registerMeal}
+                              </a>
+                            )}
                             {event.studyLink && (
                               <a
                                 href={event.studyLink}
