@@ -437,7 +437,11 @@ export function DayView() {
                       {timeless.length > 0 && (
                         <div className="space-y-1">
                           {timeless.map((e) => (
-                            <div key={e.id} className="cursor-pointer" onClick={() => handleEventClick(e.id)}>
+                            <div
+                              key={e.id}
+                              className={e.type === 'conference' ? 'cursor-pointer' : ''}
+                              onClick={e.type === 'conference' ? () => handleEventClick(e.id) : undefined}
+                            >
                               <p className={`font-semibold ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
                               {e.description && (
                                 <p className={`text-sm opacity-75 ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
@@ -449,8 +453,8 @@ export function DayView() {
                       {timed.map((event) => (
                         <div
                           key={event.id}
-                          className="bg-white/70 dark:bg-white/5 rounded-lg p-3 cursor-pointer hover:bg-white/90 dark:hover:bg-white/10 transition-colors"
-                          onClick={() => handleEventClick(event.id)}
+                          className={`bg-white/70 dark:bg-white/5 rounded-lg p-3 transition-colors ${event.type === 'conference' ? 'cursor-pointer hover:bg-white/90 dark:hover:bg-white/10' : ''}`}
+                          onClick={event.type === 'conference' ? () => handleEventClick(event.id) : undefined}
                         >
                           <div className="flex items-start gap-3">
                             <div className={`flex items-center gap-1.5 text-sm min-w-[100px] ${color.text}`}>

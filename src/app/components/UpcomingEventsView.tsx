@@ -66,17 +66,14 @@ export function UpcomingEventsView() {
             const days = getDays(event);
             const isSpecial = event.type === 'special';
             const accent = isSpecial
-              ? { bar: 'bg-purple-500', text: 'text-purple-700 dark:text-purple-300', badge: 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300', hover: 'group-hover:text-purple-600 dark:group-hover:text-purple-400', chevron: 'group-hover:text-purple-400', cal: 'text-purple-500', calText: 'text-purple-600 dark:text-purple-300' }
-              : { bar: 'bg-blue-500',   text: 'text-blue-700 dark:text-blue-300',     badge: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',       hover: 'group-hover:text-blue-600 dark:group-hover:text-blue-400',     chevron: 'group-hover:text-blue-400',   cal: 'text-blue-500',   calText: 'text-blue-600 dark:text-blue-300' };
+              ? { bar: 'bg-purple-500', text: 'text-purple-700 dark:text-purple-300', badge: 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300', hover: '', cal: 'text-purple-500', calText: 'text-purple-600 dark:text-purple-300' }
+              : { bar: 'bg-blue-500',   text: 'text-blue-700 dark:text-blue-300',     badge: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',       hover: 'group-hover:text-blue-600 dark:group-hover:text-blue-400', cal: 'text-blue-500', calText: 'text-blue-600 dark:text-blue-300' };
             const badgeLabel = isSpecial
               ? { he: 'אירוע', en: 'Event', ru: 'Событие', es: 'Evento' }
               : { he: 'כנס',   en: 'Congress', ru: 'Конгресс', es: 'Congreso' };
-            return (
-              <Link
-                key={event.id}
-                to={`/event/${event.id}?from=upcoming`}
-                className="flex items-center gap-4 px-4 py-3 sm:px-5 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors group"
-              >
+
+            const inner = (
+              <>
                 <div className={`w-1 self-stretch rounded-full shrink-0 ${accent.bar}`} />
 
                 <div className={`shrink-0 text-center min-w-[52px] ${accent.text}`}>
@@ -121,12 +118,28 @@ export function UpcomingEventsView() {
 
                 <AddToCalendarButton event={event} language={language} isRTL={isRTL} />
 
-                <div className={`shrink-0 text-gray-300 dark:text-gray-600 ${accent.chevron} transition-colors`}>
-                  {isRTL
-                    ? <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                    : <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                  }
-                </div>
+                {!isSpecial && (
+                  <div className="shrink-0 text-gray-300 dark:text-gray-600 group-hover:text-blue-400 transition-colors">
+                    {isRTL
+                      ? <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                      : <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    }
+                  </div>
+                )}
+              </>
+            );
+
+            return isSpecial ? (
+              <div key={event.id} className="flex items-center gap-4 px-4 py-3 sm:px-5 sm:py-4">
+                {inner}
+              </div>
+            ) : (
+              <Link
+                key={event.id}
+                to={`/event/${event.id}?from=upcoming`}
+                className="flex items-center gap-4 px-4 py-3 sm:px-5 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/60 transition-colors group"
+              >
+                {inner}
               </Link>
             );
           })}
