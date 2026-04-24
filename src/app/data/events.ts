@@ -1,4 +1,4 @@
-export type EventType = 'regular' | 'conference' | 'holiday';
+export type EventType = 'regular' | 'conference' | 'holiday' | 'special';
 
 export interface Event {
   id: string;

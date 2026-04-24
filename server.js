@@ -90,10 +90,10 @@ function parseRows(rows) {
     // Sheets API returns rows as arrays (0-indexed from col A):
     // 0-3: calendar IDs (A-D, skip)
     // 4: start date (E), 5: end date (F), 6: start time (G), 7: end time (H)
-    // 8-11: display flags I-L (skip)
-    // 12: Hebrew title (M), 13: English (N), 14: Russian (O), 15: Spanish (P)
-    // 16: Hebrew details (Q), 17: English details (R), 18: Russian details (S), 19: Spanish details (T)
-    if (!cols || cols.length < 13) continue;
+    // 8-13: display flags I-N (skip); N = "לא מפורסם" (unpublished)
+    // 14: Hebrew title (O), 15: English (P), 16: Russian (Q), 17: Spanish (R)
+    // 18: Hebrew details (S), 19: English details (T), 20: Russian details (U), 21: Spanish details (V)
+    if (!cols || cols.length < 15) continue;
 
     const startDate = parseDate(cols[4]);
     if (!startDate) continue;
@@ -101,19 +101,22 @@ function parseRows(rows) {
     const endDate = parseDate(cols[5]) || startDate;
     const startTime = (cols[6] || '').trim();
     const endTime = (cols[7] || '').trim();
-    const titleHe = (cols[12] || '').trim();
-    const titleEn = (cols[13] || '').trim();
-    const titleRu = (cols[14] || '').trim();
-    const titleEs = (cols[15] || '').trim();
-    const detailsHe = (cols[16] || '').trim();
-    const detailsEn = (cols[17] || '').trim();
-    const detailsRu = (cols[18] || '').trim();
-    const detailsEs = (cols[19] || '').trim();
+    if ((cols[13] || '').trim().toUpperCase() === 'TRUE') continue;
+
+    const isSpecialEvent = (cols[12] || '').trim().toUpperCase() === 'TRUE';
+    const titleHe = (cols[14] || '').trim();
+    const titleEn = (cols[15] || '').trim();
+    const titleRu = (cols[16] || '').trim();
+    const titleEs = (cols[17] || '').trim();
+    const detailsHe = (cols[18] || '').trim();
+    const detailsEn = (cols[19] || '').trim();
+    const detailsRu = (cols[20] || '').trim();
+    const detailsEs = (cols[21] || '').trim();
 
     if (!titleHe && !titleEn) continue;
 
     const isMultiDay = startDate !== endDate;
-    const type = isMultiDay ? 'conference' : 'regular';
+    const type = isMultiDay ? 'conference' : isSpecialEvent ? 'special' : 'regular';
 
     const event = {
       id: `ev-${idCounter++}`,
