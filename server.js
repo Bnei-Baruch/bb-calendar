@@ -1,3 +1,5 @@
+import { config } from 'dotenv';
+config();
 import express from 'express';
 import { google } from 'googleapis';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, unlinkSync } from 'fs';
@@ -6,6 +8,9 @@ import { dirname, join } from 'path';
 import { TelegramClient } from 'telegram';
 import { StringSession } from 'telegram/sessions/index.js';
 import { Api } from 'telegram';
+import { initDb, getDbEvents } from './server/db.js';
+import { extractUser, canSeePrivate } from './server/auth.js';
+import adminRoutes from './server/adminRoutes.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -13,11 +18,12 @@ const PORT = 3001;
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
+app.use(extractUser);
 const CACHE_FILE = join(__dirname, 'data', 'events.json');
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
@@ -274,10 +280,17 @@ async function fetchTelegramPosts() {
 
 app.use(express.json());
 
+app.use('/api/admin', adminRoutes);
+
 app.get('/api/events', async (req, res) => {
   try {
-    const [events, studyLinks] = await Promise.all([getEvents(), fetchStudyLinks()]);
-    const enriched = events.map(e => {
+    const showPrivate = canSeePrivate(req);
+    const [sheetsEvents, dbEvents, studyLinks] = await Promise.all([
+      getEvents(), getDbEvents(showPrivate), fetchStudyLinks(),
+    ]);
+    const allEvents = [...sheetsEvents, ...dbEvents]
+      .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime));
+    const enriched = allEvents.map(e => {
       const eMin = timeToMin(e.startTime);
       const match = studyLinks.find(s =>
         s.date === e.date && eMin >= s.startMin && (s.endMin < 0 || eMin < s.endMin)
@@ -292,8 +305,8 @@ app.get('/api/events', async (req, res) => {
 
 app.get('/api/ics/:eventId', async (req, res) => {
   try {
-    const events = await getEvents();
-    const event = events.find(e => e.id === req.params.eventId);
+    const [sheetsEvents, dbEvents] = await Promise.all([getEvents(), getDbEvents(true)]);
+    const event = [...sheetsEvents, ...dbEvents].find(e => e.id === req.params.eventId);
     if (!event) return res.status(404).send('Event not found');
 
     const lang = req.query.lang || 'en';
@@ -403,6 +416,7 @@ app.get('/api/posts', async (_req, res) => {
 });
 
 // Warm cache on startup
+initDb().catch(console.error);
 getEvents().catch(console.error);
 fetchTelegramPosts().catch(err => console.error('[telegram] Startup warm failed:', err.message));
 

@@ -6,6 +6,9 @@ import { EventDetail } from './components/EventDetail';
 import { UpcomingEventsView } from './components/UpcomingEventsView';
 import { HolidaysView } from './components/HolidaysView';
 import { PostsView } from './components/PostsView';
+import { AdminGuard } from './admin/AdminGuard';
+import { TemplateList } from './admin/TemplateList';
+import { TemplateForm } from './admin/TemplateForm';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +38,24 @@ export const router = createBrowserRouter([
       {
         path: 'event/:eventId',
         Component: EventDetail,
+      },
+      {
+        path: 'admin',
+        Component: AdminGuard,
+        children: [
+          {
+            path: 'templates',
+            Component: TemplateList,
+          },
+          {
+            path: 'templates/new',
+            Component: TemplateForm,
+          },
+          {
+            path: 'templates/:id',
+            Component: TemplateForm,
+          },
+        ],
       },
       {
         path: '*',

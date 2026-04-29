@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams, useOutletContext } from 'react-router';
-import { ChevronLeft, ChevronRight, Clock, CalendarIcon, BookOpen, Share2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, CalendarIcon, BookOpen, Share2, Pencil, Trash2 } from 'lucide-react';
 import { AddToCalendarButton } from './AddToCalendarButton';
 import { he as heLocale, enUS, ru, es } from 'date-fns/locale';
 import { Button } from './ui/button';
@@ -11,6 +11,9 @@ import { getEventsByDate, getIsraelToday } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
 import { useState } from 'react';
+import { isAdmin } from '../admin/AdminGuard';
+import { AddEventModal } from '../admin/AddEventModal';
+import { adminApi } from '../admin/adminApi';
 
 export function DayView() {
   const { language } = useOutletContext<{ language: Language }>();
@@ -19,7 +22,10 @@ export function DayView() {
   const navigate = useNavigate();
   const isRTL = language === 'he';
 
-  const { events: allEvents, loading } = useEvents();
+  const { events: allEvents, loading, refetch } = useEvents();
+  const admin = isAdmin();
+  const [addEventDate, setAddEventDate] = useState<string | null>(null);
+  const [editEvent, setEditEvent] = useState<any>(null);
   const dateParam = searchParams.get('date') || getIsraelToday();
   const currentDate = parseISO(dateParam);
 
@@ -50,24 +56,18 @@ export function DayView() {
     return `${h.padStart(2, '0')}:${m || '00'}`;
   };
 
-  const dayNames = {
-    he: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-    en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-    es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-  };
+  const locale = language === 'he' ? 'he-IL' : language;
 
-  const monthNames = {
-    he: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  };
+  const getDayName = (date: Date) =>
+    date.toLocaleDateString(locale, { weekday: 'long' });
+
+  const getMonthName = (date: Date) =>
+    date.toLocaleDateString(locale, { month: 'long' });
 
   const formatDayHeader = (date: Date) => {
     const day = date.getDate();
-    const dayName = dayNames[language][date.getDay()];
-    const month = monthNames[language][date.getMonth()];
+    const dayName = getDayName(date);
+    const month = getMonthName(date);
     if (language === 'he') return `${dayName}, ${day} ${month}`;
     return `${dayName}, ${month} ${day}`;
   };
@@ -75,8 +75,8 @@ export function DayView() {
   const formatWeekRange = () => {
     const startDay = currentDate.getDate();
     const endDay = endDate.getDate();
-    const startMonth = monthNames[language][currentDate.getMonth()];
-    const endMonth = monthNames[language][endDate.getMonth()];
+    const startMonth = getMonthName(currentDate);
+    const endMonth = getMonthName(endDate);
     const year = endDate.getFullYear();
     if (language === 'he') {
       if (currentDate.getMonth() === endDate.getMonth()) {
@@ -379,6 +379,13 @@ export function DayView() {
                           {t.today}
                         </span>
                       )}
+                      {admin && (
+                        <button
+                          onClick={() => setAddEventDate(dateStr)}
+                          className="text-sm font-bold opacity-50 hover:opacity-100 transition-opacity"
+                          title="Add event"
+                        >＋</button>
+                      )}
                     </div>
                     <div className="relative shrink-0">
                       <button
@@ -469,6 +476,7 @@ export function DayView() {
                             <div className="flex-1">
                               <h4 className={`font-semibold text-sm sm:text-base ${color.text}`}>
                                 {event.title[language]}
+                                {event.private && <span className="ml-1 opacity-60 text-sm">🔒</span>}
                               </h4>
                               {event.description && (
                                 <p className={`text-xs sm:text-sm opacity-75 mt-0.5 ${color.text}`}>
@@ -476,6 +484,25 @@ export function DayView() {
                                 </p>
                               )}
                             </div>
+                            {admin && event.id.startsWith('adm-') && (
+                              <div className="flex items-center gap-1 shrink-0">
+                                <button
+                                  onClick={e => { e.stopPropagation(); setEditEvent(event); }}
+                                  className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
+                                  title="Edit"
+                                ><Pencil className="w-4 h-4" /></button>
+                                <button
+                                  onClick={async e => {
+                                    e.stopPropagation();
+                                    if (!confirm('Delete this event?')) return;
+                                    await adminApi.deleteEvent(event.id);
+                                    refetch();
+                                  }}
+                                  className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"
+                                  title="Delete"
+                                ><Trash2 className="w-4 h-4" /></button>
+                              </div>
+                            )}
                             {event.title.en === 'Meal' && (
                               <a
                                 href={`https://pay.kli.one/${language}/Calendar-Meals`}
@@ -510,6 +537,21 @@ export function DayView() {
           </div>
         )}
       </div>
+
+      {addEventDate && (
+        <AddEventModal
+          date={addEventDate}
+          onClose={() => setAddEventDate(null)}
+          onSaved={() => { setAddEventDate(null); refetch(); }}
+        />
+      )}
+      {editEvent && (
+        <AddEventModal
+          event={editEvent}
+          onClose={() => setEditEvent(null)}
+          onSaved={() => { setEditEvent(null); refetch(); }}
+        />
+      )}
     </div>
   );
 }

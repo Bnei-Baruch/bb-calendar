@@ -5,6 +5,9 @@ import { Moon, Sun, LayoutGrid } from 'lucide-react';
 import { LanguageSelector } from './LanguageSelector';
 import { Language, useTranslation } from '../utils/i18n';
 import keycloak from '../../keycloak';
+import { isAdmin } from '../admin/AdminGuard';
+import { GenerateModal } from '../admin/GenerateModal';
+import { HolidayGenerateModal } from '../admin/HolidayGenerateModal';
 
 interface HeaderProps {
   currentLanguage: Language;
@@ -34,11 +37,15 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
     }
   };
 
-  const currentLogoText = logoContent[currentLanguage];
+  const currentLogoText = logoContent[currentLanguage as keyof typeof logoContent] ?? logoContent.en;
 
   const [linksOpen, setLinksOpen] = useState(false);
   const linksRef = useRef<HTMLDivElement>(null);
   const [userOpen, setUserOpen] = useState(false);
+  const [generateOpen, setGenerateOpen] = useState(false);
+  const [holidaysOpen, setHolidaysOpen] = useState(false);
+  const [generateToast, setGenerateToast] = useState('');
+  const admin = isAdmin();
   const userRef = useRef<HTMLDivElement>(null);
 
   const userName = [keycloak.tokenParsed?.given_name, keycloak.tokenParsed?.family_name].filter(Boolean).join(' ')
@@ -58,6 +65,8 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
 
   const usefulLinksTitle: Record<Language, string> = {
     he: 'קישורים שימושיים', en: 'Useful Links', ru: 'Полезные ссылки', es: 'Enlaces útiles',
+    de: 'Nützliche Links', it: 'Link utili', fr: 'Liens utiles', pt: 'Links úteis',
+    uk: 'Корисні посилання', tr: 'Yararlı Bağlantılar', bg: 'Полезни връзки',
   };
 
   const usefulLinks = [
@@ -195,7 +204,7 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
                       className="flex items-center px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     >
                       <div>
-                        <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">{link.label[currentLanguage]}</div>
+                        <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">{link.label[currentLanguage] ?? link.label.en}</div>
                         <div className="text-xs text-gray-400 dark:text-gray-500">{link.sublabel}</div>
                       </div>
                     </a>
@@ -215,6 +224,27 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
             >
               {dark ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-gray-600 dark:text-gray-400" />}
             </button>
+            {admin && (
+              <>
+                <Link to="/admin/templates"
+                  className="hidden sm:inline-flex items-center text-xs px-2.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+                  Templates
+                </Link>
+                <button
+                  onClick={() => setHolidaysOpen(true)}
+                  className="hidden sm:inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors"
+                >
+                  ✡ Holidays
+                </button>
+                <button
+                  onClick={() => setGenerateOpen(true)}
+                  className="hidden sm:inline-flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors"
+                >
+                  ⚡ Generate
+                </button>
+              </>
+            )}
+
             <LanguageSelector
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
@@ -239,12 +269,12 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
                       <a key={i} href={item.href} target="_blank" rel="noopener noreferrer"
                         onClick={() => setUserOpen(false)}
                         className="block px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                        {item.label[currentLanguage]}
+                        {item.label[currentLanguage] ?? item.label.en}
                       </a>
                     ) : (
                       <button key={i} onClick={() => { setUserOpen(false); item.onClick?.(); }}
                         className="w-full text-start px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                        {item.label[currentLanguage]}
+                        {item.label[currentLanguage] ?? item.label.en}
                       </button>
                     )
                   )}
@@ -263,6 +293,30 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
           </Link>
         </div>
       </div>
+
+      {generateOpen && (
+        <GenerateModal
+          onClose={() => setGenerateOpen(false)}
+          onCreated={count => {
+            setGenerateToast(`✅ Created ${count} events`);
+            setTimeout(() => setGenerateToast(''), 4000);
+          }}
+        />
+      )}
+      {holidaysOpen && (
+        <HolidayGenerateModal
+          onClose={() => setHolidaysOpen(false)}
+          onCreated={count => {
+            setGenerateToast(`✅ Added ${count} holidays`);
+            setTimeout(() => setGenerateToast(''), 4000);
+          }}
+        />
+      )}
+      {generateToast && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm">
+          {generateToast}
+        </div>
+      )}
     </header>
   );
 }
