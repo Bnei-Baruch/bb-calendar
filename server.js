@@ -66,7 +66,7 @@ async function fetchStudyLinks() {
         date: e.date.split('T')[0],
         startMin: timeToMin(e.start_time),
         endMin: timeToMin(e.end_time),
-        link: 'https://study.kli.one/?event=' + e.id,
+        link: 'https://study.kli.one/event/' + e.id,
       });
     }
     studyLinksCache = list;
@@ -285,10 +285,11 @@ app.use('/api/admin', adminRoutes);
 app.get('/api/events', async (req, res) => {
   try {
     const showPrivate = canSeePrivate(req);
-    const [sheetsEvents, dbEvents, studyLinks] = await Promise.all([
-      getEvents(), getDbEvents(showPrivate), fetchStudyLinks(),
+    const [sheetsRaw, dbEvents, studyLinks] = await Promise.all([
+      process.env.DISABLE_SHEETS ? [] : getEvents(), getDbEvents(showPrivate), fetchStudyLinks(),
     ]);
-    const allEvents = [...sheetsEvents, ...dbEvents]
+    const dbIds = new Set(dbEvents.map(e => e.id));
+    const allEvents = [...sheetsRaw.filter(e => !dbIds.has(e.id)), ...dbEvents]
       .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime));
     const enriched = allEvents.map(e => {
       const eMin = timeToMin(e.startTime);

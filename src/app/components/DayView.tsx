@@ -484,7 +484,7 @@ export function DayView() {
                                 </p>
                               )}
                             </div>
-                            {admin && event.id.startsWith('adm-') && (
+                            {admin && event._db && (
                               <div className="flex items-center gap-1 shrink-0">
                                 <button
                                   onClick={e => { e.stopPropagation(); setEditEvent(event); }}

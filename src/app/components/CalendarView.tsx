@@ -400,7 +400,7 @@ export function CalendarView() {
                                     <span className="font-medium">{event.startTime}</span>{' '}
                                     <span>{event.title[language]}</span>
                                     {event.private && <span className="ml-1 opacity-60">🔒</span>}
-                                    {admin && event.id.startsWith('adm-') && (
+                                    {admin && event._db && (
                                       <span className="inline-flex items-center gap-0.5 opacity-0 group-hover/ev:opacity-100 transition-opacity ml-1">
                                         <button
                                           onClick={e => { e.stopPropagation(); setEditEvent(event); }}

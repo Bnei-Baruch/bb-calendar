@@ -31,6 +31,9 @@ export function TemplateList() {
   const [templates, setTemplates] = useState<AdminTemplate[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [importUrl, setImportUrl] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState('');
   const navigate = useNavigate();
 
   const load = () => {
@@ -53,6 +56,23 @@ export function TemplateList() {
     }
   };
 
+  const importFromSheets = async () => {
+    if (!importUrl.trim()) return;
+    setImporting(true);
+    setImportResult('');
+    setError('');
+    try {
+      const { created, updated } = await adminApi.importTemplatesFromSheets(importUrl.trim());
+      setImportResult(`✅ Created: ${created}, updated: ${updated}`);
+      setImportUrl('');
+      load();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setImporting(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-6 max-w-3xl">
       <div className="flex items-center justify-between mb-6">
@@ -64,6 +84,20 @@ export function TemplateList() {
           <Button onClick={() => navigate('/admin/templates/new')}>+ New template</Button>
         </div>
       </div>
+
+      <div className="mb-4 flex gap-2">
+        <input
+          type="url"
+          value={importUrl}
+          onChange={e => setImportUrl(e.target.value)}
+          placeholder="Paste Google Sheets URL to import templates…"
+          className="flex-1 border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+        />
+        <Button variant="outline" onClick={importFromSheets} disabled={importing || !importUrl.trim()}>
+          {importing ? 'Importing…' : '↑ Import'}
+        </Button>
+      </div>
+      {importResult && <p className="text-sm text-green-600 mb-3">{importResult}</p>}
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
       {loading && <p className="text-gray-400">Loading…</p>}

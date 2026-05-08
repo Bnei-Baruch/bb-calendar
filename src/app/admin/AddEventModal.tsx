@@ -3,21 +3,29 @@ import { createPortal } from 'react-dom';
 import { adminApi, type AdminEvent, type AdminTemplate } from './adminApi';
 import { Button } from '../components/ui/button';
 import { type Language, languageNames } from '../utils/i18n';
+import { useEvents } from '../context/EventsContext';
 
 const ALL_LANGS: Language[] = ['he', 'en', 'ru', 'es', 'de', 'it', 'fr', 'pt', 'uk', 'tr', 'bg'];
 
 interface Props {
   date?: string;
   event?: AdminEvent;
+  parentId?: string;
   onClose: () => void;
   onSaved: () => void;
 }
 
-export function AddEventModal({ date, event, onClose, onSaved }: Props) {
+export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props) {
   const isEdit = !!event;
+  const { events: allEvents } = useEvents();
+
+  const parents = allEvents.filter(e => e.type === 'conference' || e.type === 'holiday');
 
   const [templates, setTemplates] = useState<AdminTemplate[]>([]);
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | ''>('');
+  const [selectedParentId, setSelectedParentId] = useState<string>(
+    event?.parentId ?? parentId ?? ''
+  );
   const [form, setForm] = useState({
     date: event?.date ?? date ?? '',
     endDate: event?.endDate ?? '',
@@ -86,6 +94,7 @@ export function AddEventModal({ date, event, onClose, onSaved }: Props) {
         endTime: form.endTime,
         titles: form.titles,
         private: form.private,
+        parentId: selectedParentId || undefined,
       };
       if (isEdit) {
         await adminApi.updateEvent(event.id, payload);
@@ -136,6 +145,25 @@ export function AddEventModal({ date, event, onClose, onSaved }: Props) {
                 <option value="">— pick a template —</option>
                 {templates.map(t => (
                   <option key={t.id} value={t.id}>{t.titles['he'] || t.name}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {parents.length > 0 && (
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Belongs to (convention / holiday)</label>
+              <select
+                value={selectedParentId}
+                onChange={e => setSelectedParentId(e.target.value)}
+                className="w-full border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+                dir="rtl"
+              >
+                <option value="">— none —</option>
+                {parents.map(p => (
+                  <option key={p.id} value={p.id}>
+                    {p.title?.he || p.title?.en || p.id} ({p.date})
+                  </option>
                 ))}
               </select>
             </div>

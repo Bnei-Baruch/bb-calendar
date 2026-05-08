@@ -1,11 +1,7 @@
 import pg from 'pg';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-
 const { Pool, types } = pg;
 // Return DATE columns as plain strings (avoids local-midnight UTC shift on UTC+3)
 types.setTypeParser(1082, v => v);
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://bb_calendar:changeme@127.0.0.1:5432/bb_calendar',
@@ -26,8 +22,10 @@ CREATE TABLE IF NOT EXISTS events (
   location       TEXT,
   private        BOOLEAN NOT NULL DEFAULT FALSE,
   generation_tag TEXT,
+  parent_id      TEXT,
   created_at     TIMESTAMPTZ DEFAULT NOW()
 );
+ALTER TABLE events ADD COLUMN IF NOT EXISTS parent_id TEXT;
 
 CREATE TABLE IF NOT EXISTS event_templates (
   id                 SERIAL PRIMARY KEY,
@@ -72,6 +70,8 @@ function rowToEvent(row) {
     location: row.location || undefined,
     private: row.private,
     generationTag: row.generation_tag || undefined,
+    parentId: row.parent_id || undefined,
+    _db: true,
   };
 }
 

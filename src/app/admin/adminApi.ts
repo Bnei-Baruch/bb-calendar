@@ -32,6 +32,10 @@ export const adminApi = {
   createTemplate: (data: TemplatePayload) => request<AdminTemplate>('/templates', { method: 'POST', body: JSON.stringify(data) }),
   updateTemplate: (id: number, data: TemplatePayload) => request<AdminTemplate>(`/templates/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteTemplate: (id: number) => request<{ ok: boolean }>(`/templates/${id}`, { method: 'DELETE' }),
+  importTemplatesFromSheets: (url: string) =>
+    request<{ created: number; updated: number }>('/templates/import-sheets', { method: 'POST', body: JSON.stringify({ url }) }),
+  importEventsFromSheets: (url: string, parentId: string) =>
+    request<{ created: number; updated: number }>('/events/import-sheets', { method: 'POST', body: JSON.stringify({ url, parentId }) }),
 
   // Generate
   generatePreview: (targetMonth: string, referenceMonth: string) =>
@@ -69,6 +73,7 @@ export interface AdminEvent {
   location?: string;
   private: boolean;
   generationTag?: string;
+  parentId?: string;
 }
 
 export interface EventPayload {
@@ -81,6 +86,7 @@ export interface EventPayload {
   descriptions?: Record<string, string>;
   location?: string;
   private?: boolean;
+  parentId?: string;
 }
 
 export interface AdminTemplate {

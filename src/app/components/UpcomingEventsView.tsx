@@ -92,7 +92,7 @@ export function UpcomingEventsView() {
             {congresses.map((event) => {
               const days = getDays(event);
               const isSpecial = event.type === 'special';
-              const isDB = event.id.startsWith('adm-');
+              const isDB = !!event._db;
               const accent = isSpecial
                 ? { bar: 'bg-purple-500', text: 'text-purple-700 dark:text-purple-300', badge: 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300', hover: '', cal: 'text-purple-500', calText: 'text-purple-600 dark:text-purple-300' }
                 : { bar: 'bg-blue-500',   text: 'text-blue-700 dark:text-blue-300',     badge: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',       hover: 'group-hover:text-blue-600 dark:group-hover:text-blue-400', cal: 'text-blue-500', calText: 'text-blue-600 dark:text-blue-300' };

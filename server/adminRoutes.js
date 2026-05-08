@@ -72,12 +72,12 @@ router.get('/events/:id', async (req, res) => {
 router.post('/events', async (req, res) => {
   try {
     const { type = 'regular', date, endDate, startTime = '', endTime = '',
-            titles = {}, descriptions, location, private: priv = false, generationTag } = req.body;
+            titles = {}, descriptions, location, private: priv = false, generationTag, parentId } = req.body;
     if (!date) return res.status(400).json({ error: 'date required' });
     const { rows } = await pool.query(
-      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, titles, descriptions || null, location || null, priv, generationTag || null]
+      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+      [type, date, endDate || null, startTime, endTime, titles, descriptions || null, location || null, priv, generationTag || null, parentId || null]
     );
     res.status(201).json(rowToEvent(rows[0]));
   } catch (err) {
@@ -87,13 +87,13 @@ router.post('/events', async (req, res) => {
 
 router.put('/events/:id', async (req, res) => {
   try {
-    const { type, date, endDate, startTime, endTime, titles, descriptions, location, private: priv } = req.body;
+    const { type, date, endDate, startTime, endTime, titles, descriptions, location, private: priv, parentId } = req.body;
     const { rows } = await pool.query(
       `UPDATE events SET
          type=$1, date=$2, end_date=$3, start_time=$4, end_time=$5,
-         titles=$6, descriptions=$7, location=$8, private=$9
-       WHERE id=$10 RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, titles, descriptions || null, location || null, priv, req.params.id]
+         titles=$6, descriptions=$7, location=$8, private=$9, parent_id=$10
+       WHERE id=$11 RETURNING *`,
+      [type, date, endDate || null, startTime, endTime, titles, descriptions || null, location || null, priv, parentId || null, req.params.id]
     );
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
     res.json(rowToEvent(rows[0]));
@@ -708,6 +708,173 @@ router.delete('/generate/:tag', async (req, res) => {
       [req.params.tag]
     );
     res.json({ deleted: rowCount });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── Import events for a convention/holiday from Google Sheet ──────────────────
+
+const HE_MONTHS = {
+  'ינואר':1,'פברואר':2,'מרץ':3,'אפריל':4,'מאי':5,'יוני':6,
+  'יולי':7,'אוגוסט':8,'ספטמבר':9,'אוקטובר':10,'נובמבר':11,'דצמבר':12,
+};
+
+function parseHebrewDate(str) {
+  const clean = str.replace(/\*/g, '').trim();
+  const comma = clean.indexOf(', ');
+  if (comma === -1) return null;
+  const [day, monthHe, year] = clean.slice(comma + 2).split(' ');
+  const m = HE_MONTHS[monthHe];
+  if (!m || !year) return null;
+  return `${year}-${String(m).padStart(2,'0')}-${String(parseInt(day)).padStart(2,'0')}`;
+}
+
+router.post('/events/import-sheets', async (req, res) => {
+  try {
+    const { url, parentId } = req.body;
+    if (!url || !parentId) return res.status(400).json({ error: 'url and parentId required' });
+
+    const { spreadsheetId, gid } = parseSheetUrl(url);
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
+    const resp = await fetch(csvUrl);
+    if (!resp.ok) throw new Error(`Sheets fetch failed: ${resp.status} ${resp.statusText}`);
+    const text = await resp.text();
+
+    const rows = parseCsv(text);
+    if (!rows.length) return res.status(400).json({ error: 'Sheet appears empty' });
+
+    const ALL_LANGS = ['he','en','ru','es','de','it','fr','pt','uk','tr','bg'];
+    const dataRows = rows[0][0].toLowerCase() === 'date' ? rows.slice(1) : rows;
+
+    let created = 0, updated = 0;
+
+    for (const cols of dataRows) {
+      const dateRaw  = (cols[0] || '').trim();
+      const startTime = (cols[1] || '').trim();
+      const endTime   = (cols[2] || '').trim();
+      if (!dateRaw || !startTime) continue; // skip day-header dividers and empty rows
+
+      const date = parseHebrewDate(dateRaw);
+      if (!date) continue;
+
+      const titles = Object.fromEntries(
+        ALL_LANGS.map((l, i) => [l, (cols[3 + i] || '').trim()]).filter(([, v]) => v)
+      );
+      if (!titles.he && !titles.en) continue;
+
+      // Upsert by (parentId, date, startTime)
+      const { rows: existing } = await pool.query(
+        `SELECT id FROM events WHERE parent_id=$1 AND date=$2 AND start_time=$3`,
+        [parentId, date, startTime]
+      );
+      if (existing.length) {
+        await pool.query(
+          `UPDATE events SET titles = titles || $1::jsonb, end_time=$2 WHERE id=$3`,
+          [titles, endTime, existing[0].id]
+        );
+        updated++;
+      } else {
+        await pool.query(
+          `INSERT INTO events (type, date, start_time, end_time, titles, private, parent_id)
+           VALUES ('regular',$1,$2,$3,$4,false,$5)`,
+          [date, startTime, endTime, titles, parentId]
+        );
+        created++;
+      }
+    }
+
+    res.json({ created, updated });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── Import templates from Google Sheet ────────────────────────────────────────
+
+function parseSheetUrl(url) {
+  const m = url.match(/\/spreadsheets\/d\/([^/]+)/);
+  if (!m) throw new Error('Could not parse spreadsheet ID from URL');
+  const spreadsheetId = m[1];
+  const gidMatch = url.match(/[?&#]gid=(\d+)/);
+  const gid = gidMatch ? gidMatch[1] : '0';
+  return { spreadsheetId, gid };
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [], field = '', inQuote = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQuote) {
+      if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      else if (ch === '"') inQuote = false;
+      else field += ch;
+    } else {
+      if (ch === '"') { inQuote = true; }
+      else if (ch === ',') { row.push(field.trim()); field = ''; }
+      else if (ch === '\n') { row.push(field.trim()); rows.push(row); row = []; field = ''; }
+      else if (ch !== '\r') { field += ch; }
+    }
+  }
+  if (field || row.length) { row.push(field.trim()); rows.push(row); }
+  return rows.filter(r => r.some(c => c));
+}
+
+router.post('/templates/import-sheets', async (req, res) => {
+  try {
+    const { url } = req.body;
+    if (!url) return res.status(400).json({ error: 'url required' });
+
+    const { spreadsheetId, gid } = parseSheetUrl(url);
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
+    const resp = await fetch(csvUrl);
+    if (!resp.ok) throw new Error(`Sheets fetch failed: ${resp.status} ${resp.statusText}`);
+    const text = await resp.text();
+
+    const rows = parseCsv(text);
+    if (!rows.length) return res.status(400).json({ error: 'Sheet appears empty' });
+
+    // Detect header row (first row containing 'name' or Hebrew column)
+    const dataRows = rows[0][0].toLowerCase() === 'name' ? rows.slice(1) : rows;
+
+    const ALL_LANGS = ['he','en','ru','es','de','it','fr','pt','uk','tr','bg'];
+    let created = 0, updated = 0;
+
+    for (const cols of dataRows) {
+      const name = cols[0];
+      if (!name) continue;
+      const startTime = cols[1] || '';
+      const endTime   = cols[2] || '';
+      // Only include non-empty values so blank sheet cells don't wipe existing translations
+      const titles = Object.fromEntries(
+        ALL_LANGS.map((l, i) => [l, (cols[3 + i] || '').trim()]).filter(([, v]) => v)
+      );
+
+      const { rows: existing } = await pool.query(
+        'SELECT id FROM event_templates WHERE name=$1', [name]
+      );
+      if (existing.length) {
+        await pool.query(
+          `UPDATE event_templates
+             SET titles = titles || $1::jsonb,
+                 default_start_time = CASE WHEN $2 <> '' THEN $2 ELSE default_start_time END,
+                 default_end_time   = CASE WHEN $3 <> '' THEN $3 ELSE default_end_time   END
+           WHERE name = $4`,
+          [titles, startTime, endTime, name]
+        );
+        updated++;
+      } else {
+        await pool.query(
+          `INSERT INTO event_templates (name, titles, default_start_time, default_end_time, private_by_default, type)
+           VALUES ($1,$2,$3,$4,false,'regular')`,
+          [name, titles, startTime, endTime]
+        );
+        created++;
+      }
+    }
+
+    res.json({ created, updated });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

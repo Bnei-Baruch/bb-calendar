@@ -14,6 +14,8 @@ export interface Event {
   location?: string;
   studyLink?: string;
   private?: boolean;
+  parentId?: string;
+  _db?: boolean;
 }
 
 export function getEventTitle(event: Event, language: Language): string {

@@ -170,7 +170,7 @@ export function HolidaysView() {
             {holidays.map((event) => {
               const days = getDays(event);
               const memorial = isMemorialDay(event);
-              const isDB = event.id.startsWith('adm-');
+              const isDB = !!event._db;
               const tagLabel = memorial ? (language === 'he' ? 'יום לאומי' : 'National Day') : (language === 'he' ? 'חג' : 'Holiday');
 
               const displayStart = eveDate(event);

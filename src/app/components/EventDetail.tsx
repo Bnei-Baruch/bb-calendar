@@ -27,6 +27,10 @@ export function EventDetail() {
   const [shareOpen, setShareOpen] = useState(false);
   const [editEvent, setEditEvent] = useState<AdminEvent | null>(null);
   const [addDate, setAddDate] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importUrl, setImportUrl] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState('');
 
   useEffect(() => { window.scrollTo(0, 0); }, [eventId]);
 
@@ -56,12 +60,14 @@ export function EventDetail() {
     }
 
     const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+    const isContainer = event.type === 'conference' || event.type === 'holiday';
     allEvents
       .filter(e =>
         e.date >= event.date &&
         e.date <= endRange &&
         e.id !== event.id &&
-        !(e.endDate && e.endDate !== e.date)
+        !(e.endDate && e.endDate !== e.date) &&
+        (isContainer ? e.parentId === event.id : !e.parentId)
       )
       .forEach(e => {
         if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
@@ -305,14 +311,60 @@ export function EventDetail() {
             </div>
           )}
 
-          {sortedDates.length > 0 && (
+          {(sortedDates.length > 0 || (admin && (event.type === 'conference' || event.type === 'holiday'))) && (
             <div className="mt-8 pt-6 border-t">
-              <h3 className={`font-semibold text-xl mb-6 ${isRTL ? 'text-right' : ''}`}>
-                {language === 'he' ? 'לוח זמנים מפורט' : 
-                 language === 'en' ? 'Detailed Schedule' :
-                 language === 'ru' ? 'Подробное расписание' :
-                 'Horario detallado'}
-              </h3>
+              <div className={`flex items-center justify-between mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <h3 className={`font-semibold text-xl ${isRTL ? 'text-right' : ''}`}>
+                  {language === 'he' ? 'לוח זמנים מפורט' :
+                   language === 'en' ? 'Detailed Schedule' :
+                   language === 'ru' ? 'Подробное расписание' :
+                   'Horario detallado'}
+                </h3>
+                {admin && (event.type === 'conference' || event.type === 'holiday') && (
+                  <button
+                    onClick={() => { setImportOpen(v => !v); setImportResult(''); }}
+                    className="text-xs px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    {isRTL ? '↑ ייבוא מגיליון' : '↑ Import from Sheets'}
+                  </button>
+                )}
+              </div>
+              {importOpen && admin && (() => {
+                const doImport = async () => {
+                  if (!importUrl.trim()) return;
+                  setImporting(true);
+                  setImportResult('');
+                  try {
+                    const { created, updated } = await adminApi.importEventsFromSheets(importUrl.trim(), event.id);
+                    setImportResult(`✅ Created: ${created}, updated: ${updated}`);
+                    setImportUrl('');
+                    setImportOpen(false);
+                    refetch();
+                  } catch (e: any) {
+                    setImportResult(`❌ ${e.message}`);
+                  } finally {
+                    setImporting(false);
+                  }
+                };
+                return (
+                  <div className="mb-6 flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <input
+                        type="url"
+                        value={importUrl}
+                        onChange={e => setImportUrl(e.target.value)}
+                        placeholder="Paste Google Sheets URL…"
+                        className="flex-1 border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+                        onKeyDown={e => e.key === 'Enter' && doImport()}
+                      />
+                      <Button variant="outline" onClick={doImport} disabled={importing || !importUrl.trim()}>
+                        {importing ? (isRTL ? 'מייבא…' : 'Importing…') : (isRTL ? 'ייבא' : 'Import')}
+                      </Button>
+                    </div>
+                    {importResult && <p className="text-sm">{importResult}</p>}
+                  </div>
+                );
+              })()}
               <div className="space-y-6">
                 {sortedDates.map(date => {
                   const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
@@ -383,7 +435,7 @@ export function EventDetail() {
                                       <BookOpen className="w-4 h-4 text-white" />
                                     </a>
                                   )}
-                                  {admin && evt.id.startsWith('adm-') && (
+                                  {admin && evt._db && (
                                     <div className="flex items-center gap-1 opacity-0 group-hover/ev:opacity-100 transition-opacity">
                                       <button
                                         onClick={() => setEditEvent(evt as unknown as AdminEvent)}
@@ -419,6 +471,7 @@ export function EventDetail() {
       {addDate && (
         <AddEventModal
           date={addDate}
+          parentId={event.id}
           onClose={() => setAddDate(null)}
           onSaved={() => { setAddDate(null); refetch(); }}
         />
