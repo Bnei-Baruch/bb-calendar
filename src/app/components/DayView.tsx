@@ -11,7 +11,7 @@ import { getEventsByDate, getIsraelToday } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
 import { useState } from 'react';
-import { isAdmin } from '../admin/AdminGuard';
+import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
 import { AddEventModal } from '../admin/AddEventModal';
 import { adminApi } from '../admin/adminApi';
 
@@ -24,6 +24,8 @@ export function DayView() {
 
   const { events: allEvents, loading, refetch } = useEvents();
   const admin = isAdmin();
+  const canEdit = isAdminOrTranslator();
+  const displayEvents = canEdit ? allEvents : allEvents.filter(e => !!e.title?.[language]);
   const [addEventDate, setAddEventDate] = useState<string | null>(null);
   const [editEvent, setEditEvent] = useState<any>(null);
   const dateParam = searchParams.get('date') || getIsraelToday();
@@ -123,8 +125,8 @@ export function DayView() {
     const appTitle = { he: 'לוח אירועים', en: 'Events Calendar', ru: 'Календарь событий', es: 'Calendario de Eventos' }[language];
     const siteLabel = { he: 'לאתר לוח אירועים', en: 'Events Calendar website', ru: 'Сайт календаря событий', es: 'Sitio web del calendario de eventos' }[language];
     const lines: string[] = [`*${appTitle}*`, `*${formatDayHeader(date)}*`, '──────────'];
-    const dayEvents = getEventsByDate(allEvents, dateStr);
-    const parentEvent = allEvents
+    const dayEvents = getEventsByDate(displayEvents, dateStr);
+    const parentEvent = displayEvents
       .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
       .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
     const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
@@ -177,8 +179,8 @@ export function DayView() {
     const lines: string[] = [`*${appTitle}*`, `*${formatWeekRange()}*`, ''];
     weekDates.forEach(dateStr => {
       const date = parseISO(dateStr);
-      const dayEvents = getEventsByDate(allEvents, dateStr);
-      const parentEvent = allEvents
+      const dayEvents = getEventsByDate(displayEvents, dateStr);
+      const parentEvent = displayEvents
         .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
         .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
       const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
@@ -350,8 +352,8 @@ export function DayView() {
               const date = parseISO(dateStr);
               const todayFlag = isToday(date);
               const color = dayColors[dayIdx];
-              const allDayEvents = getEventsByDate(allEvents, dateStr);
-              const parentEvent = allEvents
+              const allDayEvents = getEventsByDate(displayEvents, dateStr);
+              const parentEvent = displayEvents
                 .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
                 .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
               const events = parentEvent
@@ -379,7 +381,7 @@ export function DayView() {
                           {t.today}
                         </span>
                       )}
-                      {admin && (
+                      {canEdit && (
                         <button
                           onClick={() => setAddEventDate(dateStr)}
                           className="text-sm font-bold opacity-50 hover:opacity-100 transition-opacity"
@@ -463,7 +465,7 @@ export function DayView() {
                           className={`bg-white/70 dark:bg-white/5 rounded-lg p-3 transition-colors ${event.type === 'conference' ? 'cursor-pointer hover:bg-white/90 dark:hover:bg-white/10' : ''}`}
                           onClick={event.type === 'conference' ? () => handleEventClick(event.id) : undefined}
                         >
-                          <div className="flex items-start gap-3">
+                          <div className="flex items-center gap-3">
                             <div className={`flex items-center gap-1.5 text-sm min-w-[100px] ${color.text}`}>
                               <Clock className="w-3.5 h-3.5 shrink-0" />
                               <span className="font-medium" dir="ltr">
@@ -484,14 +486,14 @@ export function DayView() {
                                 </p>
                               )}
                             </div>
-                            {admin && event._db && (
+                            {canEdit && event._db && (
                               <div className="flex items-center gap-1 shrink-0">
                                 <button
                                   onClick={e => { e.stopPropagation(); setEditEvent(event); }}
                                   className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
                                   title="Edit"
                                 ><Pencil className="w-4 h-4" /></button>
-                                <button
+                                {admin && <button
                                   onClick={async e => {
                                     e.stopPropagation();
                                     if (!confirm('Delete this event?')) return;
@@ -500,7 +502,7 @@ export function DayView() {
                                   }}
                                   className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"
                                   title="Delete"
-                                ><Trash2 className="w-4 h-4" /></button>
+                                ><Trash2 className="w-4 h-4" /></button>}
                               </div>
                             )}
                             {event.title.en === 'Meal' && (

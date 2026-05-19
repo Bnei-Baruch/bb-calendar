@@ -6,7 +6,7 @@ import { useEvents } from '../context/EventsContext';
 import { Event, getIsraelToday } from '../data/events';
 import { isHoliday } from './HolidaysView';
 import { AddToCalendarButton } from './AddToCalendarButton';
-import { isAdmin } from '../admin/AdminGuard';
+import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
 import { adminApi } from '../admin/adminApi';
 import { AddEventModal } from '../admin/AddEventModal';
 import type { AdminEvent } from '../admin/adminApi';
@@ -16,6 +16,7 @@ export function UpcomingEventsView() {
   const t = useTranslation(language);
   const isRTL = language === 'he';
   const admin = isAdmin();
+  const canEdit = isAdminOrTranslator();
 
   const { events: allEvents, refetch } = useEvents();
   const [editEvent, setEditEvent] = useState<AdminEvent | null>(null);
@@ -28,6 +29,7 @@ export function UpcomingEventsView() {
     .filter(event => {
       if (event.date < todayStr) return false;
       if (isHoliday(event)) return false;
+      if (!canEdit && !event.title?.[language]) return false;
       const isMultiDay = event.endDate && event.endDate !== event.date;
       return isMultiDay || event.type === 'special';
     })
@@ -71,7 +73,7 @@ export function UpcomingEventsView() {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t.upcomingEvents}</h2>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{t.congressesSubtitle}</p>
           </div>
-          {admin && (
+          {canEdit && (
             <button
               onClick={() => setAddOpen(true)}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors shrink-0 mt-1"
@@ -145,7 +147,7 @@ export function UpcomingEventsView() {
 
                   <div className="flex items-center gap-1 shrink-0">
                     <AddToCalendarButton event={event} language={language} isRTL={isRTL} />
-                    {admin && (
+                    {canEdit && (
                       <>
                         <button
                           onClick={e => {
@@ -155,7 +157,7 @@ export function UpcomingEventsView() {
                           className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
                           title="Edit"
                         ><Pencil className="w-4 h-4" /></button>
-                        {isDB && (
+                        {isDB && admin && (
                           <button
                             onClick={e => handleDelete(e, event.id)}
                             className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"

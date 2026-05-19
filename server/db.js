@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS events (
   created_at     TIMESTAMPTZ DEFAULT NOW()
 );
 ALTER TABLE events ADD COLUMN IF NOT EXISTS parent_id TEXT;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS suppressed BOOLEAN NOT NULL DEFAULT FALSE;
 
 CREATE TABLE IF NOT EXISTS event_templates (
   id                 SERIAL PRIMARY KEY,
@@ -78,10 +79,15 @@ function rowToEvent(row) {
 export async function getDbEvents(includePrivate = false) {
   const { rows } = await pool.query(
     includePrivate
-      ? 'SELECT * FROM events ORDER BY date, start_time'
-      : 'SELECT * FROM events WHERE private = FALSE ORDER BY date, start_time'
+      ? 'SELECT * FROM events WHERE suppressed = FALSE ORDER BY date, start_time'
+      : 'SELECT * FROM events WHERE private = FALSE AND suppressed = FALSE ORDER BY date, start_time'
   );
   return rows.map(rowToEvent);
+}
+
+export async function getAllDbIds() {
+  const { rows } = await pool.query('SELECT id FROM events');
+  return rows.map(r => r.id);
 }
 
 export async function getDbEventById(id) {

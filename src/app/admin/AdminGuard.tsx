@@ -6,6 +6,15 @@ export function isAdmin(): boolean {
   return roles.includes('events_admin');
 }
 
+export function isTranslator(): boolean {
+  const roles: string[] = keycloak.tokenParsed?.realm_access?.roles ?? [];
+  return roles.includes('events_translator');
+}
+
+export function isAdminOrTranslator(): boolean {
+  return isAdmin() || isTranslator();
+}
+
 export function AdminGuard() {
   if (!keycloak.authenticated) return <Navigate to="/" replace />;
   if (!isAdmin()) {

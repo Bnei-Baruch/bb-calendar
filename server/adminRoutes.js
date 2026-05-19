@@ -5,7 +5,7 @@ import { readFileSync, existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { pool, getDbEvents, getDbEventById, rowToEvent } from './db.js';
-import { requireAdmin } from './auth.js';
+import { requireAdmin, requireAdminOrTranslator, isTranslatorRole } from './auth.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -16,7 +16,6 @@ function getSheetsEvents() {
 }
 
 const router = Router();
-router.use(requireAdmin);
 router.use((req, res, next) => { res.setHeader('Content-Type', 'application/json'); next(); });
 
 let anthropic;
@@ -26,6 +25,57 @@ function getAnthropic() {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
+
+const ALL_LANGS_ORDERED = ['he','en','ru','es','de','it','fr','pt','uk','tr','bg'];
+const LANG_NAMES_EN = { he:'Hebrew',en:'English',ru:'Russian',es:'Spanish',de:'German',it:'Italian',fr:'French',pt:'Portuguese',uk:'Ukrainian',tr:'Turkish',bg:'Bulgarian' };
+
+async function enrichTitles(titles, templates) {
+  const full = { ...titles };
+  const missing = ALL_LANGS_ORDERED.filter(l => !full[l]);
+  if (!missing.length) return full;
+
+  // 1. Fill from best-matching template (he or en title match)
+  const heTitle = (full.he || '').trim().toLowerCase();
+  const enTitle = (full.en || '').trim().toLowerCase();
+  const tmpl = templates.find(t => {
+    const tHe = (t.titles?.he || '').trim().toLowerCase();
+    const tEn = (t.titles?.en || '').trim().toLowerCase();
+    return (heTitle && tHe && heTitle === tHe) || (enTitle && tEn && enTitle === tEn);
+  });
+  if (tmpl) {
+    for (const l of missing) {
+      if (tmpl.titles[l]) full[l] = tmpl.titles[l];
+    }
+  }
+
+  // 2. Translate remaining via Claude (haiku — fast & cheap)
+  const stillMissing = ALL_LANGS_ORDERED.filter(l => !full[l]);
+  if (stillMissing.length) {
+    try {
+      const sourceLang = full.he ? 'he' : full.en ? 'en' : 'ru';
+      const sourceText = full[sourceLang];
+      const targetList = stillMissing.map(l => `${l} (${LANG_NAMES_EN[l]})`).join(', ');
+      const prompt = `Translate the following short event title from ${LANG_NAMES_EN[sourceLang]} into these languages: ${targetList}.
+This is for a Jewish educational community calendar (Bnei Baruch / Kabbalah). Preserve proper nouns like "Kabbalah", "Zohar", "Bnei Baruch".
+Output one translation per line in the exact format: LANGCODE|translation
+Do not include any other text.
+
+Text to translate:
+${sourceText}`;
+      const msg = await getAnthropic().messages.create({ model:'claude-haiku-4-5-20251001', max_tokens:512, messages:[{role:'user',content:prompt}] });
+      for (const line of msg.content[0].text.trim().split('\n')) {
+        const pipe = line.indexOf('|');
+        if (pipe === -1) continue;
+        const lang = line.slice(0, pipe).trim();
+        const val  = line.slice(pipe + 1).trim();
+        if (lang && val && stillMissing.includes(lang)) full[lang] = val;
+      }
+    } catch (err) {
+      console.warn('[enrichTitles] translation failed:', err.message);
+    }
+  }
+  return full;
+}
 
 function byDateThenTime(a, b) {
   return a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime);
@@ -50,7 +100,7 @@ function dayOfWeek(dateStr) {
 
 // ── Events CRUD ───────────────────────────────────────────────────────────────
 
-router.get('/events', async (req, res) => {
+router.get('/events', requireAdmin, async (req, res) => {
   try {
     const events = await getDbEvents(true);
     res.json(events);
@@ -59,7 +109,7 @@ router.get('/events', async (req, res) => {
   }
 });
 
-router.get('/events/:id', async (req, res) => {
+router.get('/events/:id', requireAdminOrTranslator, async (req, res) => {
   try {
     const event = await getDbEventById(req.params.id);
     if (!event) return res.status(404).json({ error: 'Not found' });
@@ -69,15 +119,27 @@ router.get('/events/:id', async (req, res) => {
   }
 });
 
-router.post('/events', async (req, res) => {
+router.post('/events', requireAdminOrTranslator, async (req, res) => {
   try {
     const { type = 'regular', date, endDate, startTime = '', endTime = '',
             titles = {}, descriptions, location, private: priv = false, generationTag, parentId } = req.body;
     if (!date) return res.status(400).json({ error: 'date required' });
+
+    let safeTitles = titles;
+    let safeDescs = descriptions;
+    let safePriv = priv;
+    if (isTranslatorRole(req.user)) {
+      const { he: _ht, ...nonHeTitles } = titles;
+      const { he: _hd, ...nonHeDescs } = (descriptions || {});
+      safeTitles = nonHeTitles;
+      safeDescs = Object.keys(nonHeDescs).length ? nonHeDescs : null;
+      safePriv = false;
+    }
+
     const { rows } = await pool.query(
       `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, titles, descriptions || null, location || null, priv, generationTag || null, parentId || null]
+      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null]
     );
     res.status(201).json(rowToEvent(rows[0]));
   } catch (err) {
@@ -85,15 +147,30 @@ router.post('/events', async (req, res) => {
   }
 });
 
-router.put('/events/:id', async (req, res) => {
+router.put('/events/:id', requireAdminOrTranslator, async (req, res) => {
   try {
     const { type, date, endDate, startTime, endTime, titles, descriptions, location, private: priv, parentId } = req.body;
+
+    let safeTitles = titles;
+    let safeDescs = descriptions;
+    let safePriv = priv;
+    if (isTranslatorRole(req.user)) {
+      const existing = await getDbEventById(req.params.id);
+      if (!existing) return res.status(404).json({ error: 'Not found' });
+      safeTitles = { ...titles };
+      existing.title?.he ? (safeTitles.he = existing.title.he) : delete safeTitles.he;
+      safeDescs = { ...(descriptions || {}) };
+      existing.description?.he ? (safeDescs.he = existing.description.he) : delete safeDescs.he;
+      if (!Object.keys(safeDescs).length) safeDescs = null;
+      safePriv = existing.private;
+    }
+
     const { rows } = await pool.query(
       `UPDATE events SET
          type=$1, date=$2, end_date=$3, start_time=$4, end_time=$5,
          titles=$6, descriptions=$7, location=$8, private=$9, parent_id=$10
        WHERE id=$11 RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, titles, descriptions || null, location || null, priv, parentId || null, req.params.id]
+      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, parentId || null, req.params.id]
     );
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
     res.json(rowToEvent(rows[0]));
@@ -102,15 +179,64 @@ router.put('/events/:id', async (req, res) => {
   }
 });
 
-router.delete('/events/:id', async (req, res) => {
+router.delete('/events/:id', requireAdmin, async (req, res) => {
   try {
-    const { rowCount } = await pool.query('DELETE FROM events WHERE id=$1', [req.params.id]);
+    const { id } = req.params;
+    // Sheets-sourced events (ev-*) are soft-deleted so they don't reappear from the Sheets cache
+    const query = id.startsWith('adm-')
+      ? 'DELETE FROM events WHERE id=$1'
+      : 'UPDATE events SET suppressed=TRUE WHERE id=$1';
+    const { rowCount } = await pool.query(query, [id]);
     if (!rowCount) return res.status(404).json({ error: 'Not found' });
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ── Translate (accessible to translators) ─────────────────────────────────────
+
+router.post('/translate', requireAdminOrTranslator, async (req, res) => {
+  try {
+    const { text, sourceLang = 'he', targetLangs } = req.body;
+    if (!text || !Array.isArray(targetLangs) || !targetLangs.length) {
+      return res.status(400).json({ error: 'text and targetLangs[] required' });
+    }
+
+    const targetList = targetLangs.map(l => `${l} (${LANG_NAMES[l] || l})`).join(', ');
+    const prompt = `Translate the following short event title from ${LANG_NAMES[sourceLang] || sourceLang} into these languages: ${targetList}.
+This is for a Jewish educational community calendar (Bnei Baruch / Kabbalah). Preserve proper nouns like "Kabbalah", "Zohar", "Bnei Baruch".
+Output one translation per line in the exact format: LANGCODE|translation
+Do not include any other text, explanation, or punctuation outside the lines.
+Example:
+en|Morning Lesson
+ru|Утренний урок
+
+Text to translate:
+${text}`;
+
+    const message = await getAnthropic().messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1024,
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    const translations = {};
+    for (const line of message.content[0].text.trim().split('\n')) {
+      const pipe = line.indexOf('|');
+      if (pipe === -1) continue;
+      const lang = line.slice(0, pipe).trim();
+      const val  = line.slice(pipe + 1).trim();
+      if (lang && val) translations[lang] = val;
+    }
+    res.json({ translations });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// All routes below this point require admin role
+router.use(requireAdmin);
 
 // ── Templates CRUD ────────────────────────────────────────────────────────────
 
@@ -660,44 +786,6 @@ const LANG_NAMES = {
   uk: 'Ukrainian', tr: 'Turkish', bg: 'Bulgarian',
 };
 
-router.post('/translate', async (req, res) => {
-  try {
-    const { text, sourceLang = 'he', targetLangs } = req.body;
-    if (!text || !Array.isArray(targetLangs) || !targetLangs.length) {
-      return res.status(400).json({ error: 'text and targetLangs[] required' });
-    }
-
-    const targetList = targetLangs.map(l => `${l} (${LANG_NAMES[l] || l})`).join(', ');
-    const prompt = `Translate the following short event title from ${LANG_NAMES[sourceLang] || sourceLang} into these languages: ${targetList}.
-This is for a Jewish educational community calendar (Bnei Baruch / Kabbalah). Preserve proper nouns like "Kabbalah", "Zohar", "Bnei Baruch".
-Output one translation per line in the exact format: LANGCODE|translation
-Do not include any other text, explanation, or punctuation outside the lines.
-Example:
-en|Morning Lesson
-ru|Утренний урок
-
-Text to translate:
-${text}`;
-
-    const message = await getAnthropic().messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1024,
-      messages: [{ role: 'user', content: prompt }],
-    });
-
-    const translations = {};
-    for (const line of message.content[0].text.trim().split('\n')) {
-      const pipe = line.indexOf('|');
-      if (pipe === -1) continue;
-      const lang = line.slice(0, pipe).trim();
-      const val  = line.slice(pipe + 1).trim();
-      if (lang && val) translations[lang] = val;
-    }
-    res.json({ translations });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // ── Bulk delete by generation tag ─────────────────────────────────────────────
 
@@ -744,8 +832,10 @@ router.post('/events/import-sheets', async (req, res) => {
     const rows = parseCsv(text);
     if (!rows.length) return res.status(400).json({ error: 'Sheet appears empty' });
 
-    const ALL_LANGS = ['he','en','ru','es','de','it','fr','pt','uk','tr','bg'];
     const dataRows = rows[0][0].toLowerCase() === 'date' ? rows.slice(1) : rows;
+
+    // Load templates once for title matching
+    const { rows: templates } = await pool.query('SELECT id, titles FROM event_templates');
 
     let created = 0, updated = 0;
 
@@ -753,15 +843,17 @@ router.post('/events/import-sheets', async (req, res) => {
       const dateRaw  = (cols[0] || '').trim();
       const startTime = (cols[1] || '').trim();
       const endTime   = (cols[2] || '').trim();
-      if (!dateRaw || !startTime) continue; // skip day-header dividers and empty rows
+      if (!dateRaw || !startTime) continue;
 
       const date = parseHebrewDate(dateRaw);
       if (!date) continue;
 
-      const titles = Object.fromEntries(
-        ALL_LANGS.map((l, i) => [l, (cols[3 + i] || '').trim()]).filter(([, v]) => v)
+      const rawTitles = Object.fromEntries(
+        ALL_LANGS_ORDERED.map((l, i) => [l, (cols[3 + i] || '').trim()]).filter(([, v]) => v)
       );
-      if (!titles.he && !titles.en) continue;
+      if (!rawTitles.he && !rawTitles.en) continue;
+
+      const titles = await enrichTitles(rawTitles, templates);
 
       // Upsert by (parentId, date, startTime)
       const { rows: existing } = await pool.query(
@@ -771,14 +863,14 @@ router.post('/events/import-sheets', async (req, res) => {
       if (existing.length) {
         await pool.query(
           `UPDATE events SET titles = titles || $1::jsonb, end_time=$2 WHERE id=$3`,
-          [titles, endTime, existing[0].id]
+          [JSON.stringify(titles), endTime, existing[0].id]
         );
         updated++;
       } else {
         await pool.query(
           `INSERT INTO events (type, date, start_time, end_time, titles, private, parent_id)
            VALUES ('regular',$1,$2,$3,$4,false,$5)`,
-          [date, startTime, endTime, titles, parentId]
+          [date, startTime, endTime, JSON.stringify(titles), parentId]
         );
         created++;
       }

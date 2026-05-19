@@ -4,6 +4,7 @@ import { adminApi, type AdminEvent, type AdminTemplate } from './adminApi';
 import { Button } from '../components/ui/button';
 import { type Language, languageNames } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
+import { isAdmin } from './AdminGuard';
 
 const ALL_LANGS: Language[] = ['he', 'en', 'ru', 'es', 'de', 'it', 'fr', 'pt', 'uk', 'tr', 'bg'];
 
@@ -17,6 +18,8 @@ interface Props {
 
 export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props) {
   const isEdit = !!event;
+  const admin = isAdmin();
+  const visibleLangs = admin ? ALL_LANGS : ALL_LANGS.filter(l => l !== 'he');
   const { events: allEvents } = useEvents();
 
   const parents = allEvents.filter(e => e.type === 'conference' || e.type === 'holiday');
@@ -35,7 +38,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     private: event?.private ?? false,
     titles: event?.title ?? {} as Record<string, string>,
   });
-  const [activeLang, setActiveLang] = useState<Language>('he');
+  const [activeLang, setActiveLang] = useState<Language>(admin ? 'he' : 'en');
   const [showTitles, setShowTitles] = useState(isEdit);
   const [translating, setTranslating] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -50,13 +53,16 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     const t = templates.find(t => t.id === id);
     if (!t) return;
     setSelectedTemplateId(id);
+    const templateTitles = admin
+      ? { ...t.titles }
+      : Object.fromEntries(Object.entries(t.titles).filter(([l]) => l !== 'he'));
     setForm(f => ({
       ...f,
       type: t.type || f.type,
       startTime: t.defaultStartTime || f.startTime,
       endTime: t.defaultEndTime || f.endTime,
-      private: t.privateByDefault,
-      titles: { ...t.titles },
+      private: admin ? t.privateByDefault : false,
+      titles: templateTitles,
     }));
   };
 
@@ -68,7 +74,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     const source = form.titles['he'] || form.titles['en'];
     if (!source) return;
     const sourceLang = form.titles['he'] ? 'he' : 'en';
-    const missing = ALL_LANGS.filter(l => l !== sourceLang && !form.titles[l]);
+    const missing = visibleLangs.filter(l => l !== sourceLang && !form.titles[l]);
     if (!missing.length) return;
     setTranslating(true);
     try {
@@ -215,12 +221,14 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
             </div>
           </div>
 
-          <label className="flex items-center gap-2 text-sm cursor-pointer">
-            <input type="checkbox" checked={form.private}
-              onChange={e => setForm(f => ({ ...f, private: e.target.checked }))}
-              className="rounded" />
-            🔒 Private (visible to moderators only)
-          </label>
+          {admin && (
+            <label className="flex items-center gap-2 text-sm cursor-pointer">
+              <input type="checkbox" checked={form.private}
+                onChange={e => setForm(f => ({ ...f, private: e.target.checked }))}
+                className="rounded" />
+              🔒 Private (visible to moderators only)
+            </label>
+          )}
 
           <div className="border rounded-lg dark:border-gray-700">
             <button
@@ -234,7 +242,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
             {showTitles && (
               <div className="px-3 pb-3 space-y-2">
                 <div className="flex flex-wrap gap-1 pt-1">
-                  {ALL_LANGS.map(l => (
+                  {visibleLangs.map(l => (
                     <button key={l}
                       onClick={() => setActiveLang(l)}
                       className={[
@@ -269,7 +277,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
         </div>
 
         <div className="px-5 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between gap-3">
-          {isEdit ? (
+          {isEdit && admin ? (
             <Button variant="destructive" size="sm" onClick={remove} disabled={deleting}>
               {deleting ? 'Deleting…' : '🗑 Delete'}
             </Button>
