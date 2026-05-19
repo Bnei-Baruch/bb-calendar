@@ -136,10 +136,11 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
       safePriv = false;
     }
 
+    const createdByRole = isTranslatorRole(req.user) ? 'events_translator' : 'events_admin';
     const { rows } = await pool.query(
-      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null]
+      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id, created_by_role)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null, createdByRole]
     );
     res.status(201).json(rowToEvent(rows[0]));
   } catch (err) {

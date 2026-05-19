@@ -74,6 +74,7 @@ export interface AdminEvent {
   private: boolean;
   generationTag?: string;
   parentId?: string;
+  createdByRole?: string;
 }
 
 export interface EventPayload {

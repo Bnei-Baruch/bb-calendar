@@ -409,6 +409,9 @@ export function CalendarView() {
                                     <span className="font-medium">{event.startTime}</span>{' '}
                                     <span>{event.title[language]}</span>
                                     {event.private && <span className="ml-1 opacity-60">🔒</span>}
+                                    {canEdit && event.createdByRole === 'events_translator' && (
+                                      <span className="ml-1 text-xs font-semibold px-1 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">T</span>
+                                    )}
                                     {canEdit && event._db && (
                                       <span className="inline-flex items-center gap-0.5 opacity-0 group-hover/ev:opacity-100 transition-opacity ml-1">
                                         <button

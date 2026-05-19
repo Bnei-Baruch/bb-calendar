@@ -16,6 +16,7 @@ export interface Event {
   private?: boolean;
   parentId?: string;
   _db?: boolean;
+  createdByRole?: string;
 }
 
 export function getEventTitle(event: Event, language: Language): string {

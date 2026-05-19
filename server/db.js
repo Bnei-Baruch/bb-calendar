@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS events (
 );
 ALTER TABLE events ADD COLUMN IF NOT EXISTS parent_id TEXT;
 ALTER TABLE events ADD COLUMN IF NOT EXISTS suppressed BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS created_by_role TEXT;
 
 CREATE TABLE IF NOT EXISTS event_templates (
   id                 SERIAL PRIMARY KEY,
@@ -72,6 +73,7 @@ function rowToEvent(row) {
     private: row.private,
     generationTag: row.generation_tag || undefined,
     parentId: row.parent_id || undefined,
+    createdByRole: row.created_by_role || undefined,
     _db: true,
   };
 }

@@ -476,9 +476,12 @@ export function DayView() {
                               </span>
                             </div>
                             <div className="flex-1">
-                              <h4 className={`font-semibold text-sm sm:text-base ${color.text}`}>
+                              <h4 className={`font-semibold text-sm sm:text-base ${color.text} flex items-center gap-1.5 flex-wrap`}>
                                 {event.title[language]}
-                                {event.private && <span className="ml-1 opacity-60 text-sm">🔒</span>}
+                                {event.private && <span className="opacity-60 text-sm">🔒</span>}
+                                {admin && event.createdByRole === 'events_translator' && (
+                                  <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">T</span>
+                                )}
                               </h4>
                               {event.description && (
                                 <p className={`text-xs sm:text-sm opacity-75 mt-0.5 ${color.text}`}>

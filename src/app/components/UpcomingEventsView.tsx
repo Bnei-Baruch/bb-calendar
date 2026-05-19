@@ -127,9 +127,12 @@ export function UpcomingEventsView() {
                         </span>
                       )}
                     </div>
-                    <h3 className={`font-semibold text-gray-900 dark:text-gray-100 ${accent.hover} transition-colors`}>
+                    <h3 className={`font-semibold text-gray-900 dark:text-gray-100 ${accent.hover} transition-colors flex items-center gap-1.5 flex-wrap`}>
                       {event.title[language] ?? event.title.he ?? event.title.en}
-                      {event.private && <span className="ml-1 opacity-60 text-sm">🔒</span>}
+                      {event.private && <span className="opacity-60 text-sm">🔒</span>}
+                      {admin && event.createdByRole === 'events_translator' && (
+                        <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">T</span>
+                      )}
                     </h3>
                     <div className="flex items-center gap-1 mt-1">
                       <Calendar className={`w-3.5 h-3.5 shrink-0 ${accent.cal}`} />
