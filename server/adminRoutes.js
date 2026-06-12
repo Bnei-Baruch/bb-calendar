@@ -98,6 +98,36 @@ function dayOfWeek(dateStr) {
   return new Date(dateStr + 'T12:00:00Z').getUTCDay();
 }
 
+function generateRecurrenceDates(startDate, recurrence, endDate, recurrenceDays) {
+  const dates = [];
+  const end = new Date(endDate + 'T12:00:00Z');
+  let current = new Date(startDate + 'T12:00:00Z');
+  const MAX = 1827;
+
+  if (recurrence === 'custom' && recurrenceDays) {
+    const allowedDows = new Set(recurrenceDays.split(',').map(Number));
+    current = new Date(current.getTime() + 86400000);
+    while (current <= end && dates.length < MAX) {
+      if (allowedDows.has(current.getUTCDay())) dates.push(current.toISOString().slice(0, 10));
+      current = new Date(current.getTime() + 86400000);
+    }
+    return dates;
+  }
+
+  const advance = (d) => {
+    if (recurrence === 'daily')   return new Date(d.getTime() + 86400000);
+    if (recurrence === 'weekly')  return new Date(d.getTime() + 7 * 86400000);
+    const next = new Date(d); next.setUTCMonth(next.getUTCMonth() + 1); return next;
+  };
+
+  current = advance(current);
+  while (current <= end && dates.length < MAX) {
+    dates.push(current.toISOString().slice(0, 10));
+    current = advance(current);
+  }
+  return dates;
+}
+
 // ── Events CRUD ───────────────────────────────────────────────────────────────
 
 router.get('/events', requireAdmin, async (req, res) => {
@@ -122,7 +152,8 @@ router.get('/events/:id', requireAdminOrTranslator, async (req, res) => {
 router.post('/events', requireAdminOrTranslator, async (req, res) => {
   try {
     const { type = 'regular', date, endDate, startTime = '', endTime = '',
-            titles = {}, descriptions, location, private: priv = false, generationTag, parentId } = req.body;
+            titles = {}, descriptions, location, private: priv = false, generationTag, parentId,
+            recurrence, recurrenceEnd, recurrenceDays } = req.body;
     if (!date) return res.status(400).json({ error: 'date required' });
 
     let safeTitles = titles;
@@ -137,12 +168,34 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
     }
 
     const createdByRole = isTranslatorRole(req.user) ? 'events_translator' : 'events_admin';
+    const safeRecurrenceDays = recurrence === 'custom' && recurrenceDays ? recurrenceDays : null;
     const { rows } = await pool.query(
-      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id, created_by_role)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null, createdByRole]
+      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id, created_by_role, recurrence, recurrence_end, recurrence_days)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *`,
+      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null, createdByRole, recurrence || null, recurrenceEnd || null, safeRecurrenceDays]
     );
-    res.status(201).json(rowToEvent(rows[0]));
+    const parent = rows[0];
+
+    if (recurrence && recurrenceEnd) {
+      // Tag all series events (including parent) with the parent's id as recurrence_id
+      await pool.query('UPDATE events SET recurrence_id=$1 WHERE id=$1', [parent.id]);
+
+      const occurrenceDates = generateRecurrenceDates(date, recurrence, recurrenceEnd, safeRecurrenceDays);
+      if (occurrenceDates.length) {
+        const vals = [], params = [];
+        let idx = 1;
+        for (const d of occurrenceDates) {
+          vals.push(`($${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++})`);
+          params.push(type, d, endDate || null, startTime, endTime, JSON.stringify(safeTitles), safeDescs ? JSON.stringify(safeDescs) : null, location || null, safePriv, parentId || null, parent.id);
+        }
+        await pool.query(
+          `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, parent_id, recurrence_id) VALUES ${vals.join(',')}`,
+          params
+        );
+      }
+    }
+
+    res.status(201).json(rowToEvent(parent));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -183,12 +236,102 @@ router.put('/events/:id', requireAdminOrTranslator, async (req, res) => {
 router.delete('/events/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    // Sheets-sourced events (ev-*) are soft-deleted so they don't reappear from the Sheets cache
+    const future = req.query.future === 'true';
+
+    if (future) {
+      const { rows } = await pool.query('SELECT recurrence_id, date FROM events WHERE id=$1', [id]);
+      if (!rows.length) return res.status(404).json({ error: 'Not found' });
+      const seriesId = rows[0].recurrence_id;
+      const thisDate = rows[0].date?.slice(0, 10);
+      if (!seriesId) return res.status(400).json({ error: 'Not a recurring event' });
+      await pool.query('DELETE FROM events WHERE recurrence_id=$1 AND date >= $2', [seriesId, thisDate]);
+      return res.json({ ok: true });
+    }
+
     const query = id.startsWith('adm-')
       ? 'DELETE FROM events WHERE id=$1'
       : 'UPDATE events SET suppressed=TRUE WHERE id=$1';
     const { rowCount } = await pool.query(query, [id]);
     if (!rowCount) return res.status(404).json({ error: 'Not found' });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put('/events/:id/series', requireAdminOrTranslator, async (req, res) => {
+  try {
+    const { titles, descriptions, startTime, endTime, location, private: priv,
+            recurrence, recurrenceEnd, recurrenceDays } = req.body;
+    const { rows } = await pool.query('SELECT recurrence_id, date FROM events WHERE id=$1', [req.params.id]);
+    if (!rows.length) return res.status(404).json({ error: 'Not found' });
+    const seriesId = rows[0].recurrence_id;
+    if (!seriesId) return res.status(400).json({ error: 'Not a recurring event' });
+
+    let safeTitles = titles;
+    let safeDescs = descriptions || null;
+    if (isTranslatorRole(req.user)) {
+      const existing = await getDbEventById(req.params.id);
+      safeTitles = { ...titles };
+      existing.title?.he ? (safeTitles.he = existing.title.he) : delete safeTitles.he;
+      safeDescs = { ...(descriptions || {}) };
+      existing.description?.he ? (safeDescs.he = existing.description.he) : delete safeDescs.he;
+      if (!Object.keys(safeDescs).length) safeDescs = null;
+    }
+
+    const thisDate = rows[0].date?.slice(0, 10);
+
+    if (recurrence) {
+      const safeRecurrenceDays = recurrence === 'custom' && recurrenceDays ? recurrenceDays : null;
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        await client.query(
+          `UPDATE events SET titles=$1, descriptions=$2, start_time=$3, end_time=$4, location=$5, private=$6
+           WHERE recurrence_id=$7 AND date >= $8`,
+          [safeTitles, safeDescs, startTime, endTime, location || null, priv, seriesId, thisDate]
+        );
+        await client.query(
+          'DELETE FROM events WHERE recurrence_id=$1 AND date > $2',
+          [seriesId, thisDate]
+        );
+        await client.query(
+          'UPDATE events SET recurrence=$1, recurrence_end=$2, recurrence_days=$3 WHERE id=$4',
+          [recurrence, recurrenceEnd || null, safeRecurrenceDays, seriesId]
+        );
+        if (recurrenceEnd) {
+          const futureDates = generateRecurrenceDates(thisDate, recurrence, recurrenceEnd, safeRecurrenceDays);
+          if (futureDates.length) {
+            const { rows: parentRows } = await client.query('SELECT * FROM events WHERE id=$1', [seriesId]);
+            const p = parentRows[0];
+            const vals = [], params = [];
+            let idx = 1;
+            for (const d of futureDates) {
+              vals.push(`($${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++})`);
+              params.push(p.type, d, p.end_date, startTime, endTime,
+                JSON.stringify(safeTitles), safeDescs ? JSON.stringify(safeDescs) : null,
+                location || null, priv, seriesId);
+            }
+            await client.query(
+              `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, recurrence_id) VALUES ${vals.join(',')}`,
+              params
+            );
+          }
+        }
+        await client.query('COMMIT');
+      } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+      } finally {
+        client.release();
+      }
+    } else {
+      await pool.query(
+        `UPDATE events SET titles=$1, descriptions=$2, start_time=$3, end_time=$4, location=$5, private=$6
+         WHERE recurrence_id=$7 AND date >= $8`,
+        [safeTitles, safeDescs, startTime, endTime, location || null, priv, seriesId, thisDate]
+      );
+    }
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: err.message });

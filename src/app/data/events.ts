@@ -17,6 +17,10 @@ export interface Event {
   parentId?: string;
   _db?: boolean;
   createdByRole?: string;
+  recurrence?: 'daily' | 'weekly' | 'monthly' | 'custom';
+  recurrenceEnd?: string;
+  recurrenceId?: string;
+  recurrenceDays?: string;
 }
 
 export function getEventTitle(event: Event, language: Language): string {

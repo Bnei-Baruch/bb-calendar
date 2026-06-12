@@ -23,6 +23,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
   const { events: allEvents } = useEvents();
 
   const parents = allEvents.filter(e => e.type === 'conference' || e.type === 'holiday');
+  const parentEvent = event?.recurrenceId ? allEvents.find(e => e.id === event.recurrenceId) : undefined;
 
   const [templates, setTemplates] = useState<AdminTemplate[]>([]);
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | ''>('');
@@ -40,9 +41,32 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
   });
   const [activeLang, setActiveLang] = useState<Language>(admin ? 'he' : 'en');
   const [showTitles, setShowTitles] = useState(isEdit);
+  const [recurrence, setRecurrence] = useState<'none' | 'daily' | 'weekly' | 'monthly' | 'custom'>(
+    ((event?.recurrence || parentEvent?.recurrence) as 'daily' | 'weekly' | 'monthly' | 'custom' | undefined) ?? 'none'
+  );
+  const [customDays, setCustomDays] = useState<Set<number>>(() => {
+    const days = event?.recurrenceDays || parentEvent?.recurrenceDays;
+    if (days) return new Set(days.split(',').map(Number));
+    return new Set();
+  });
+  const toggleDay = (d: number) => setCustomDays(prev => {
+    const next = new Set(prev);
+    next.has(d) ? next.delete(d) : next.add(d);
+    return next;
+  });
+  const [recurrenceEnd, setRecurrenceEnd] = useState<string>(() => {
+    const end = event?.recurrenceEnd || parentEvent?.recurrenceEnd;
+    if (end) return end;
+    const base = event?.date || date || new Date().toISOString().slice(0, 10);
+    const d = new Date(base + 'T12:00:00Z');
+    d.setUTCFullYear(d.getUTCFullYear() + 5);
+    return d.toISOString().slice(0, 10);
+  });
   const [translating, setTranslating] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savingFuture, setSavingFuture] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [deletingFuture, setDeletingFuture] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -87,25 +111,31 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     }
   };
 
+  const buildPayload = () => ({
+    type: form.type,
+    date: form.date,
+    endDate: form.endDate || undefined,
+    startTime: form.startTime,
+    endTime: form.endTime,
+    titles: form.titles,
+    private: form.private,
+    parentId: selectedParentId || undefined,
+    recurrence: recurrence !== 'none' ? recurrence : undefined,
+    recurrenceEnd: recurrence !== 'none' ? recurrenceEnd : undefined,
+    recurrenceDays: recurrence === 'custom' && customDays.size > 0
+      ? [...customDays].sort((a, b) => a - b).join(',')
+      : undefined,
+  });
+
   const save = async () => {
     if (!form.date) { setError('Date is required'); return; }
     setSaving(true);
     setError('');
     try {
-      const payload = {
-        type: form.type,
-        date: form.date,
-        endDate: form.endDate || undefined,
-        startTime: form.startTime,
-        endTime: form.endTime,
-        titles: form.titles,
-        private: form.private,
-        parentId: selectedParentId || undefined,
-      };
       if (isEdit) {
-        await adminApi.updateEvent(event.id, payload);
+        await adminApi.updateEvent(event.id, buildPayload());
       } else {
-        await adminApi.createEvent(payload);
+        await adminApi.createEvent(buildPayload());
       }
       onSaved();
       onClose();
@@ -113,6 +143,32 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
       setError(e.message);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const saveThisFuture = async () => {
+    if (!event) return;
+    setSavingFuture(true);
+    setError('');
+    try {
+      await adminApi.updateEventSeries(event.id, {
+        titles: form.titles,
+        startTime: form.startTime,
+        endTime: form.endTime,
+        private: form.private,
+        location: undefined,
+        recurrence: recurrence !== 'none' ? recurrence : undefined,
+        recurrenceEnd: recurrence !== 'none' ? recurrenceEnd : undefined,
+        recurrenceDays: recurrence === 'custom' && customDays.size > 0
+          ? [...customDays].sort((a, b) => a - b).join(',')
+          : undefined,
+      });
+      onSaved();
+      onClose();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setSavingFuture(false);
     }
   };
 
@@ -127,6 +183,20 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
       setError(e.message);
     } finally {
       setDeleting(false);
+    }
+  };
+
+  const removeThisFuture = async () => {
+    if (!event || !confirm('Delete this and all future occurrences?')) return;
+    setDeletingFuture(true);
+    try {
+      await adminApi.deleteEventFuture(event.id);
+      onSaved();
+      onClose();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setDeletingFuture(false);
     }
   };
 
@@ -230,6 +300,65 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
             </label>
           )}
 
+          {/* Recurrence — editable for admin on create or when editing recurring event */}
+          {admin && (!isEdit || !!event?.recurrenceId) ? (
+            <div className="space-y-2">
+              {isEdit && event?.recurrenceId && (
+                <p className="text-xs text-blue-600 dark:text-blue-400">🔁 Recurring series — recurrence changes apply when "Save future" is clicked</p>
+              )}
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Repeat</label>
+                <select
+                  value={recurrence}
+                  onChange={e => setRecurrence(e.target.value as typeof recurrence)}
+                  className="w-full border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <option value="none">Does not repeat</option>
+                  <option value="daily">Daily (every day)</option>
+                  <option value="weekly">Weekly (same day)</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="custom">Custom days…</option>
+                </select>
+              </div>
+              {recurrence === 'custom' && (
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1.5">Repeat on</label>
+                  <div className="flex gap-1 flex-wrap">
+                    {(['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] as const).map((label, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => toggleDay(i)}
+                        className={[
+                          'px-2.5 py-1 rounded text-xs font-medium border transition-colors',
+                          customDays.has(i)
+                            ? 'bg-blue-600 text-white border-blue-600'
+                            : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
+                        ].join(' ')}
+                      >{label}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {recurrence !== 'none' && (
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Repeat until</label>
+                  <input
+                    type="date"
+                    value={recurrenceEnd}
+                    onChange={e => setRecurrenceEnd(e.target.value)}
+                    className="w-full border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+                  />
+                </div>
+              )}
+            </div>
+          ) : isEdit && event?.recurrenceId ? (
+            <div className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg px-3 py-2">
+              <span>🔁</span>
+              <span>Recurring ({event.recurrence || 'series'})</span>
+            </div>
+          ) : null}
+
           <div className="border rounded-lg dark:border-gray-700">
             <button
               onClick={() => setShowTitles(v => !v)}
@@ -278,14 +407,26 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
 
         <div className="px-5 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between gap-3">
           {isEdit && admin ? (
-            <Button variant="destructive" size="sm" onClick={remove} disabled={deleting}>
-              {deleting ? 'Deleting…' : '🗑 Delete'}
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="destructive" size="sm" onClick={remove} disabled={deleting || deletingFuture}>
+                {deleting ? 'Deleting…' : event?.recurrenceId ? 'Delete this' : '🗑 Delete'}
+              </Button>
+              {event?.recurrenceId && (
+                <Button variant="destructive" size="sm" onClick={removeThisFuture} disabled={deleting || deletingFuture}>
+                  {deletingFuture ? 'Deleting…' : 'Delete future'}
+                </Button>
+              )}
+            </div>
           ) : <div />}
           <div className="flex gap-2">
             <Button variant="outline" onClick={onClose}>Cancel</Button>
-            <Button onClick={save} disabled={saving}>
-              {saving ? 'Saving…' : '💾 Save'}
+            {isEdit && event?.recurrenceId && (
+              <Button variant="outline" onClick={saveThisFuture} disabled={saving || savingFuture}>
+                {savingFuture ? 'Saving…' : 'Save future'}
+              </Button>
+            )}
+            <Button onClick={save} disabled={saving || savingFuture}>
+              {saving ? 'Saving…' : isEdit && event?.recurrenceId ? 'Save this' : '💾 Save'}
             </Button>
           </div>
         </div>

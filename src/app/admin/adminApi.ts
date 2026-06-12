@@ -25,6 +25,9 @@ export const adminApi = {
   createEvent: (data: EventPayload) => request<AdminEvent>('/events', { method: 'POST', body: JSON.stringify(data) }),
   updateEvent: (id: string, data: EventPayload) => request<AdminEvent>(`/events/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteEvent: (id: string) => request<{ ok: boolean }>(`/events/${id}`, { method: 'DELETE' }),
+  deleteEventFuture: (id: string) => request<{ ok: boolean }>(`/events/${id}?future=true`, { method: 'DELETE' }),
+  updateEventSeries: (id: string, data: Omit<EventPayload, 'date' | 'endDate' | 'type' | 'parentId'>) =>
+    request<{ ok: boolean }>(`/events/${id}/series`, { method: 'PUT', body: JSON.stringify(data) }),
 
   // Templates
   getTemplates: () => request<AdminTemplate[]>('/templates'),
@@ -75,6 +78,10 @@ export interface AdminEvent {
   generationTag?: string;
   parentId?: string;
   createdByRole?: string;
+  recurrence?: 'daily' | 'weekly' | 'monthly' | 'custom';
+  recurrenceEnd?: string;
+  recurrenceId?: string;
+  recurrenceDays?: string;
 }
 
 export interface EventPayload {
@@ -88,6 +95,9 @@ export interface EventPayload {
   location?: string;
   private?: boolean;
   parentId?: string;
+  recurrence?: string;
+  recurrenceEnd?: string;
+  recurrenceDays?: string;
 }
 
 export interface AdminTemplate {

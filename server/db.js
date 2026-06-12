@@ -28,6 +28,10 @@ CREATE TABLE IF NOT EXISTS events (
 ALTER TABLE events ADD COLUMN IF NOT EXISTS parent_id TEXT;
 ALTER TABLE events ADD COLUMN IF NOT EXISTS suppressed BOOLEAN NOT NULL DEFAULT FALSE;
 ALTER TABLE events ADD COLUMN IF NOT EXISTS created_by_role TEXT;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence TEXT;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence_end DATE;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence_id TEXT;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence_days TEXT;
 
 CREATE TABLE IF NOT EXISTS event_templates (
   id                 SERIAL PRIMARY KEY,
@@ -74,6 +78,10 @@ function rowToEvent(row) {
     generationTag: row.generation_tag || undefined,
     parentId: row.parent_id || undefined,
     createdByRole: row.created_by_role || undefined,
+    recurrence: row.recurrence || undefined,
+    recurrenceEnd: row.recurrence_end ? row.recurrence_end.slice(0, 10) : undefined,
+    recurrenceId: row.recurrence_id || undefined,
+    recurrenceDays: row.recurrence_days || undefined,
     _db: true,
   };
 }

@@ -10,7 +10,7 @@ import { Language, useTranslation } from '../utils/i18n';
 import { getEventsByDate, getIsraelToday } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
 import { AddEventModal } from '../admin/AddEventModal';
 import { adminApi } from '../admin/adminApi';
@@ -28,6 +28,13 @@ export function DayView() {
   const displayEvents = canEdit ? allEvents : allEvents.filter(e => !!e.title?.[language]);
   const [addEventDate, setAddEventDate] = useState<string | null>(null);
   const [editEvent, setEditEvent] = useState<any>(null);
+  const [deleteMenuId, setDeleteMenuId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!deleteMenuId) return;
+    const dismiss = () => setDeleteMenuId(null);
+    document.addEventListener('click', dismiss);
+    return () => document.removeEventListener('click', dismiss);
+  }, [deleteMenuId]);
   const dateParam = searchParams.get('date') || getIsraelToday();
   const currentDate = parseISO(dateParam);
 
@@ -482,6 +489,9 @@ export function DayView() {
                                 {admin && event.createdByRole === 'events_translator' && (
                                   <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">T</span>
                                 )}
+                                {canEdit && event.recurrenceId && (
+                                  <span className="text-xs opacity-50" title="Recurring">🔁</span>
+                                )}
                               </h4>
                               {event.description && (
                                 <p className={`text-xs sm:text-sm opacity-75 mt-0.5 ${color.text}`}>
@@ -496,16 +506,46 @@ export function DayView() {
                                   className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
                                   title="Edit"
                                 ><Pencil className="w-4 h-4" /></button>
-                                {admin && <button
-                                  onClick={async e => {
-                                    e.stopPropagation();
-                                    if (!confirm('Delete this event?')) return;
-                                    await adminApi.deleteEvent(event.id);
-                                    refetch();
-                                  }}
-                                  className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"
-                                  title="Delete"
-                                ><Trash2 className="w-4 h-4" /></button>}
+                                {admin && (
+                                  <div className="relative">
+                                    <button
+                                      onClick={e => {
+                                        e.stopPropagation();
+                                        if (event.recurrenceId) {
+                                          setDeleteMenuId(deleteMenuId === event.id ? null : event.id);
+                                        } else {
+                                          if (!confirm('Delete this event?')) return;
+                                          adminApi.deleteEvent(event.id).then(refetch);
+                                        }
+                                      }}
+                                      className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"
+                                      title="Delete"
+                                    ><Trash2 className="w-4 h-4" /></button>
+                                    {deleteMenuId === event.id && (
+                                      <div
+                                        className="absolute z-50 end-0 top-9 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden min-w-[160px]"
+                                        onClick={e => e.stopPropagation()}
+                                      >
+                                        <button
+                                          className="w-full text-start px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                          onClick={async () => {
+                                            setDeleteMenuId(null);
+                                            await adminApi.deleteEvent(event.id);
+                                            refetch();
+                                          }}
+                                        >Delete this only</button>
+                                        <button
+                                          className="w-full text-start px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 border-t border-gray-100 dark:border-gray-700"
+                                          onClick={async () => {
+                                            setDeleteMenuId(null);
+                                            await adminApi.deleteEventFuture(event.id);
+                                            refetch();
+                                          }}
+                                        >Delete this &amp; future</button>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
                               </div>
                             )}
                             {event.title.en === 'Meal' && (
