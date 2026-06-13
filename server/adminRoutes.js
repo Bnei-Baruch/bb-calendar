@@ -6,6 +6,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { pool, getDbEvents, getDbEventById, rowToEvent } from './db.js';
 import { requireAdmin, requireAdminOrTranslator, isTranslatorRole } from './auth.js';
+import { gcalCreate, gcalUpdate, gcalDelete, gcalUpdateUntil } from './gcal.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -128,6 +129,31 @@ function generateRecurrenceDates(startDate, recurrence, endDate, recurrenceDays)
   return dates;
 }
 
+// ── Google Calendar sync (fire-and-forget) ────────────────────────────────────
+
+function isGcalChild(event) {
+  return event.recurrenceId && event.id !== event.recurrenceId;
+}
+
+function syncGcalCreate(event) {
+  if (event.private || isGcalChild(event)) return;
+  gcalCreate(event)
+    .then(ids => { if (ids) pool.query('UPDATE events SET gcal_event_ids=$1 WHERE id=$2', [ids, event.id]); })
+    .catch(err => console.error('[gcal] create failed:', err.message));
+}
+
+function syncGcalUpdate(event) {
+  if (isGcalChild(event)) return;
+  gcalUpdate(event, event.gcalEventIds)
+    .then(ids => { if (ids) pool.query('UPDATE events SET gcal_event_ids=$1 WHERE id=$2', [ids, event.id]); })
+    .catch(err => console.error('[gcal] update failed:', err.message));
+}
+
+function syncGcalDelete(gcalIds) {
+  if (!gcalIds) return;
+  gcalDelete(gcalIds).catch(err => console.error('[gcal] delete failed:', err.message));
+}
+
 // ── Events CRUD ───────────────────────────────────────────────────────────────
 
 router.get('/events', requireAdmin, async (req, res) => {
@@ -195,7 +221,9 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
       }
     }
 
-    res.status(201).json(rowToEvent(parent));
+    const created = rowToEvent(parent);
+    res.status(201).json(created);
+    syncGcalCreate(created);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -227,7 +255,9 @@ router.put('/events/:id', requireAdminOrTranslator, async (req, res) => {
       [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, parentId || null, req.params.id]
     );
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
-    res.json(rowToEvent(rows[0]));
+    const updated = rowToEvent(rows[0]);
+    res.json(updated);
+    syncGcalUpdate(updated);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -244,16 +274,26 @@ router.delete('/events/:id', requireAdmin, async (req, res) => {
       const seriesId = rows[0].recurrence_id;
       const thisDate = rows[0].date?.slice(0, 10);
       if (!seriesId) return res.status(400).json({ error: 'Not a recurring event' });
+      // Fetch parent gcal IDs before deleting
+      const { rows: parentRows } = await pool.query('SELECT gcal_event_ids FROM events WHERE id=$1', [seriesId]);
+      const parentGcalIds = parentRows[0]?.gcal_event_ids;
       await pool.query('DELETE FROM events WHERE recurrence_id=$1 AND date >= $2', [seriesId, thisDate]);
-      return res.json({ ok: true });
+      res.json({ ok: true });
+      gcalUpdateUntil(parentGcalIds, thisDate).catch(err => console.error('[gcal] updateUntil failed:', err.message));
+      return;
     }
 
+    // Fetch gcal IDs before deleting
+    const { rows: evRows } = await pool.query('SELECT gcal_event_ids, recurrence_id, id FROM events WHERE id=$1', [id]);
+    const evGcalIds = evRows[0]?.gcal_event_ids;
+    const isChild = evRows[0]?.recurrence_id && evRows[0]?.recurrence_id !== id;
     const query = id.startsWith('adm-')
       ? 'DELETE FROM events WHERE id=$1'
       : 'UPDATE events SET suppressed=TRUE WHERE id=$1';
     const { rowCount } = await pool.query(query, [id]);
     if (!rowCount) return res.status(404).json({ error: 'Not found' });
     res.json({ ok: true });
+    if (!isChild) syncGcalDelete(evGcalIds);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -333,6 +373,9 @@ router.put('/events/:id/series', requireAdminOrTranslator, async (req, res) => {
       );
     }
     res.json({ ok: true });
+    // Sync the parent recurring event to GCal (it has the RRULE)
+    const { rows: parentRows } = await pool.query('SELECT * FROM events WHERE id=$1', [seriesId]);
+    if (parentRows.length) syncGcalUpdate(rowToEvent(parentRows[0]));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
