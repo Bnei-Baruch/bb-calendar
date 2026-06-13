@@ -42,11 +42,33 @@ async function main() {
 
   console.log(`Events to sync: ${rows.length}`);
   if (DRY_RUN) {
-    const recurring    = rows.filter(r => r.recurrence_id).length;
-    const nonRecurring = rows.length - recurring;
-    console.log(`  Recurring series (parents): ${recurring}`);
-    console.log(`  Non-recurring events:       ${nonRecurring}`);
-    console.log('\nDry run done. Set DRY_RUN=false to apply.\n');
+    const recurring    = rows.filter(r => r.recurrence_id);
+    const nonRecurring = rows.filter(r => !r.recurrence_id);
+    console.log(`  Recurring series (parents): ${recurring.length}`);
+    console.log(`  Non-recurring events:       ${nonRecurring.length}\n`);
+
+    if (recurring.length) {
+      console.log('Recurring series:');
+      for (const r of recurring) {
+        const title = r.titles?.he || r.titles?.en || Object.values(r.titles || {})[0] || '(no title)';
+        const days  = r.recurrence_days ? ` [${r.recurrence_days}]` : '';
+        const synced = r.gcal_event_ids ? ' ✓synced' : '';
+        console.log(`  ${r.id}  ${r.date?.slice(0,10)}  ${r.recurrence}${days} → ${r.recurrence_end?.slice(0,10) || '?'}  "${title}"${synced}`);
+      }
+      console.log('');
+    }
+
+    if (nonRecurring.length) {
+      console.log('Non-recurring events:');
+      for (const r of nonRecurring) {
+        const title = r.titles?.he || r.titles?.en || Object.values(r.titles || {})[0] || '(no title)';
+        const synced = r.gcal_event_ids ? ' ✓synced' : '';
+        console.log(`  ${r.id}  ${r.date?.slice(0,10)}  "${title}"${synced}`);
+      }
+      console.log('');
+    }
+
+    console.log('Dry run done. Set DRY_RUN=false to apply.\n');
     await pool.end();
     return;
   }
