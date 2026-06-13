@@ -144,7 +144,10 @@ function syncGcalCreate(event) {
 
 function syncGcalUpdate(event) {
   if (isGcalChild(event)) return;
-  gcalUpdate(event, event.gcalEventIds)
+  const action = event.gcalEventIds
+    ? gcalUpdate(event, event.gcalEventIds)
+    : gcalCreate(event);
+  action
     .then(ids => { if (ids) pool.query('UPDATE events SET gcal_event_ids=$1 WHERE id=$2', [ids, event.id]); })
     .catch(err => console.error('[gcal] update failed:', err.message));
 }
@@ -205,6 +208,7 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
     if (recurrence && recurrenceEnd) {
       // Tag all series events (including parent) with the parent's id as recurrence_id
       await pool.query('UPDATE events SET recurrence_id=$1 WHERE id=$1', [parent.id]);
+      parent.recurrence_id = parent.id; // reflect so rowToEvent includes it for RRULE
 
       const occurrenceDates = generateRecurrenceDates(date, recurrence, recurrenceEnd, safeRecurrenceDays);
       if (occurrenceDates.length) {
