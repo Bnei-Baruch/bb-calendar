@@ -51,13 +51,22 @@ function buildResource(event) {
   return (lang) => {
     const title = event.title?.[lang];
     if (!title) return null;
-    const resource = {
-      summary: title,
-      start: { dateTime: `${event.date}T${event.startTime}:00`, timeZone: TZ },
-      end:   { dateTime: `${event.date}T${event.endTime}:00`,   timeZone: TZ },
-    };
+    const resource = { summary: title };
     if (event.description?.[lang]) resource.description = event.description[lang];
     if (rrule) resource.recurrence = [rrule];
+
+    if (event.startTime) {
+      resource.start = { dateTime: `${event.date}T${event.startTime}:00`, timeZone: TZ };
+      resource.end   = { dateTime: `${event.endDate || event.date}T${event.endTime}:00`, timeZone: TZ };
+    } else {
+      // All-day event — GCal end date is exclusive, so add 1 day to endDate
+      resource.start = { date: event.date };
+      const lastDay = event.endDate || event.date;
+      const d = new Date(lastDay + 'T12:00:00Z');
+      d.setUTCDate(d.getUTCDate() + 1);
+      resource.end = { date: d.toISOString().slice(0, 10) };
+    }
+
     return resource;
   };
 }
