@@ -122,6 +122,38 @@ export async function gcalDelete(gcalIds) {
   }
 }
 
+// Delete a single occurrence of a recurring GCal event for a specific date
+export async function gcalDeleteInstance(gcalIds, date) {
+  if (!gcalIds) return;
+  const cal = getCalendar();
+  // Wide window to cover timezone edge cases (e.g. 02:50 local = prev day UTC)
+  const dayBefore = new Date(date + 'T00:00:00Z');
+  dayBefore.setUTCDate(dayBefore.getUTCDate() - 1);
+  const dayAfter = new Date(date + 'T00:00:00Z');
+  dayAfter.setUTCDate(dayAfter.getUTCDate() + 1);
+
+  for (const [lang, calId] of Object.entries(CALENDAR_IDS)) {
+    const gcalId = gcalIds[lang];
+    if (!gcalId) continue;
+    try {
+      const resp = await cal.events.instances({
+        calendarId: calId,
+        eventId: gcalId,
+        timeMin: dayBefore.toISOString(),
+        timeMax: dayAfter.toISOString(),
+      });
+      const instance = (resp.data.items || []).find(item =>
+        (item.start?.dateTime || item.start?.date || '').slice(0, 10) === date
+      );
+      if (instance) {
+        await cal.events.delete({ calendarId: calId, eventId: instance.id });
+      }
+    } catch (err) {
+      if (err.status !== 410) console.error(`[gcal] deleteInstance ${lang} failed:`, err.message);
+    }
+  }
+}
+
 // Truncate a recurring series UNTIL to the day before cutoffDate
 export async function gcalUpdateUntil(gcalIds, cutoffDate) {
   if (!gcalIds) return;
@@ -129,7 +161,8 @@ export async function gcalUpdateUntil(gcalIds, cutoffDate) {
   // new UNTIL = one day before cutoffDate
   const d = new Date(cutoffDate + 'T12:00:00Z');
   d.setUTCDate(d.getUTCDate() - 1);
-  const until = d.toISOString().slice(0, 10).replace(/-/g, '') + 'T235959Z';
+  // T205959Z = 23:59:59 IST (UTC+3), ensures early-morning Israel events on cutoffDate are excluded
+  const until = d.toISOString().slice(0, 10).replace(/-/g, '') + 'T205959Z';
 
   for (const [lang, calId] of Object.entries(CALENDAR_IDS)) {
     const gcalId = gcalIds[lang];

@@ -6,7 +6,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { pool, getDbEvents, getDbEventById, rowToEvent } from './db.js';
 import { requireAdmin, requireAdminOrTranslator, isTranslatorRole } from './auth.js';
-import { gcalCreate, gcalUpdate, gcalDelete, gcalUpdateUntil } from './gcal.js';
+import { gcalCreate, gcalUpdate, gcalDelete, gcalUpdateUntil, gcalDeleteInstance } from './gcal.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -278,26 +278,47 @@ router.delete('/events/:id', requireAdmin, async (req, res) => {
       const seriesId = rows[0].recurrence_id;
       const thisDate = rows[0].date?.slice(0, 10);
       if (!seriesId) return res.status(400).json({ error: 'Not a recurring event' });
-      // Fetch parent gcal IDs before deleting
-      const { rows: parentRows } = await pool.query('SELECT gcal_event_ids FROM events WHERE id=$1', [seriesId]);
+      // Fetch parent gcal IDs and date before deleting
+      const { rows: parentRows } = await pool.query('SELECT gcal_event_ids, date FROM events WHERE id=$1', [seriesId]);
       const parentGcalIds = parentRows[0]?.gcal_event_ids;
+      const parentDate = parentRows[0]?.date?.slice(0, 10);
       await pool.query('DELETE FROM events WHERE recurrence_id=$1 AND date >= $2', [seriesId, thisDate]);
       res.json({ ok: true });
-      gcalUpdateUntil(parentGcalIds, thisDate).catch(err => console.error('[gcal] updateUntil failed:', err.message));
+      if (parentGcalIds) {
+        if (!parentDate || thisDate <= parentDate) {
+          // Deleting from the first occurrence — remove GCal event entirely
+          gcalDelete(parentGcalIds).catch(err => console.error('[gcal] delete series failed:', err.message));
+        } else {
+          gcalUpdateUntil(parentGcalIds, thisDate).catch(err => console.error('[gcal] updateUntil failed:', err.message));
+        }
+      }
       return;
     }
 
     // Fetch gcal IDs before deleting
-    const { rows: evRows } = await pool.query('SELECT gcal_event_ids, recurrence_id, id FROM events WHERE id=$1', [id]);
+    const { rows: evRows } = await pool.query('SELECT gcal_event_ids, recurrence_id, id, date FROM events WHERE id=$1', [id]);
     const evGcalIds = evRows[0]?.gcal_event_ids;
-    const isChild = evRows[0]?.recurrence_id && evRows[0]?.recurrence_id !== id;
+    const evDate = evRows[0]?.date?.slice(0, 10);
+    const parentId = evRows[0]?.recurrence_id;
+    const isChild = parentId && parentId !== id;
     const query = id.startsWith('adm-')
       ? 'DELETE FROM events WHERE id=$1'
       : 'UPDATE events SET suppressed=TRUE WHERE id=$1';
     const { rowCount } = await pool.query(query, [id]);
     if (!rowCount) return res.status(404).json({ error: 'Not found' });
     res.json({ ok: true });
-    if (!isChild) syncGcalDelete(evGcalIds);
+    if (!isChild) {
+      syncGcalDelete(evGcalIds);
+    } else if (evDate) {
+      // Single occurrence of a recurring series — cancel the specific GCal instance
+      pool.query('SELECT gcal_event_ids FROM events WHERE id=$1', [parentId])
+        .then(({ rows }) => {
+          const parentGcalIds = rows[0]?.gcal_event_ids;
+          if (parentGcalIds) gcalDeleteInstance(parentGcalIds, evDate)
+            .catch(err => console.error('[gcal] deleteInstance failed:', err.message));
+        })
+        .catch(err => console.error('[gcal] parent lookup failed:', err.message));
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
