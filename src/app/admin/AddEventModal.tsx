@@ -4,7 +4,7 @@ import { adminApi, type AdminEvent, type AdminTemplate } from './adminApi';
 import { Button } from '../components/ui/button';
 import { type Language, languageNames } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
-import { isAdmin } from './AdminGuard';
+import { isAdmin, isAdminOrTranslator } from './AdminGuard';
 
 const ALL_LANGS: Language[] = ['he', 'en', 'ru', 'es', 'de', 'it', 'fr', 'pt', 'uk', 'tr', 'bg'];
 
@@ -19,6 +19,7 @@ interface Props {
 export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props) {
   const isEdit = !!event;
   const admin = isAdmin();
+  const adminOrTranslator = isAdminOrTranslator();
   const visibleLangs = admin ? ALL_LANGS : ALL_LANGS.filter(l => l !== 'he');
   const { events: allEvents } = useEvents();
 
@@ -300,8 +301,8 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
             </label>
           )}
 
-          {/* Recurrence — editable for admin on create or when editing recurring event */}
-          {admin && (!isEdit || !!event?.recurrenceId) ? (
+          {/* Recurrence — editable for admin/translator on create or when editing recurring event */}
+          {adminOrTranslator && (!isEdit || !!event?.recurrenceId) ? (
             <div className="space-y-2">
               {isEdit && event?.recurrenceId && (
                 <p className="text-xs text-blue-600 dark:text-blue-400">🔁 Recurring series — recurrence changes apply when "Save future" is clicked</p>
