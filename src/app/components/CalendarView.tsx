@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Pencil, Trash2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Language, useTranslation } from '../utils/i18n';
 import { getMonthEvents, getIsraelToday, Event } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { isHoliday, isMemorialDay } from './HolidaysView';
 import { format, parseISO, eachDayOfInterval } from 'date-fns';
+import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
+import { AddEventModal } from '../admin/AddEventModal';
+import { adminApi } from '../admin/adminApi';
 
 interface MultiDayEvent {
   id: string;
@@ -52,15 +55,20 @@ export function CalendarView() {
   const navigate = useNavigate();
   const isRTL = language === 'he';
 
-  const { events: allEvents } = useEvents();
+  const { events: allEvents, refetch } = useEvents();
   const [currentYear, setCurrentYear] = useState(() => parseInt(getIsraelToday().slice(0, 4)));
   const [currentMonth, setCurrentMonth] = useState(() => parseInt(getIsraelToday().slice(5, 7)) - 1);
   const [popupDay, setPopupDay] = useState<number | null>(null);
+  const [addEventDate, setAddEventDate] = useState<string | null>(null);
+  const [editEvent, setEditEvent] = useState<Event | null>(null);
+  const admin = isAdmin();
+  const canEdit = isAdminOrTranslator();
+  const displayEvents = canEdit ? allEvents : allEvents.filter(e => !!e.title?.[language]);
 
-  const monthEvents = getMonthEvents(allEvents, currentYear, currentMonth + 1);
+  const monthEvents = getMonthEvents(displayEvents, currentYear, currentMonth + 1);
 
   const getMultiDayEvents = (): MultiDayEvent[] => {
-    return allEvents
+    return displayEvents
       .filter(e => e.endDate && e.endDate !== e.date)
       .map(e => {
         const allDates = eachDayOfInterval({ start: parseISO(e.date), end: parseISO(e.endDate!) })
@@ -87,12 +95,10 @@ export function CalendarView() {
     }
   };
 
-  const monthNames = {
-    he: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  };
+  const locale = language === 'he' ? 'he-IL' : language;
+  const monthNames = Array.from({ length: 12 }, (_, i) =>
+    new Date(2000, i, 1).toLocaleDateString(locale, { month: 'long' })
+  );
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -191,11 +197,18 @@ export function CalendarView() {
       .filter(item => item.span > 0);
   };
 
-  const shortDayNames = {
+  const shortDayNames: Record<string, string[]> = {
     he: ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'],
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
     es: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+    de: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+    it: ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'],
+    fr: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+    pt: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    uk: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+    tr: ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
+    bg: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
   };
 
   const popupEvents = popupDay ? getAllEventsForDay(popupDay) : [];
@@ -216,7 +229,7 @@ export function CalendarView() {
               onChange={(e) => setCurrentMonth(Number(e.target.value))}
               className="px-2 sm:px-3 py-1 sm:py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm sm:text-base font-semibold bg-white dark:bg-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {monthNames[language].map((month, index) => (
+              {monthNames.map((month, index) => (
                 <option key={index} value={index}>{month}</option>
               ))}
             </select>
@@ -361,7 +374,7 @@ export function CalendarView() {
                           {day && (
                             <div className="h-full flex flex-col">
                               {/* Day number */}
-                              <div className="mb-2 flex justify-center">
+                              <div className="mb-2 flex justify-between items-center">
                                 {todayCell ? (
                                   <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-blue-600 text-white text-lg font-bold shadow">
                                     {day}
@@ -370,6 +383,13 @@ export function CalendarView() {
                                   <span className={`text-lg font-bold ${DAY_TEXT[dayIndex]}`}>
                                     {day}
                                   </span>
+                                )}
+                                {canEdit && (
+                                  <button
+                                    onClick={e => { e.stopPropagation(); const d = new Date(currentYear, currentMonth, day); setAddEventDate(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`); }}
+                                    className="text-blue-500 hover:text-blue-700 text-base leading-none opacity-0 group-hover:opacity-100 transition-opacity"
+                                    title="Add event"
+                                  >＋</button>
                                 )}
                               </div>
 
@@ -383,11 +403,37 @@ export function CalendarView() {
                                   <div
                                     key={event.id}
                                     onClick={(e) => handleEventClick(event.id, e)}
-                                    className={`text-xs p-1 rounded border cursor-pointer hover:opacity-80 transition-opacity ${getEventColor(event)} truncate`}
+                                    className={`group/ev text-xs p-1 rounded border cursor-pointer hover:opacity-80 transition-opacity ${getEventColor(event)} truncate`}
                                     dir={isRTL ? 'rtl' : 'ltr'}
                                   >
                                     <span className="font-medium">{event.startTime}</span>{' '}
                                     <span>{event.title[language]}</span>
+                                    {event.private && <span className="ml-1 opacity-60">🔒</span>}
+                                    {canEdit && event.createdByRole === 'events_translator' && (
+                                      <span className="ml-1 text-xs font-semibold px-1 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">T</span>
+                                    )}
+                                    {canEdit && event.recurrenceId && (
+                                      <span className="ml-1 opacity-40" title="Recurring">🔁</span>
+                                    )}
+                                    {canEdit && event._db && (
+                                      <span className="inline-flex items-center gap-0.5 opacity-0 group-hover/ev:opacity-100 transition-opacity ml-1">
+                                        <button
+                                          onClick={e => { e.stopPropagation(); setEditEvent(event); }}
+                                          className="w-5 h-5 flex items-center justify-center rounded hover:text-blue-600 transition-colors"
+                                          title="Edit"
+                                        ><Pencil className="w-3 h-3" /></button>
+                                        {admin && <button
+                                          onClick={async e => {
+                                            e.stopPropagation();
+                                            if (!confirm('Delete?')) return;
+                                            await adminApi.deleteEvent(event.id);
+                                            refetch();
+                                          }}
+                                          className="w-5 h-5 flex items-center justify-center rounded hover:text-red-600 transition-colors"
+                                          title="Delete"
+                                        ><Trash2 className="w-3 h-3" /></button>}
+                                      </span>
+                                    )}
                                   </div>
                                 ))}
                                 {getMoreEventsCount(day) > 0 && (
@@ -412,6 +458,21 @@ export function CalendarView() {
         </div>
       </div>
 
+      {addEventDate && (
+        <AddEventModal
+          date={addEventDate}
+          onClose={() => setAddEventDate(null)}
+          onSaved={() => { setAddEventDate(null); refetch(); }}
+        />
+      )}
+      {editEvent && (
+        <AddEventModal
+          event={editEvent}
+          onClose={() => setEditEvent(null)}
+          onSaved={() => { setEditEvent(null); refetch(); }}
+        />
+      )}
+
       {/* Popup for extra events */}
       {popupDay !== null && (
         <>
@@ -422,7 +483,7 @@ export function CalendarView() {
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
               <span className="font-semibold text-gray-800 dark:text-gray-100">
-                {popupDay} {monthNames[language][currentMonth]} {currentYear}
+                {popupDay} {monthNames[currentMonth]} {currentYear}
               </span>
               <button onClick={() => setPopupDay(null)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
                 <X className="w-4 h-4" />

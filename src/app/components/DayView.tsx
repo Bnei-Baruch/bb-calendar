@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams, useOutletContext } from 'react-router';
-import { ChevronLeft, ChevronRight, Clock, CalendarIcon, BookOpen, Share2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, CalendarIcon, BookOpen, Share2, Pencil, Trash2 } from 'lucide-react';
 import { AddToCalendarButton } from './AddToCalendarButton';
 import { he as heLocale, enUS, ru, es } from 'date-fns/locale';
 import { Button } from './ui/button';
@@ -10,7 +10,10 @@ import { Language, useTranslation } from '../utils/i18n';
 import { getEventsByDate, getIsraelToday } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
+import { AddEventModal } from '../admin/AddEventModal';
+import { adminApi } from '../admin/adminApi';
 
 export function DayView() {
   const { language } = useOutletContext<{ language: Language }>();
@@ -19,7 +22,19 @@ export function DayView() {
   const navigate = useNavigate();
   const isRTL = language === 'he';
 
-  const { events: allEvents, loading } = useEvents();
+  const { events: allEvents, loading, refetch } = useEvents();
+  const admin = isAdmin();
+  const canEdit = isAdminOrTranslator();
+  const displayEvents = canEdit ? allEvents : allEvents.filter(e => !!e.title?.[language]);
+  const [addEventDate, setAddEventDate] = useState<string | null>(null);
+  const [editEvent, setEditEvent] = useState<any>(null);
+  const [deleteMenuId, setDeleteMenuId] = useState<string | null>(null);
+  useEffect(() => {
+    if (!deleteMenuId) return;
+    const dismiss = () => setDeleteMenuId(null);
+    document.addEventListener('click', dismiss);
+    return () => document.removeEventListener('click', dismiss);
+  }, [deleteMenuId]);
   const dateParam = searchParams.get('date') || getIsraelToday();
   const currentDate = parseISO(dateParam);
 
@@ -50,24 +65,18 @@ export function DayView() {
     return `${h.padStart(2, '0')}:${m || '00'}`;
   };
 
-  const dayNames = {
-    he: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-    en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-    es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-  };
+  const locale = language === 'he' ? 'he-IL' : language;
 
-  const monthNames = {
-    he: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  };
+  const getDayName = (date: Date) =>
+    date.toLocaleDateString(locale, { weekday: 'long' });
+
+  const getMonthName = (date: Date) =>
+    date.toLocaleDateString(locale, { month: 'long' });
 
   const formatDayHeader = (date: Date) => {
     const day = date.getDate();
-    const dayName = dayNames[language][date.getDay()];
-    const month = monthNames[language][date.getMonth()];
+    const dayName = getDayName(date);
+    const month = getMonthName(date);
     if (language === 'he') return `${dayName}, ${day} ${month}`;
     return `${dayName}, ${month} ${day}`;
   };
@@ -75,8 +84,8 @@ export function DayView() {
   const formatWeekRange = () => {
     const startDay = currentDate.getDate();
     const endDay = endDate.getDate();
-    const startMonth = monthNames[language][currentDate.getMonth()];
-    const endMonth = monthNames[language][endDate.getMonth()];
+    const startMonth = getMonthName(currentDate);
+    const endMonth = getMonthName(endDate);
     const year = endDate.getFullYear();
     if (language === 'he') {
       if (currentDate.getMonth() === endDate.getMonth()) {
@@ -123,8 +132,8 @@ export function DayView() {
     const appTitle = { he: 'לוח אירועים', en: 'Events Calendar', ru: 'Календарь событий', es: 'Calendario de Eventos' }[language];
     const siteLabel = { he: 'לאתר לוח אירועים', en: 'Events Calendar website', ru: 'Сайт календаря событий', es: 'Sitio web del calendario de eventos' }[language];
     const lines: string[] = [`*${appTitle}*`, `*${formatDayHeader(date)}*`, '──────────'];
-    const dayEvents = getEventsByDate(allEvents, dateStr);
-    const parentEvent = allEvents
+    const dayEvents = getEventsByDate(displayEvents, dateStr);
+    const parentEvent = displayEvents
       .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
       .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
     const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
@@ -177,8 +186,8 @@ export function DayView() {
     const lines: string[] = [`*${appTitle}*`, `*${formatWeekRange()}*`, ''];
     weekDates.forEach(dateStr => {
       const date = parseISO(dateStr);
-      const dayEvents = getEventsByDate(allEvents, dateStr);
-      const parentEvent = allEvents
+      const dayEvents = getEventsByDate(displayEvents, dateStr);
+      const parentEvent = displayEvents
         .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
         .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
       const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
@@ -350,8 +359,8 @@ export function DayView() {
               const date = parseISO(dateStr);
               const todayFlag = isToday(date);
               const color = dayColors[dayIdx];
-              const allDayEvents = getEventsByDate(allEvents, dateStr);
-              const parentEvent = allEvents
+              const allDayEvents = getEventsByDate(displayEvents, dateStr);
+              const parentEvent = displayEvents
                 .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
                 .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
               const events = parentEvent
@@ -378,6 +387,13 @@ export function DayView() {
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded-full text-white ${color.badge}`}>
                           {t.today}
                         </span>
+                      )}
+                      {canEdit && (
+                        <button
+                          onClick={() => setAddEventDate(dateStr)}
+                          className="text-sm font-bold opacity-50 hover:opacity-100 transition-opacity"
+                          title="Add event"
+                        >＋</button>
                       )}
                     </div>
                     <div className="relative shrink-0">
@@ -456,7 +472,7 @@ export function DayView() {
                           className={`bg-white/70 dark:bg-white/5 rounded-lg p-3 transition-colors ${event.type === 'conference' ? 'cursor-pointer hover:bg-white/90 dark:hover:bg-white/10' : ''}`}
                           onClick={event.type === 'conference' ? () => handleEventClick(event.id) : undefined}
                         >
-                          <div className="flex items-start gap-3">
+                          <div className="flex items-center gap-3">
                             <div className={`flex items-center gap-1.5 text-sm min-w-[100px] ${color.text}`}>
                               <Clock className="w-3.5 h-3.5 shrink-0" />
                               <span className="font-medium" dir="ltr">
@@ -467,8 +483,15 @@ export function DayView() {
                               </span>
                             </div>
                             <div className="flex-1">
-                              <h4 className={`font-semibold text-sm sm:text-base ${color.text}`}>
+                              <h4 className={`font-semibold text-sm sm:text-base ${color.text} flex items-center gap-1.5 flex-wrap`}>
                                 {event.title[language]}
+                                {event.private && <span className="opacity-60 text-sm">🔒</span>}
+                                {admin && event.createdByRole === 'events_translator' && (
+                                  <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">T</span>
+                                )}
+                                {canEdit && event.recurrenceId && (
+                                  <span className="text-xs opacity-50" title="Recurring">🔁</span>
+                                )}
                               </h4>
                               {event.description && (
                                 <p className={`text-xs sm:text-sm opacity-75 mt-0.5 ${color.text}`}>
@@ -476,6 +499,55 @@ export function DayView() {
                                 </p>
                               )}
                             </div>
+                            {canEdit && event._db && (
+                              <div className="flex items-center gap-1 shrink-0">
+                                <button
+                                  onClick={e => { e.stopPropagation(); setEditEvent(event); }}
+                                  className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
+                                  title="Edit"
+                                ><Pencil className="w-4 h-4" /></button>
+                                {admin && (
+                                  <div className="relative">
+                                    <button
+                                      onClick={e => {
+                                        e.stopPropagation();
+                                        if (event.recurrenceId) {
+                                          setDeleteMenuId(deleteMenuId === event.id ? null : event.id);
+                                        } else {
+                                          if (!confirm('Delete this event?')) return;
+                                          adminApi.deleteEvent(event.id).then(refetch);
+                                        }
+                                      }}
+                                      className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"
+                                      title="Delete"
+                                    ><Trash2 className="w-4 h-4" /></button>
+                                    {deleteMenuId === event.id && (
+                                      <div
+                                        className="absolute z-50 end-0 top-9 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden min-w-[160px]"
+                                        onClick={e => e.stopPropagation()}
+                                      >
+                                        <button
+                                          className="w-full text-start px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                          onClick={async () => {
+                                            setDeleteMenuId(null);
+                                            await adminApi.deleteEvent(event.id);
+                                            refetch();
+                                          }}
+                                        >Delete this only</button>
+                                        <button
+                                          className="w-full text-start px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 border-t border-gray-100 dark:border-gray-700"
+                                          onClick={async () => {
+                                            setDeleteMenuId(null);
+                                            await adminApi.deleteEventFuture(event.id);
+                                            refetch();
+                                          }}
+                                        >Delete this &amp; future</button>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            )}
                             {event.title.en === 'Meal' && (
                               <a
                                 href={`https://pay.kli.one/${language}/Calendar-Meals`}
@@ -510,6 +582,21 @@ export function DayView() {
           </div>
         )}
       </div>
+
+      {addEventDate && (
+        <AddEventModal
+          date={addEventDate}
+          onClose={() => setAddEventDate(null)}
+          onSaved={() => { setAddEventDate(null); refetch(); }}
+        />
+      )}
+      {editEvent && (
+        <AddEventModal
+          event={editEvent}
+          onClose={() => setEditEvent(null)}
+          onSaved={() => { setEditEvent(null); refetch(); }}
+        />
+      )}
     </div>
   );
 }

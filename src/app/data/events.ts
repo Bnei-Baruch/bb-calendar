@@ -1,26 +1,34 @@
+import type { Language } from '../utils/i18n';
+
 export type EventType = 'regular' | 'conference' | 'holiday' | 'special';
 
 export interface Event {
   id: string;
   type: EventType;
   date: string; // YYYY-MM-DD
-  endDate?: string; // YYYY-MM-DD, for multi-day events
+  endDate?: string;
   startTime: string; // HH:mm
   endTime: string; // HH:mm
-  title: {
-    he: string;
-    en: string;
-    ru: string;
-    es: string;
-  };
-  description?: {
-    he: string;
-    en: string;
-    ru: string;
-    es: string;
-  };
+  title: Partial<Record<Language, string>>;
+  description?: Partial<Record<Language, string>>;
   location?: string;
   studyLink?: string;
+  private?: boolean;
+  parentId?: string;
+  _db?: boolean;
+  createdByRole?: string;
+  recurrence?: 'daily' | 'weekly' | 'monthly' | 'custom';
+  recurrenceEnd?: string;
+  recurrenceId?: string;
+  recurrenceDays?: string;
+}
+
+export function getEventTitle(event: Event, language: Language): string {
+  return event.title[language] || event.title.en || event.title.he || '';
+}
+
+export function getEventDescription(event: Event, language: Language): string {
+  return event.description?.[language] || event.description?.en || event.description?.he || '';
 }
 
 function toMinutes(time: string): number {

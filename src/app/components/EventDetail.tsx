@@ -1,6 +1,6 @@
 import { useNavigate, useParams, useOutletContext, useLocation, useSearchParams } from 'react-router';
 import { useState, useEffect } from 'react';
-import { ArrowRight, Clock, Calendar, MapPin, BookOpen, Share2 } from 'lucide-react';
+import { ArrowRight, Clock, Calendar, MapPin, BookOpen, Share2, Plus, Pencil, Trash2 } from 'lucide-react';
 import { AddToCalendarButton } from './AddToCalendarButton';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -8,6 +8,10 @@ import { Badge } from './ui/badge';
 import { Language, useTranslation } from '../utils/i18n';
 import { getEventById } from '../data/events';
 import { useEvents } from '../context/EventsContext';
+import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
+import { adminApi } from '../admin/adminApi';
+import type { AdminEvent } from '../admin/adminApi';
+import { AddEventModal } from '../admin/AddEventModal';
 
 export function EventDetail() {
   const { language } = useOutletContext<{ language: Language }>();
@@ -17,9 +21,17 @@ export function EventDetail() {
   const [searchParams] = useSearchParams();
   const t = useTranslation(language);
   const isRTL = language === 'he';
+  const admin = isAdmin();
+  const canEdit = isAdminOrTranslator();
 
-  const { events: allEvents } = useEvents();
+  const { events: allEvents, refetch } = useEvents();
   const [shareOpen, setShareOpen] = useState(false);
+  const [editEvent, setEditEvent] = useState<AdminEvent | null>(null);
+  const [addDate, setAddDate] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importUrl, setImportUrl] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState('');
 
   useEffect(() => { window.scrollTo(0, 0); }, [eventId]);
 
@@ -49,12 +61,14 @@ export function EventDetail() {
     }
 
     const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
+    const isContainer = event.type === 'conference' || event.type === 'holiday';
     allEvents
       .filter(e =>
         e.date >= event.date &&
         e.date <= endRange &&
         e.id !== event.id &&
-        !(e.endDate && e.endDate !== e.date)
+        !(e.endDate && e.endDate !== e.date) &&
+        (isContainer ? e.parentId === event.id : !e.parentId)
       )
       .forEach(e => {
         if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
@@ -83,23 +97,10 @@ export function EventDetail() {
   const formatDateByLanguage = (dateStr: string) => {
     const [y, mo, da] = dateStr.split('-').map(Number);
     const date = new Date(y, mo - 1, da);
-    const dayNames = {
-      he: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-      en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-      es: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-    };
-    
-    const monthNames = {
-      he: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-      es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    };
-
+    const loc = language === 'he' ? 'he-IL' : language;
     const day = date.getDate();
-    const dayName = dayNames[language][date.getDay()];
-    const month = monthNames[language][date.getMonth()];
+    const dayName = date.toLocaleDateString(loc, { weekday: 'long' });
+    const month = date.toLocaleDateString(loc, { month: 'long' });
     const year = date.getFullYear();
 
     if (language === 'he') {
@@ -107,19 +108,13 @@ export function EventDetail() {
     }
     return `${dayName}, ${month} ${day}, ${year}`;
   };
-  
+
   const formatShortDateByLanguage = (dateStr: string) => {
     const [y, mo, da] = dateStr.split('-').map(Number);
     const date = new Date(y, mo - 1, da);
-    const monthNames = {
-      he: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'],
-      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-      es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    };
-
+    const loc = language === 'he' ? 'he-IL' : language;
     const day = date.getDate();
-    const month = monthNames[language][date.getMonth()];
+    const month = date.toLocaleDateString(loc, { month: 'long' });
     const year = date.getFullYear();
 
     if (language === 'he') {
@@ -317,14 +312,81 @@ export function EventDetail() {
             </div>
           )}
 
-          {sortedDates.length > 0 && (
+          {(sortedDates.length > 0 || (canEdit && (event.type === 'conference' || event.type === 'holiday'))) && (
             <div className="mt-8 pt-6 border-t">
-              <h3 className={`font-semibold text-xl mb-6 ${isRTL ? 'text-right' : ''}`}>
-                {language === 'he' ? 'לוח זמנים מפורט' : 
-                 language === 'en' ? 'Detailed Schedule' :
-                 language === 'ru' ? 'Подробное расписание' :
-                 'Horario detallado'}
-              </h3>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className={`font-semibold text-xl ${isRTL ? 'text-right' : ''}`}>
+                  {({
+                    he: 'לוח זמנים מפורט',
+                    en: 'Detailed Schedule',
+                    ru: 'Подробное расписание',
+                    es: 'Horario detallado',
+                    de: 'Detaillierter Zeitplan',
+                    it: 'Programma dettagliato',
+                    fr: 'Programme détaillé',
+                    pt: 'Horário detalhado',
+                    uk: 'Детальний розклад',
+                    tr: 'Ayrıntılı Program',
+                    bg: 'Подробен график',
+                  } as Record<string, string>)[language] ?? 'Detailed Schedule'}
+                </h3>
+                {admin && (event.type === 'conference' || event.type === 'holiday') && (
+                  <button
+                    onClick={() => { setImportOpen(v => !v); setImportResult(''); }}
+                    className="text-xs px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    {({
+                      he: '↑ ייבוא מגיליון',
+                      en: '↑ Import from Sheets',
+                      ru: '↑ Импорт из таблицы',
+                      es: '↑ Importar de Sheets',
+                      de: '↑ Aus Tabelle importieren',
+                      it: '↑ Importa da Sheets',
+                      fr: '↑ Importer depuis Sheets',
+                      pt: '↑ Importar do Sheets',
+                      uk: '↑ Імпорт з таблиці',
+                      tr: '↑ Tablodan içe aktar',
+                      bg: '↑ Импортиране от таблица',
+                    } as Record<string, string>)[language] ?? '↑ Import from Sheets'}
+                  </button>
+                )}
+              </div>
+              {importOpen && admin && (() => {
+                const doImport = async () => {
+                  if (!importUrl.trim()) return;
+                  setImporting(true);
+                  setImportResult('');
+                  try {
+                    const { created, updated } = await adminApi.importEventsFromSheets(importUrl.trim(), event.id);
+                    setImportResult(`✅ Created: ${created}, updated: ${updated}`);
+                    setImportUrl('');
+                    setImportOpen(false);
+                    refetch();
+                  } catch (e: any) {
+                    setImportResult(`❌ ${e.message}`);
+                  } finally {
+                    setImporting(false);
+                  }
+                };
+                return (
+                  <div className="mb-6 flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <input
+                        type="url"
+                        value={importUrl}
+                        onChange={e => setImportUrl(e.target.value)}
+                        placeholder="Paste Google Sheets URL…"
+                        className="flex-1 border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+                        onKeyDown={e => e.key === 'Enter' && doImport()}
+                      />
+                      <Button variant="outline" onClick={doImport} disabled={importing || !importUrl.trim()}>
+                        {importing ? (isRTL ? 'מייבא…' : 'Importing…') : (isRTL ? 'ייבא' : 'Import')}
+                      </Button>
+                    </div>
+                    {importResult && <p className="text-sm">{importResult}</p>}
+                  </div>
+                );
+              })()}
               <div className="space-y-6">
                 {sortedDates.map(date => {
                   const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
@@ -332,21 +394,17 @@ export function EventDetail() {
                   
                   return (
                     <div key={date}>
-                      <div className={`flex items-center gap-3 mb-4 pb-2 border-b-2 border-purple-300 dark:border-purple-700 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-                        {isRTL ? (
-                          <>
-                            <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100">
-                              {formatDateByLanguage(date)}
-                            </h4>
-                            <Calendar className="w-5 h-5 text-purple-600" />
-                          </>
-                        ) : (
-                          <>
-                            <Calendar className="w-5 h-5 text-purple-600" />
-                            <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100">
-                              {formatDateByLanguage(date)}
-                            </h4>
-                          </>
+                      <div className="flex items-center gap-3 mb-4 pb-2 border-b-2 border-purple-300 dark:border-purple-700">
+                        <Calendar className="w-5 h-5 text-purple-600 shrink-0" />
+                        <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100 flex-1">
+                          {formatDateByLanguage(date)}
+                        </h4>
+                        {canEdit && (
+                          <button
+                            onClick={() => setAddDate(date)}
+                            className="w-7 h-7 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shrink-0"
+                            title={isRTL ? 'הוסף אירוע' : 'Add event'}
+                          ><Plus className="w-4 h-4" /></button>
                         )}
                       </div>
                       <div className="space-y-2">
@@ -370,7 +428,7 @@ export function EventDetail() {
                               {timed.map(evt => (
                                 <div
                                   key={evt.id}
-                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
+                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group/ev"
                                 >
                                   <Clock className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
                                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap" dir="ltr">
@@ -399,6 +457,24 @@ export function EventDetail() {
                                       <BookOpen className="w-4 h-4 text-white" />
                                     </a>
                                   )}
+                                  {canEdit && evt._db && (
+                                    <div className="flex items-center gap-1 opacity-0 group-hover/ev:opacity-100 transition-opacity">
+                                      <button
+                                        onClick={() => setEditEvent(evt as unknown as AdminEvent)}
+                                        className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                                        title="Edit"
+                                      ><Pencil className="w-3.5 h-3.5" /></button>
+                                      {admin && <button
+                                        onClick={async () => {
+                                          if (!confirm('Delete this event?')) return;
+                                          await adminApi.deleteEvent(evt.id);
+                                          refetch();
+                                        }}
+                                        className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                                        title="Delete"
+                                      ><Trash2 className="w-3.5 h-3.5" /></button>}
+                                    </div>
+                                  )}
                                 </div>
                               ))}
                             </>
@@ -413,6 +489,22 @@ export function EventDetail() {
           )}
         </Card>
       </div>
+
+      {addDate && (
+        <AddEventModal
+          date={addDate}
+          parentId={event.id}
+          onClose={() => setAddDate(null)}
+          onSaved={() => { setAddDate(null); refetch(); }}
+        />
+      )}
+      {editEvent && (
+        <AddEventModal
+          event={editEvent}
+          onClose={() => setEditEvent(null)}
+          onSaved={() => { setEditEvent(null); refetch(); }}
+        />
+      )}
     </div>
   );
 }

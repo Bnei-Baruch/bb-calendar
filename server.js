@@ -1,11 +1,15 @@
+import { config } from 'dotenv';
+config();
 import express from 'express';
-import { google } from 'googleapis';
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, unlinkSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { TelegramClient } from 'telegram';
 import { StringSession } from 'telegram/sessions/index.js';
 import { Api } from 'telegram';
+import { initDb, getDbEvents } from './server/db.js';
+import { extractUser, canSeePrivate } from './server/auth.js';
+import adminRoutes from './server/adminRoutes.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -13,13 +17,13 @@ const PORT = 3001;
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
-const CACHE_FILE = join(__dirname, 'data', 'events.json');
-const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+app.use(extractUser);
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes (study links)
 
 const TG_API_ID = 36986128;
 const TG_API_HASH = 'b1a1bf07bca5f6f56c09edbfb1051b95';
@@ -32,11 +36,6 @@ const MEDIA_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 let tgClient = null;
 let tgChannelEntity = null;
 let postsLastFetched = 0;
-const SHEET_ID = '1ewi5NfWbl7qRM4Sn4r4eN7lgA4czgU1w9CyWhIBGBcs';
-const KEY_FILE = join(__dirname, 'bb-calendar-488901-6a4730c846cc.json');
-const SHEET_TAB = 'לו"ז';
-
-let lastFetched = 0;
 let studyLinksCache = [];
 let studyLastFetched = 0;
 
@@ -60,7 +59,7 @@ async function fetchStudyLinks() {
         date: e.date.split('T')[0],
         startMin: timeToMin(e.start_time),
         endMin: timeToMin(e.end_time),
-        link: 'https://study.kli.one/?event=' + e.id,
+        link: 'https://study.kli.one/event/' + e.id,
       });
     }
     studyLinksCache = list;
@@ -72,114 +71,6 @@ async function fetchStudyLinks() {
   return studyLinksCache;
 }
 
-function parseDate(dateStr) {
-  if (!dateStr) return null;
-  const parts = dateStr.trim().split('.');
-  if (parts.length !== 3) return null;
-  const [day, month, year] = parts;
-  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-}
-
-function parseRows(rows) {
-  // rows[0] is the header row — skip it
-  const dataRows = rows.slice(1);
-  const events = [];
-  let idCounter = 1;
-
-  for (const cols of dataRows) {
-    // Sheets API returns rows as arrays (0-indexed from col A):
-    // 0-3: calendar IDs (A-D, skip)
-    // 4: start date (E), 5: end date (F), 6: start time (G), 7: end time (H)
-    // 8-13: display flags I-N (skip); N = "לא מפורסם" (unpublished)
-    // 14: Hebrew title (O), 15: English (P), 16: Russian (Q), 17: Spanish (R)
-    // 18: Hebrew details (S), 19: English details (T), 20: Russian details (U), 21: Spanish details (V)
-    if (!cols || cols.length < 15) continue;
-
-    const startDate = parseDate(cols[4]);
-    if (!startDate) continue;
-
-    const endDate = parseDate(cols[5]) || startDate;
-    const startTime = (cols[6] || '').trim();
-    const endTime = (cols[7] || '').trim();
-    if ((cols[13] || '').trim().toUpperCase() === 'TRUE') continue;
-
-    const isSpecialEvent = (cols[12] || '').trim().toUpperCase() === 'TRUE';
-    const titleHe = (cols[14] || '').trim();
-    const titleEn = (cols[15] || '').trim();
-    const titleRu = (cols[16] || '').trim();
-    const titleEs = (cols[17] || '').trim();
-    const detailsHe = (cols[18] || '').trim();
-    const detailsEn = (cols[19] || '').trim();
-    const detailsRu = (cols[20] || '').trim();
-    const detailsEs = (cols[21] || '').trim();
-
-    if (!titleHe && !titleEn) continue;
-
-    const isMultiDay = startDate !== endDate;
-    const type = isMultiDay ? 'conference' : isSpecialEvent ? 'special' : 'regular';
-
-    const event = {
-      id: `ev-${idCounter++}`,
-      type,
-      date: startDate,
-      endDate: isMultiDay ? endDate : undefined,
-      startTime,
-      endTime,
-      title: { he: titleHe, en: titleEn, ru: titleRu, es: titleEs },
-    };
-
-    if (detailsHe || detailsEn) {
-      event.description = { he: detailsHe, en: detailsEn, ru: detailsRu, es: detailsEs };
-    }
-
-    events.push(event);
-  }
-
-  return events;
-}
-
-async function fetchAndCache() {
-  console.log('[cache] Fetching from Google Sheets (service account)...');
-  const auth = new google.auth.GoogleAuth({
-    keyFile: KEY_FILE,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-  });
-  const sheets = google.sheets({ version: 'v4', auth });
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId: SHEET_ID,
-    range: SHEET_TAB,
-  });
-  const rows = res.data.values || [];
-  const events = parseRows(rows);
-
-  if (!existsSync(join(__dirname, 'data'))) {
-    mkdirSync(join(__dirname, 'data'));
-  }
-  writeFileSync(CACHE_FILE, JSON.stringify(events, null, 2), 'utf-8');
-  lastFetched = Date.now();
-  console.log(`[cache] Cached ${events.length} events`);
-  return events;
-}
-
-async function getEvents() {
-  const now = Date.now();
-  const isCacheStale = now - lastFetched > CACHE_TTL_MS;
-
-  if (!isCacheStale && existsSync(CACHE_FILE)) {
-    return JSON.parse(readFileSync(CACHE_FILE, 'utf-8'));
-  }
-
-  try {
-    return await fetchAndCache();
-  } catch (err) {
-    console.error('[cache] Fetch failed:', err.message);
-    // Fall back to stale cache if available
-    if (existsSync(CACHE_FILE)) {
-      return JSON.parse(readFileSync(CACHE_FILE, 'utf-8'));
-    }
-    return [];
-  }
-}
 
 function cleanupOldMedia() {
   if (!existsSync(MEDIA_DIR)) return;
@@ -274,10 +165,17 @@ async function fetchTelegramPosts() {
 
 app.use(express.json());
 
+app.use('/api/admin', adminRoutes);
+
 app.get('/api/events', async (req, res) => {
   try {
-    const [events, studyLinks] = await Promise.all([getEvents(), fetchStudyLinks()]);
-    const enriched = events.map(e => {
+    const showPrivate = canSeePrivate(req);
+    const [dbEvents, studyLinks] = await Promise.all([
+      getDbEvents(showPrivate), fetchStudyLinks(),
+    ]);
+    const allEvents = dbEvents
+      .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime));
+    const enriched = allEvents.map(e => {
       const eMin = timeToMin(e.startTime);
       const match = studyLinks.find(s =>
         s.date === e.date && eMin >= s.startMin && (s.endMin < 0 || eMin < s.endMin)
@@ -292,8 +190,8 @@ app.get('/api/events', async (req, res) => {
 
 app.get('/api/ics/:eventId', async (req, res) => {
   try {
-    const events = await getEvents();
-    const event = events.find(e => e.id === req.params.eventId);
+    const dbEvents = await getDbEvents(true);
+    const event = dbEvents.find(e => e.id === req.params.eventId);
     if (!event) return res.status(404).send('Event not found');
 
     const lang = req.query.lang || 'en';
@@ -402,8 +300,7 @@ app.get('/api/posts', async (_req, res) => {
   }
 });
 
-// Warm cache on startup
-getEvents().catch(console.error);
+initDb().catch(console.error);
 fetchTelegramPosts().catch(err => console.error('[telegram] Startup warm failed:', err.message));
 
 // Cleanup old media on startup and daily
