@@ -146,6 +146,11 @@ export function UpcomingEventsView() {
                         {event.location}
                       </div>
                     )}
+                    {event.description?.[language] && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
+                        {event.description[language]}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-1 shrink-0">

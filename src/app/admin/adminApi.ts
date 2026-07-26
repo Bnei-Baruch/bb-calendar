@@ -104,6 +104,7 @@ export interface AdminTemplate {
   id: number;
   name: string;
   titles: Record<string, string>;
+  descriptions?: Record<string, string>;
   defaultStartTime: string;
   defaultEndTime: string;
   privateByDefault: boolean;
@@ -113,6 +114,7 @@ export interface AdminTemplate {
 export interface TemplatePayload {
   name: string;
   titles: Record<string, string>;
+  descriptions?: Record<string, string>;
   defaultStartTime?: string;
   defaultEndTime?: string;
   privateByDefault?: boolean;

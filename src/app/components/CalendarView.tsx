@@ -14,6 +14,7 @@ import { adminApi } from '../admin/adminApi';
 interface MultiDayEvent {
   id: string;
   title: Event['title'];
+  description?: Event['description'];
   type: Event['type'];
   startDate: string;
   endDate: string;
@@ -73,7 +74,7 @@ export function CalendarView() {
       .map(e => {
         const allDates = eachDayOfInterval({ start: parseISO(e.date), end: parseISO(e.endDate!) })
           .map(d => format(d, 'yyyy-MM-dd'));
-        return { id: e.id, title: e.title, type: e.type, startDate: e.date, endDate: e.endDate!, allDates };
+        return { id: e.id, title: e.title, description: e.description, type: e.type, startDate: e.date, endDate: e.endDate!, allDates };
       });
   };
 
@@ -322,6 +323,7 @@ export function CalendarView() {
                           [isRTL ? 'right' : 'left']: `calc(${leftPct}% + 8px)`,
                           width: `calc(${widthPct}% - 16px)`,
                         }}
+                        title={item.event.description?.[language]}
                       >
                         <span className="truncate">{item.event.title[language]}</span>
                       </div>
@@ -350,6 +352,7 @@ export function CalendarView() {
                           [isRTL ? 'right' : 'left']: `calc(${leftPct}% + 4px)`,
                           width: `calc(${widthPct}% - 8px)`,
                         }}
+                        title={item.event.description?.[language]}
                       >
                         <span className="truncate">{item.event.title[language]}</span>
                       </div>
@@ -405,6 +408,7 @@ export function CalendarView() {
                                     onClick={(e) => handleEventClick(event.id, e)}
                                     className={`group/ev text-xs p-1 rounded border cursor-pointer hover:opacity-80 transition-opacity ${getEventColor(event)} truncate`}
                                     dir={isRTL ? 'rtl' : 'ltr'}
+                                    title={event.description?.[language]}
                                   >
                                     <span className="font-medium">{event.startTime}</span>{' '}
                                     <span>{event.title[language]}</span>
@@ -496,6 +500,7 @@ export function CalendarView() {
                   onClick={(e) => { handleEventClick(event.id, e); setPopupDay(null); }}
                   className={`text-sm px-3 py-2 rounded-lg border cursor-pointer hover:opacity-80 transition-opacity ${getEventColor(event)}`}
                   dir={isRTL ? 'rtl' : 'ltr'}
+                  title={event.description?.[language]}
                 >
                   {event.startTime && <span className="font-semibold me-2">{event.startTime}</span>}
                   <span>{event.title[language]}</span>

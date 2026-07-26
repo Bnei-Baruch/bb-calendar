@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS event_templates (
   created_at         TIMESTAMPTZ DEFAULT NOW()
 );
 ALTER TABLE event_templates ADD COLUMN IF NOT EXISTS type TEXT NOT NULL DEFAULT 'regular';
+ALTER TABLE event_templates ADD COLUMN IF NOT EXISTS descriptions JSONB;
 
 CREATE TABLE IF NOT EXISTS holidays (
   id        SERIAL PRIMARY KEY,

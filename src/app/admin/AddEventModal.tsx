@@ -39,6 +39,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     type: event?.type ?? 'regular',
     private: event?.private ?? false,
     titles: event?.title ?? {} as Record<string, string>,
+    descriptions: event?.description ?? {} as Record<string, string>,
   });
   const [activeLang, setActiveLang] = useState<Language>(admin ? 'he' : 'en');
   const [showTitles, setShowTitles] = useState(isEdit);
@@ -64,6 +65,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     return d.toISOString().slice(0, 10);
   });
   const [translating, setTranslating] = useState(false);
+  const [translatingDescription, setTranslatingDescription] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savingFuture, setSavingFuture] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -81,6 +83,9 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     const templateTitles = admin
       ? { ...t.titles }
       : Object.fromEntries(Object.entries(t.titles).filter(([l]) => l !== 'he'));
+    const templateDescriptions = admin
+      ? { ...(t.descriptions ?? {}) }
+      : Object.fromEntries(Object.entries(t.descriptions ?? {}).filter(([l]) => l !== 'he'));
     setForm(f => ({
       ...f,
       type: t.type || f.type,
@@ -88,11 +93,16 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
       endTime: t.defaultEndTime || f.endTime,
       private: admin ? t.privateByDefault : false,
       titles: templateTitles,
+      descriptions: templateDescriptions,
     }));
   };
 
   const setTitle = (lang: Language, value: string) => {
     setForm(f => ({ ...f, titles: { ...f.titles, [lang]: value } }));
+  };
+
+  const setDescription = (lang: Language, value: string) => {
+    setForm(f => ({ ...f, descriptions: { ...f.descriptions, [lang]: value } }));
   };
 
   const autoTranslate = async () => {
@@ -112,6 +122,23 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     }
   };
 
+  const autoTranslateDescription = async () => {
+    const source = form.descriptions['he'] || form.descriptions['en'];
+    if (!source) return;
+    const sourceLang = form.descriptions['he'] ? 'he' : 'en';
+    const missing = visibleLangs.filter(l => l !== sourceLang && !form.descriptions[l]);
+    if (!missing.length) return;
+    setTranslatingDescription(true);
+    try {
+      const { translations } = await adminApi.translate(source, sourceLang, missing);
+      setForm(f => ({ ...f, descriptions: { ...f.descriptions, ...translations } }));
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setTranslatingDescription(false);
+    }
+  };
+
   const buildPayload = () => ({
     type: form.type,
     date: form.date,
@@ -119,6 +146,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     startTime: form.startTime,
     endTime: form.endTime,
     titles: form.titles,
+    descriptions: form.descriptions,
     private: form.private,
     parentId: selectedParentId || undefined,
     recurrence: recurrence !== 'none' ? recurrence : undefined,
@@ -154,6 +182,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     try {
       await adminApi.updateEventSeries(event.id, {
         titles: form.titles,
+        descriptions: form.descriptions,
         startTime: form.startTime,
         endTime: form.endTime,
         private: form.private,
@@ -365,7 +394,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
               onClick={() => setShowTitles(v => !v)}
               className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
             >
-              <span>▶ Override titles</span>
+              <span>▶ Titles &amp; descriptions</span>
               <span className="text-xs text-gray-400">{showTitles ? '▲' : '▼'}</span>
             </button>
 
@@ -387,7 +416,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
                   ))}
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]}</label>
+                  <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]} — title</label>
                   <textarea
                     value={form.titles[activeLang] ?? ''}
                     onChange={e => setTitle(activeLang, e.target.value)}
@@ -397,7 +426,20 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
                   />
                 </div>
                 <Button variant="outline" size="sm" onClick={autoTranslate} disabled={translating} className="w-full">
-                  {translating ? 'Translating…' : '🤖 Auto-translate from Hebrew'}
+                  {translating ? 'Translating…' : '🤖 Auto-translate title from Hebrew'}
+                </Button>
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]} — description</label>
+                  <textarea
+                    value={form.descriptions[activeLang] ?? ''}
+                    onChange={e => setDescription(activeLang, e.target.value)}
+                    rows={3}
+                    className="w-full border rounded-lg px-3 py-2 text-sm resize-none dark:bg-gray-800 dark:border-gray-700"
+                    dir={activeLang === 'he' ? 'rtl' : 'ltr'}
+                  />
+                </div>
+                <Button variant="outline" size="sm" onClick={autoTranslateDescription} disabled={translatingDescription} className="w-full">
+                  {translatingDescription ? 'Translating…' : '🤖 Auto-translate description from Hebrew'}
                 </Button>
               </div>
             )}
