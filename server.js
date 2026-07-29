@@ -167,22 +167,45 @@ app.use(express.json());
 
 app.use('/api/admin', adminRoutes);
 
+function getIsraelToday() {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date());
+}
+
+async function getEnrichedEvents(showPrivate) {
+  const [dbEvents, studyLinks] = await Promise.all([
+    getDbEvents(showPrivate), fetchStudyLinks(),
+  ]);
+  const allEvents = dbEvents
+    .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime));
+  return allEvents.map(e => {
+    const eMin = timeToMin(e.startTime);
+    const match = studyLinks.find(s =>
+      s.date === e.date && eMin >= s.startMin && (s.endMin < 0 || eMin < s.endMin)
+    );
+    return match ? Object.assign({}, e, { studyLink: match.link }) : e;
+  });
+}
+
 app.get('/api/events', async (req, res) => {
   try {
-    const showPrivate = canSeePrivate(req);
-    const [dbEvents, studyLinks] = await Promise.all([
-      getDbEvents(showPrivate), fetchStudyLinks(),
-    ]);
-    const allEvents = dbEvents
-      .sort((a, b) => a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime));
-    const enriched = allEvents.map(e => {
-      const eMin = timeToMin(e.startTime);
-      const match = studyLinks.find(s =>
-        s.date === e.date && eMin >= s.startMin && (s.endMin < 0 || eMin < s.endMin)
-      );
-      return match ? Object.assign({}, e, { studyLink: match.link }) : e;
-    });
+    const enriched = await getEnrichedEvents(canSeePrivate(req));
     res.json(enriched);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/events/today', async (req, res) => {
+  try {
+    const enriched = await getEnrichedEvents(canSeePrivate(req));
+    const today = getIsraelToday();
+    const todaysEvents = enriched.filter(e =>
+      e.date <= today && (e.endDate || e.date) >= today
+    );
+    res.json(todaysEvents);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
