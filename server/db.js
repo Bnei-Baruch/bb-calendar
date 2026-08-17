@@ -33,6 +33,7 @@ ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence_end DATE;
 ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence_id TEXT;
 ALTER TABLE events ADD COLUMN IF NOT EXISTS recurrence_days TEXT;
 ALTER TABLE events ADD COLUMN IF NOT EXISTS gcal_event_ids JSONB;
+ALTER TABLE events ADD COLUMN IF NOT EXISTS scope TEXT;
 
 CREATE TABLE IF NOT EXISTS event_templates (
   id                 SERIAL PRIMARY KEY,
@@ -85,6 +86,7 @@ function rowToEvent(row) {
     recurrenceId: row.recurrence_id || undefined,
     recurrenceDays: row.recurrence_days || undefined,
     gcalEventIds: row.gcal_event_ids || undefined,
+    scope: row.scope || undefined,
     _db: true,
   };
 }

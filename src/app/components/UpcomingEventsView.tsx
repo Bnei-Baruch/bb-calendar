@@ -27,7 +27,7 @@ export function UpcomingEventsView() {
 
   const congresses = allEvents
     .filter(event => {
-      if (event.date < todayStr) return false;
+      if ((event.endDate || event.date) < todayStr) return false;
       if (isHoliday(event)) return false;
       if (!canEdit && !event.title?.[language]) return false;
       const isMultiDay = event.endDate && event.endDate !== event.date;

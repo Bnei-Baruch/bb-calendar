@@ -38,6 +38,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     endTime: event?.endTime ?? '',
     type: event?.type ?? 'regular',
     private: event?.private ?? false,
+    scope: event?.scope,
     titles: event?.title ?? {} as Record<string, string>,
     descriptions: event?.description ?? {} as Record<string, string>,
   });
@@ -149,6 +150,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     descriptions: form.descriptions,
     private: form.private,
     parentId: selectedParentId || undefined,
+    scope: selectedParentId ? form.scope : undefined,
     recurrence: recurrence !== 'none' ? recurrence : undefined,
     recurrenceEnd: recurrence !== 'none' ? recurrenceEnd : undefined,
     recurrenceDays: recurrence === 'custom' && customDays.size > 0
@@ -272,6 +274,31 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
                   </option>
                 ))}
               </select>
+            </div>
+          )}
+
+          {selectedParentId && (
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Scope</label>
+              <div className="flex gap-2">
+                {([
+                  { value: undefined, label: '— blank —' },
+                  { value: 'global' as const, label: 'Global' },
+                  { value: 'local' as const, label: 'Local' },
+                ]).map(opt => (
+                  <button key={opt.label} type="button"
+                    onClick={() => setForm(f => ({ ...f, scope: opt.value }))}
+                    className={[
+                      'px-3 py-1.5 rounded-lg text-sm border',
+                      form.scope === opt.value
+                        ? 'bg-blue-600 text-white border-blue-600'
+                        : 'border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700',
+                    ].join(' ')}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 

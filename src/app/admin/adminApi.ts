@@ -82,6 +82,7 @@ export interface AdminEvent {
   recurrenceEnd?: string;
   recurrenceId?: string;
   recurrenceDays?: string;
+  scope?: 'global' | 'local';
 }
 
 export interface EventPayload {
@@ -98,6 +99,7 @@ export interface EventPayload {
   recurrence?: string;
   recurrenceEnd?: string;
   recurrenceDays?: string;
+  scope?: 'global' | 'local';
 }
 
 export interface AdminTemplate {

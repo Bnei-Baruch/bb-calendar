@@ -10,6 +10,7 @@ export const translations: Record<Language, {
   congressesSubtitle: string; todayViewShort: string; upcomingShort: string;
   calendarShort: string; posts: string; postsShort: string; registerMeal: string;
   addToCalendar: string; googleCalendar: string; icsCalendar: string;
+  embed: string; embedPanelTitle: string; copyCode: string; copied: string; timezoneLabel: string;
 }> = {
   he: {
     appName: 'לוח אירועים',
@@ -45,6 +46,11 @@ export const translations: Record<Language, {
     addToCalendar: 'הוסף ליומן',
     googleCalendar: 'Google יומן',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'הטמעה',
+    embedPanelTitle: 'הטמע את לוח הזמנים באתר אחר',
+    copyCode: 'העתק קוד',
+    copied: 'הועתק',
+    timezoneLabel: 'השעות מוצגות לפי שעון ישראל (GMT+3)',
   },
   en: {
     appName: 'Events Calendar',
@@ -80,6 +86,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Add to Calendar',
     googleCalendar: 'Google Calendar',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Embed',
+    embedPanelTitle: 'Embed this schedule on another site',
+    copyCode: 'Copy code',
+    copied: 'Copied',
+    timezoneLabel: 'Times shown in Israel time (GMT+3)',
   },
   ru: {
     appName: 'Календарь событий',
@@ -115,6 +126,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Добавить в календарь',
     googleCalendar: 'Google Календарь',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Встроить',
+    embedPanelTitle: 'Встроить это расписание на другой сайт',
+    copyCode: 'Скопировать код',
+    copied: 'Скопировано',
+    timezoneLabel: 'Время указано по израильскому времени (GMT+3)',
   },
   es: {
     appName: 'Calendario de Eventos',
@@ -150,6 +166,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Agregar al calendario',
     googleCalendar: 'Google Calendar',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Insertar',
+    embedPanelTitle: 'Insertar este horario en otro sitio',
+    copyCode: 'Copiar código',
+    copied: 'Copiado',
+    timezoneLabel: 'Horarios mostrados en hora de Israel (GMT+3)',
   },
   de: {
     appName: 'Veranstaltungskalender',
@@ -185,6 +206,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Zum Kalender hinzufügen',
     googleCalendar: 'Google Kalender',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Einbetten',
+    embedPanelTitle: 'Diesen Zeitplan auf einer anderen Website einbetten',
+    copyCode: 'Code kopieren',
+    copied: 'Kopiert',
+    timezoneLabel: 'Zeiten in israelischer Zeit (GMT+3)',
   },
   it: {
     appName: 'Calendario degli Eventi',
@@ -220,6 +246,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Aggiungi al calendario',
     googleCalendar: 'Google Calendar',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Incorpora',
+    embedPanelTitle: 'Incorpora questo programma in un altro sito',
+    copyCode: 'Copia codice',
+    copied: 'Copiato',
+    timezoneLabel: "Orari mostrati nell'ora di Israele (GMT+3)",
   },
   fr: {
     appName: 'Calendrier des Événements',
@@ -255,6 +286,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Ajouter au calendrier',
     googleCalendar: 'Google Agenda',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Intégrer',
+    embedPanelTitle: 'Intégrer ce programme sur un autre site',
+    copyCode: 'Copier le code',
+    copied: 'Copié',
+    timezoneLabel: "Horaires affichés selon l'heure d'Israël (GMT+3)",
   },
   pt: {
     appName: 'Calendário de Eventos',
@@ -290,6 +326,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Adicionar ao calendário',
     googleCalendar: 'Google Agenda',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Incorporar',
+    embedPanelTitle: 'Incorporar este horário em outro site',
+    copyCode: 'Copiar código',
+    copied: 'Copiado',
+    timezoneLabel: 'Horários exibidos no horário de Israel (GMT+3)',
   },
   uk: {
     appName: 'Календар подій',
@@ -325,6 +366,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Додати до календаря',
     googleCalendar: 'Google Календар',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Вбудувати',
+    embedPanelTitle: 'Вбудувати цей розклад на іншому сайті',
+    copyCode: 'Копіювати код',
+    copied: 'Скопійовано',
+    timezoneLabel: 'Час вказано за ізраїльським часом (GMT+3)',
   },
   tr: {
     appName: 'Etkinlik Takvimi',
@@ -360,6 +406,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Takvime Ekle',
     googleCalendar: 'Google Takvim',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Göm',
+    embedPanelTitle: 'Bu programı başka bir sitede göster',
+    copyCode: 'Kodu kopyala',
+    copied: 'Kopyalandı',
+    timezoneLabel: 'Saatler İsrail saatine göre gösterilir (GMT+3)',
   },
   bg: {
     appName: 'Календар на събитията',
@@ -395,6 +446,11 @@ export const translations: Record<Language, {
     addToCalendar: 'Добави в календара',
     googleCalendar: 'Google Календар',
     icsCalendar: 'Apple / Outlook (.ics)',
+    embed: 'Вграждане',
+    embedPanelTitle: 'Вградете този график на друг сайт',
+    copyCode: 'Копирай кода',
+    copied: 'Копирано',
+    timezoneLabel: 'Часовете са показани по израелско време (GMT+3)',
   },
 };
 
