@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import type { Locale } from 'date-fns';
 import { he, enUS, ru, es } from 'date-fns/locale';
 import { BookOpen, Pencil, Trash2, Plus, Code2, Copy, Check, Calendar as CalendarIcon, Globe } from 'lucide-react';
-import { Event, getContainerSchedule, getEventTitle, getEventDescription } from '../data/events';
+import { Event, getContainerSchedule, getEventTitle } from '../data/events';
 import { EMBED_THEMES, DEFAULT_EMBED_THEME, EmbedTheme } from '../data/embedThemes';
 import { Language, useTranslation } from '../utils/i18n';
 import { AddToCalendarButton } from './AddToCalendarButton';
@@ -210,9 +210,9 @@ export function ConventionSchedule({
                 {t.timezoneLabel}
               </span>
             </div>
-            {getEventDescription(event, language) && (
+            {event.description?.[language] && (
               <p className="text-sm max-w-prose" style={{ color: 'var(--embed-fg-muted)' }}>
-                {getEventDescription(event, language)}
+                {event.description[language]}
               </p>
             )}
           </div>
@@ -344,8 +344,8 @@ export function ConventionSchedule({
                 </div>
                 <div className="px-3 py-4" style={rowBorder}>
                   <p style={{ color: 'var(--embed-fg)' }}>{getEventTitle(session, language)}</p>
-                  {getEventDescription(session, language) && (
-                    <p className="text-sm mt-0.5" style={{ color: 'var(--embed-fg-subtle)' }}>{getEventDescription(session, language)}</p>
+                  {session.description?.[language] && (
+                    <p className="text-sm mt-0.5" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
                   )}
                 </div>
                 <div className="flex items-start px-3 py-4" style={rowBorder}>
