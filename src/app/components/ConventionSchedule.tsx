@@ -79,7 +79,7 @@ const COLUMN_LABELS: Record<string, { time: string; session: string; scope: stri
   bg: { time: 'Час', session: 'Сесия', scope: 'Обхват', materials: 'Материали' },
 };
 
-const ROW_GRID = '100px 1fr 130px 70px';
+const ROW_GRID = '145px 1fr 130px 70px';
 
 function formatDateRange(startStr: string, endStr: string | undefined, locale: Locale): string {
   const start = new Date(`${startStr}T00:00:00`);
@@ -185,7 +185,7 @@ export function ConventionSchedule({
   );
 
   return (
-    <div className={`bb-embed ${chrome ? '' : 'px-4 sm:px-6'}`} data-embed-theme={activeTheme} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="bb-embed px-4 py-4 sm:px-6 sm:py-6" data-embed-theme={activeTheme} dir={isRTL ? 'rtl' : 'ltr'}>
       {isContainerType ? (
         <div className="flex items-start justify-between gap-4 flex-wrap mb-7">
           <div className="flex-1 min-w-[240px]">
@@ -325,11 +325,19 @@ export function ConventionSchedule({
           {sessions.map((session, index) => {
             const isTimeless = !session.startTime || !session.endTime || session.startTime === session.endTime;
             const rowBorder = index === 0 ? {} : { borderTop: '1px solid var(--embed-border)' };
+            const timePillColors = session.scope === 'global' ? { background: '#ccfbf1', color: '#0f766e' }
+              : session.scope === 'local' ? { background: '#fef3c7', color: '#92400e' }
+              : session.scope === 'ten' ? { background: '#ede9fe', color: '#6d28d9' }
+              : { background: '#f3f4f6', color: '#4b5563' };
             return (
               <Fragment key={session.id}>
                 <div className="flex items-start px-3 py-4" style={rowBorder}>
                   {!isTimeless && (
-                    <div className="font-semibold whitespace-nowrap" style={{ color: 'var(--embed-fg)' }} dir="ltr">
+                    <div
+                      className="inline-flex items-center px-3 py-1.5 rounded-full whitespace-nowrap"
+                      style={{ ...timePillColors }}
+                      dir="ltr"
+                    >
                       {session.startTime} - {session.endTime}
                     </div>
                   )}
