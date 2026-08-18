@@ -266,7 +266,7 @@ export function EventDetail() {
             </div>
           )}
 
-          {!isContainerType && event.description && (
+          {!isContainerType && event.description?.[language] && (
             <div className="mt-8 pt-6 border-t">
               <h3 className={`font-semibold text-lg mb-3 ${isRTL ? 'text-right' : ''}`}>{t.description}</h3>
               <p className={`text-gray-700 dark:text-gray-300 leading-relaxed ${isRTL ? 'text-right' : ''}`}>

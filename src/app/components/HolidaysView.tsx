@@ -71,9 +71,6 @@ export function HolidaysView() {
     return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
   };
 
-  // Jewish holidays start at sunset of the previous evening
-  const eveDate = (event: Event) => event.type === 'holiday' ? shiftDay(event.date, -1) : event.date;
-
   // Multi-day holiday ranges (inner single-day events will be suppressed)
   const multiDayRanges = allEvents
     .filter(e => isHoliday(e) && e.endDate && e.endDate !== e.date)
@@ -111,10 +108,10 @@ export function HolidaysView() {
     .sort((a, b) => a.date.localeCompare(b.date));
 
   const getEventDateRange = (event: Event) => {
-    const startStr = eveDate(event);
+    const startStr = event.date;
     const endStr = event.endDate && event.endDate !== event.date ? event.endDate : event.date;
-    // For non-holiday single-day events, format as full date string
-    if (event.type !== 'holiday' && startStr === endStr) {
+    // For single-day events, format as full date string
+    if (startStr === endStr) {
       const [y, mo, da] = startStr.split('-').map(Number);
       return new Intl.DateTimeFormat(language === 'he' ? 'he-IL' : language, {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -128,7 +125,7 @@ export function HolidaysView() {
   };
 
   const getDays = (event: Event) => {
-    const start = new Date(eveDate(event));
+    const start = new Date(event.date);
     const end = new Date(event.endDate || event.date);
     return Math.round((end.getTime() - start.getTime()) / 86400000) + 1;
   };
@@ -173,7 +170,7 @@ export function HolidaysView() {
               const isDB = !!event._db;
               const tagLabel = memorial ? (language === 'he' ? 'יום לאומי' : 'National Day') : (language === 'he' ? 'חג' : 'Holiday');
 
-              const displayStart = eveDate(event);
+              const displayStart = event.date;
               const [dsy, dsm, dsd] = displayStart.split('-').map(Number);
               const displayDate = new Date(dsy, dsm - 1, dsd);
 

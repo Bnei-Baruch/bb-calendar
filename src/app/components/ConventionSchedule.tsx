@@ -185,7 +185,7 @@ export function ConventionSchedule({
   );
 
   return (
-    <div className="bb-embed px-4 py-4 sm:px-6 sm:py-6" data-embed-theme={activeTheme} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className={`bb-embed ${(!chrome || isContainerType) ? 'px-4 py-4 sm:px-6 sm:py-6' : ''}`} data-embed-theme={activeTheme} dir={isRTL ? 'rtl' : 'ltr'}>
       {isContainerType ? (
         <div className="flex items-start justify-between gap-4 flex-wrap mb-7">
           <div className="flex-1 min-w-[240px]">
