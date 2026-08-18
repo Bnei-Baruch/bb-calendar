@@ -33,8 +33,13 @@ const LOCAL_LABEL: Record<string, string> = {
   fr: 'Local', pt: 'Local', uk: 'Локально', tr: 'Yerel', bg: 'Локално',
 };
 
+const TEN_LABEL: Record<string, string> = {
+  he: 'עשיריה', en: 'Ten', ru: 'Десятка', es: 'Diez', de: 'Zehnergruppe', it: 'Decina',
+  fr: 'Dizaine', pt: 'Dez', uk: 'Десятка', tr: 'Onlu Grup', bg: 'Десятка',
+};
+
 const GLOBAL_LEGEND: Record<string, string> = {
-  he: 'גלובלי — שידור לכל הקבוצות בעולם', en: 'Global — broadcast for all groups worldwide',
+  he: 'גלובלי — מחוברים לשידור מרכזי', en: 'Global — broadcast for all groups worldwide',
   ru: 'Глобально — трансляция для всех групп по всему миру', es: 'Global — transmisión para todos los grupos del mundo',
   de: 'Global — Übertragung für alle Gruppen weltweit', it: 'Globale — trasmissione per tutti i gruppi nel mondo',
   fr: 'Global — diffusion pour tous les groupes dans le monde', pt: 'Global — transmissão para todos os grupos no mundo',
@@ -43,7 +48,7 @@ const GLOBAL_LEGEND: Record<string, string> = {
 };
 
 const LOCAL_LEGEND: Record<string, string> = {
-  he: 'מקומי — מופעל על ידי הקבוצה שלך', en: 'Local — run by your own group',
+  he: 'מקומי — פעילות מקומית/איזורית', en: 'Local — run by your own group',
   ru: 'Локально — проводится вашей группой', es: 'Local — organizado por tu propio grupo',
   de: 'Lokal — von der eigenen Gruppe durchgeführt', it: 'Locale — gestito dal proprio gruppo',
   fr: 'Local — organisé par votre propre groupe', pt: 'Local — realizado pelo seu próprio grupo',
@@ -51,8 +56,17 @@ const LOCAL_LEGEND: Record<string, string> = {
   bg: 'Локално — провежда се от вашата собствена група',
 };
 
+const TEN_LEGEND: Record<string, string> = {
+  he: 'עשיריה — פעילות בעשיריה שלך', en: 'Ten — a small ten-person group session',
+  ru: 'Десятка — встреча в группе из десяти человек', es: 'Diez — sesión en un grupo de diez personas',
+  de: 'Zehnergruppe — Treffen in einer Zehnergruppe', it: 'Decina — incontro in un gruppo di dieci persone',
+  fr: 'Dizaine — session en groupe de dix personnes', pt: 'Dez — sessão em um grupo de dez pessoas',
+  uk: 'Десятка — зустріч у групі з десяти осіб', tr: 'Onlu Grup — on kişilik grup oturumu',
+  bg: 'Десятка — среща в група от десет души',
+};
+
 const COLUMN_LABELS: Record<string, { time: string; session: string; scope: string; materials: string }> = {
-  he: { time: 'שעה', session: 'מפגש', scope: 'היקף', materials: 'חומרים' },
+  he: { time: 'שעה', session: 'מפגש', scope: 'מסגרת', materials: 'חומרים' },
   en: { time: 'Time', session: 'Session', scope: 'Scope', materials: 'Materials' },
   ru: { time: 'Время', session: 'Сессия', scope: 'Охват', materials: 'Материалы' },
   es: { time: 'Hora', session: 'Sesión', scope: 'Alcance', materials: 'Materiales' },
@@ -65,7 +79,7 @@ const COLUMN_LABELS: Record<string, { time: string; session: string; scope: stri
   bg: { time: 'Час', session: 'Сесия', scope: 'Обхват', materials: 'Материали' },
 };
 
-const ROW_GRID = '100px 1fr 110px 70px';
+const ROW_GRID = '100px 1fr 130px 70px';
 
 function formatDateRange(startStr: string, endStr: string | undefined, locale: Locale): string {
   const start = new Date(`${startStr}T00:00:00`);
@@ -121,12 +135,12 @@ export function ConventionSchedule({
   const sessions = currentDate ? scheduleByDate[currentDate] ?? [] : [];
   const columnLabels = COLUMN_LABELS[language] ?? COLUMN_LABELS.en;
 
-  const embedUrl = `https://cal.kli.one/embed/${event.id}?theme=${pickedTheme}`;
+  const embedUrl = `https://events.kli.one/embed/${event.id}?theme=${pickedTheme}`;
   const snippet = `<iframe id="bb-schedule" src="${embedUrl}" width="100%" height="800" style="border:0;border-radius:12px" loading="lazy" title="${getEventTitle(event, language)}"></iframe>
 <script>
   window.addEventListener("message", function (e) {
     if (!e.data || e.data.type !== "bb-schedule-height") return;
-    var f = document.querySelectorAll('iframe[src*="cal.kli.one/embed"]');
+    var f = document.querySelectorAll('iframe[src*="events.kli.one/embed"]');
     for (var i = 0; i < f.length; i++)
       if (f[i].contentWindow === e.source) f[i].style.height = e.data.height + "px";
   });
@@ -171,16 +185,18 @@ export function ConventionSchedule({
   );
 
   return (
-    <div className="bb-embed" data-embed-theme={activeTheme} dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className={`bb-embed ${chrome ? '' : 'px-4 sm:px-6'}`} data-embed-theme={activeTheme} dir={isRTL ? 'rtl' : 'ltr'}>
       {isContainerType ? (
         <div className="flex items-start justify-between gap-4 flex-wrap mb-7">
           <div className="flex-1 min-w-[240px]">
-            <div
-              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide mb-2"
-              style={{ background: 'var(--embed-bg-muted)', color: 'var(--embed-fg-heading)' }}
-            >
-              {typeLabel}
-            </div>
+            {chrome && (
+              <div
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide mb-2"
+                style={{ background: 'var(--embed-bg-muted)', color: 'var(--embed-fg-heading)' }}
+              >
+                {typeLabel}
+              </div>
+            )}
             <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--embed-fg-heading)' }}>
               {getEventTitle(event, language)}
             </h2>
@@ -301,10 +317,10 @@ export function ConventionSchedule({
 
       {sessions.length > 0 && (
         <div className="grid gap-x-6" style={{ gridTemplateColumns: ROW_GRID }}>
-          <div className="hidden sm:block px-3 pb-3 text-[11px] font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.time}</div>
-          <div className="hidden sm:block px-3 pb-3 text-[11px] font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.session}</div>
-          <div className="hidden sm:block px-3 pb-3 text-[11px] font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.scope}</div>
-          <div className="hidden sm:block px-3 pb-3 text-[11px] font-bold uppercase tracking-wide text-end" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.materials}</div>
+          <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.time}</div>
+          <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.session}</div>
+          <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.scope}</div>
+          <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide text-end" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.materials}</div>
 
           {sessions.map((session, index) => {
             const isTimeless = !session.startTime || !session.endTime || session.startTime === session.endTime;
@@ -327,17 +343,20 @@ export function ConventionSchedule({
                 <div className="flex items-start px-3 py-4" style={rowBorder}>
                   {session.scope === 'global' && (
                     <span
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap"
-                      style={{ background: 'var(--embed-bg-muted)', color: 'var(--embed-fg-heading)' }}
+                      className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white"
+                      style={{ background: 'var(--embed-accent)' }}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: 'var(--embed-accent)' }} />
                       {GLOBAL_LABEL[language] ?? GLOBAL_LABEL.en}
                     </span>
                   )}
                   {session.scope === 'local' && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
-                      <span className="w-1.5 h-1.5 rounded-full inline-block bg-amber-500" />
+                    <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white bg-amber-500">
                       {LOCAL_LABEL[language] ?? LOCAL_LABEL.en}
+                    </span>
+                  )}
+                  {session.scope === 'ten' && (
+                    <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white bg-purple-600">
+                      {TEN_LABEL[language] ?? TEN_LABEL.en}
                     </span>
                   )}
                 </div>
@@ -395,14 +414,24 @@ export function ConventionSchedule({
 
       {sessions.some(s => s.scope) && (
         <div className="flex flex-wrap gap-4 mt-4 pt-4 text-xs" style={{ borderTop: '1px solid var(--embed-border)', color: 'var(--embed-fg-subtle)' }}>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: 'var(--embed-accent)' }} />
-            {GLOBAL_LEGEND[language] ?? GLOBAL_LEGEND.en}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full inline-block bg-amber-500" />
-            {LOCAL_LEGEND[language] ?? LOCAL_LEGEND.en}
-          </span>
+          {sessions.some(s => s.scope === 'global') && (
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: 'var(--embed-accent)' }} />
+              {GLOBAL_LEGEND[language] ?? GLOBAL_LEGEND.en}
+            </span>
+          )}
+          {sessions.some(s => s.scope === 'local') && (
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full inline-block bg-amber-500" />
+              {LOCAL_LEGEND[language] ?? LOCAL_LEGEND.en}
+            </span>
+          )}
+          {sessions.some(s => s.scope === 'ten') && (
+            <span className="inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full inline-block bg-purple-500" />
+              {TEN_LEGEND[language] ?? TEN_LEGEND.en}
+            </span>
+          )}
         </div>
       )}
 

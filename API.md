@@ -1,6 +1,6 @@
 # API Reference
 
-Base URL: `http://localhost:3001` (dev) / `https://cal.kli.one` (prod)
+Base URL: `http://localhost:3001` (dev) / `https://events.kli.one` (prod)
 
 All `/api/admin/*` routes require a Keycloak Bearer token:
 ```

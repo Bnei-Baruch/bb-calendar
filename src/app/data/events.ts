@@ -15,7 +15,7 @@ export interface Event {
   studyLink?: string;
   private?: boolean;
   parentId?: string;
-  scope?: 'global' | 'local';
+  scope?: 'global' | 'local' | 'ten';
   _db?: boolean;
   createdByRole?: string;
   recurrence?: 'daily' | 'weekly' | 'monthly' | 'custom';

@@ -151,7 +151,7 @@ export function EventDetail() {
       });
     });
     lines.push('');
-    lines.push(`${siteLabel}: https://cal.kli.one`);
+    lines.push(`${siteLabel}: https://events.kli.one`);
     return lines.join('\n');
   };
 

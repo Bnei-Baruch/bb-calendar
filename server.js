@@ -236,9 +236,9 @@ app.get('/api/ics/:eventId', async (req, res) => {
     const lines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//KLI Calendar//cal.kli.one//EN',
+      'PRODID:-//KLI Calendar//events.kli.one//EN',
       'BEGIN:VEVENT',
-      `UID:${event.id}@cal.kli.one`,
+      `UID:${event.id}@events.kli.one`,
       `DTSTAMP:${now}`,
       `DTSTART;VALUE=DATE:${start}`,
       `DTEND;VALUE=DATE:${end}`,

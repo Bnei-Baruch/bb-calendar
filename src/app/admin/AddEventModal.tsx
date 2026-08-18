@@ -285,6 +285,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
                   { value: undefined, label: '— blank —' },
                   { value: 'global' as const, label: 'Global' },
                   { value: 'local' as const, label: 'Local' },
+                  { value: 'ten' as const, label: 'Ten' },
                 ]).map(opt => (
                   <button key={opt.label} type="button"
                     onClick={() => setForm(f => ({ ...f, scope: opt.value }))}
