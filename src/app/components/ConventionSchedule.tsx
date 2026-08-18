@@ -58,7 +58,7 @@ const LOCAL_LEGEND: Record<string, string> = {
 
 const TEN_LEGEND: Record<string, string> = {
   he: 'עשיריה — פעילות בעשיריה שלך', en: 'Ten — a small ten-person group session',
-  ru: 'Десятка — встреча в группе из десяти человек', es: 'Diez — sesión en un grupo de diez personas',
+  ru: 'Десятка — встреча в вашей десятке', es: 'Diez — sesión en un grupo de diez personas',
   de: 'Zehnergruppe — Treffen in einer Zehnergruppe', it: 'Decina — incontro in un gruppo di dieci persone',
   fr: 'Dizaine — session en groupe de dix personnes', pt: 'Dez — sessão em um grupo de dez pessoas',
   uk: 'Десятка — зустріч у групі з десяти осіб', tr: 'Onlu Grup — on kişilik grup oturumu',
