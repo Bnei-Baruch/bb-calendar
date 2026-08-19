@@ -80,6 +80,7 @@ const COLUMN_LABELS: Record<string, { time: string; session: string; scope: stri
 };
 
 const ROW_GRID = '145px 1fr 130px 120px';
+const ROW_GRID_NO_SCOPE = '145px 1fr 120px';
 
 function formatDateRange(startStr: string, endStr: string | undefined, locale: Locale): string {
   const start = new Date(`${startStr}T00:00:00`);
@@ -146,6 +147,8 @@ export function ConventionSchedule({
 
   const isMultiDay = sortedDates.length > 1;
   const sessions = currentDate ? scheduleByDate[currentDate] ?? [] : [];
+  const hasAnyScope = sessions.some(s => s.scope);
+  const rowGrid = hasAnyScope ? ROW_GRID : ROW_GRID_NO_SCOPE;
   const columnLabels = COLUMN_LABELS[language] ?? COLUMN_LABELS.en;
 
   const embedUrl = `https://events.kli.one/embed/${event.id}?theme=${pickedTheme}`;
@@ -315,7 +318,12 @@ export function ConventionSchedule({
       )}
 
       {!isMultiDay && currentDate && (
-        <div className="mb-6 px-4 py-3 rounded-lg font-bold text-lg" style={{ background: 'var(--embed-bg-muted)', color: 'var(--embed-fg-heading)' }}>
+        <div
+          className="mb-6 px-4 py-3 rounded-lg font-bold text-lg"
+          style={event.type === 'holiday'
+            ? { background: '#fed7aa', color: '#7c2d12' }
+            : { background: 'var(--embed-bg-muted)', color: 'var(--embed-fg-heading)' }}
+        >
           {format(new Date(`${currentDate}T00:00:00`), 'EEEE, d MMMM yyyy', { locale })}
         </div>
       )}
@@ -329,18 +337,21 @@ export function ConventionSchedule({
       )}
 
       {sessions.length > 0 && (
-        <div className="grid gap-x-6" style={{ gridTemplateColumns: ROW_GRID }}>
+        <div className="grid gap-x-6" style={{ gridTemplateColumns: rowGrid }}>
           <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.time}</div>
           <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.session}</div>
-          <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.scope}</div>
+          {hasAnyScope && (
+            <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.scope}</div>
+          )}
           <div className="px-3 pb-3 text-sm font-bold uppercase tracking-wide text-end" style={{ color: 'var(--embed-fg-subtle)', borderBottom: '1px solid var(--embed-border)' }}>{columnLabels.materials}</div>
 
           {sessions.map((session, index) => {
             const isTimeless = !session.startTime || !session.endTime || session.startTime === session.endTime;
             const rowBorder = index === 0 ? {} : { borderTop: '1px solid var(--embed-border)' };
             const timePillColors = session.scope === 'global' ? { background: '#ccfbf1', color: '#0f766e' }
-              : session.scope === 'local' ? { background: '#fef3c7', color: '#92400e' }
+              : session.scope === 'local' ? { background: '#fed7aa', color: '#7c2d12' }
               : session.scope === 'ten' ? { background: '#ede9fe', color: '#6d28d9' }
+              : event.type === 'holiday' ? { background: '#fed7aa', color: '#7c2d12' }
               : { background: '#f3f4f6', color: '#4b5563' };
             return (
               <Fragment key={session.id}>
@@ -361,33 +372,35 @@ export function ConventionSchedule({
                     <p className="text-sm mt-0.5" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
                   )}
                 </div>
-                <div className="flex items-start px-3 py-4" style={rowBorder}>
-                  {session.scope === 'global' && (
-                    <span
-                      className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white"
-                      style={{ background: 'var(--embed-accent)' }}
-                    >
-                      {GLOBAL_LABEL[language] ?? GLOBAL_LABEL.en}
-                    </span>
-                  )}
-                  {session.scope === 'local' && (
-                    <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white bg-amber-500">
-                      {LOCAL_LABEL[language] ?? LOCAL_LABEL.en}
-                    </span>
-                  )}
-                  {session.scope === 'ten' && (
-                    <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white bg-purple-600">
-                      {TEN_LABEL[language] ?? TEN_LABEL.en}
-                    </span>
-                  )}
-                </div>
+                {hasAnyScope && (
+                  <div className="flex items-start px-3 py-4" style={rowBorder}>
+                    {session.scope === 'global' && (
+                      <span
+                        className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white"
+                        style={{ background: 'var(--embed-accent)' }}
+                      >
+                        {GLOBAL_LABEL[language] ?? GLOBAL_LABEL.en}
+                      </span>
+                    )}
+                    {session.scope === 'local' && (
+                      <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white bg-amber-500">
+                        {LOCAL_LABEL[language] ?? LOCAL_LABEL.en}
+                      </span>
+                    )}
+                    {session.scope === 'ten' && (
+                      <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold whitespace-nowrap text-white bg-purple-600">
+                        {TEN_LABEL[language] ?? TEN_LABEL.en}
+                      </span>
+                    )}
+                  </div>
+                )}
                 <div className="group/session flex items-start gap-2 justify-end px-3 py-4" style={rowBorder}>
                   {session.title.en === 'Meal' && (
                     <a
                       href={`https://pay.kli.one/${language}/Calendar-Meals`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-semibold px-2 py-1 rounded-full flex-shrink-0 transition-colors text-white bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
+                      className="text-xs font-semibold px-2 py-1 rounded-full flex-shrink-0 transition-colors text-orange-900 bg-orange-200 hover:bg-orange-300 whitespace-nowrap"
                     >
                       {t.registerMeal}
                     </a>
