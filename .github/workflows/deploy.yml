@@ -46,7 +46,7 @@ jobs:
 
       - name: Sync files to production
         run: |
-          rsync -avz -e "ssh -F ~/.ssh/config" \
+          rsync -avz -e "ssh -F $HOME/.ssh/config" \
             --exclude node_modules \
             --exclude bb-calendar-488901-6a4730c846cc.json \
             --exclude telegram-session.txt \
@@ -55,4 +55,4 @@ jobs:
 
       - name: Install backend deps and restart services
         run: |
-          ssh -F ~/.ssh/config prod "cd /root/luz && npm install && pm2 restart bb-calendar-api bb-calendar-web && pm2 list"
+          ssh -F "$HOME/.ssh/config" prod "cd /root/luz && npm install && pm2 restart bb-calendar-api bb-calendar-web && pm2 list"
