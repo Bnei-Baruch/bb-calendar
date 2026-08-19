@@ -30,16 +30,29 @@ jobs:
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config << SSHCONFIG
+          Host bastion
+            HostName ${{ secrets.DEPLOY_BASTION_HOST }}
+            User root
+            IdentityFile ~/.ssh/deploy_key
+
+          Host prod
+            HostName ${{ secrets.DEPLOY_PROD_HOST }}
+            User root
+            IdentityFile ~/.ssh/deploy_key
+            ProxyJump bastion
+          SSHCONFIG
+          chmod 600 ~/.ssh/config
 
       - name: Sync files to production
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+          rsync -avz -e "ssh -F ~/.ssh/config" \
             --exclude node_modules \
             --exclude bb-calendar-488901-6a4730c846cc.json \
             --exclude telegram-session.txt \
             --exclude data/ \
-            ./ root@10.77.1.40:/root/luz/
+            ./ prod:/root/luz/
 
       - name: Install backend deps and restart services
         run: |
-          ssh -i ~/.ssh/deploy_key root@10.77.1.40 "cd /root/luz && npm install && pm2 restart bb-calendar-api bb-calendar-web && pm2 list"
+          ssh -F ~/.ssh/config prod "cd /root/luz && npm install && pm2 restart bb-calendar-api bb-calendar-web && pm2 list"
