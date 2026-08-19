@@ -416,17 +416,25 @@ export function ConventionSchedule({
           );
         }
 
+        const hasScope = sessions.some(s => s.scope);
         const materialsColumnEnabled = showMaterials || (chrome && !!canEdit);
-        const wideGridColumns = ['175px', '4px', '1fr', '150px', ...(materialsColumnEnabled ? ['120px'] : [])].join(' ');
+        const timeColWidth = hasScope ? '175px' : '145px';
+        const wideGridColumns = [
+          timeColWidth,
+          ...(hasScope ? ['4px'] : []),
+          '1fr',
+          ...(hasScope ? ['150px'] : []),
+          ...(materialsColumnEnabled ? ['120px'] : []),
+        ].join(' ');
 
         return (
           <>
             {/* Wide layout (sm and up): grid with time / stripe / session / format-pill / materials columns */}
             <div className="hidden sm:grid" style={{ gridTemplateColumns: wideGridColumns }}>
               <div className="px-3 pb-3 text-[12.5px] font-semibold" style={headerCellStyle}>{columnLabels.time}</div>
-              <div style={headerCellStyle} />
+              {hasScope && <div style={headerCellStyle} />}
               <div className="px-3 pb-3 text-[12.5px] font-semibold" style={headerCellStyle}>{columnLabels.session}</div>
-              <div className="px-3 pb-3 text-[12.5px] font-semibold" style={headerCellStyle}>{columnLabels.scope}</div>
+              {hasScope && <div className="px-3 pb-3 text-[12.5px] font-semibold" style={headerCellStyle}>{columnLabels.scope}</div>}
               {materialsColumnEnabled && <div className="px-3 pb-3 text-[12.5px] font-semibold" style={headerCellStyle}>{columnLabels.materials}</div>}
 
               {sessions.map((session, index) => {
@@ -437,7 +445,7 @@ export function ConventionSchedule({
                 const cellStyle = scopeStyle ? { ...rowBorder, background: scopeStyle.rowBg } : rowBorder;
                 return (
                   <Fragment key={session.id}>
-                    <div className="flex items-center ps-3 pe-14 py-4" style={cellStyle}>
+                    <div className={`flex items-center ps-3 py-4 ${hasScope ? 'pe-14' : 'pe-3'}`} style={cellStyle}>
                       {!isTimeless && (
                         <div
                           className="text-[15px] font-bold whitespace-nowrap"
@@ -448,10 +456,12 @@ export function ConventionSchedule({
                         </div>
                       )}
                     </div>
-                    <div className="flex items-center" style={cellStyle}>
-                      <span className="w-full" style={{ height: 32, borderRadius: 2, background: scopeStyle ? scopeStyle.stripe : 'transparent' }} />
-                    </div>
-                    <div className="ps-5 pe-3 py-4 flex items-center" style={cellStyle}>
+                    {hasScope && (
+                      <div className="flex items-center" style={cellStyle}>
+                        <span className="w-full" style={{ height: 32, borderRadius: 2, background: scopeStyle ? scopeStyle.stripe : 'transparent' }} />
+                      </div>
+                    )}
+                    <div className={`${hasScope ? 'ps-5' : 'ps-3'} pe-3 py-4 flex items-center`} style={cellStyle}>
                       <div>
                         <p className="text-[15.5px] font-semibold" style={{ color: 'var(--embed-fg)' }}>{getEventTitle(session, language)}</p>
                         {session.description?.[language] && (
@@ -459,17 +469,19 @@ export function ConventionSchedule({
                         )}
                       </div>
                     </div>
-                    <div className="px-3 py-4 flex items-center" style={cellStyle}>
-                      {scopeStyle && scopeLabel && (
-                        <span
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12.5px] font-semibold whitespace-nowrap"
-                          style={{ background: scopeStyle.badgeBg, color: scopeStyle.badgeText }}
-                        >
-                          <span className="w-1.5 h-1.5 flex-shrink-0" style={{ borderRadius: 2, background: scopeStyle.stripe }} />
-                          {scopeLabel}
-                        </span>
-                      )}
-                    </div>
+                    {hasScope && (
+                      <div className="px-3 py-4 flex items-center" style={cellStyle}>
+                        {scopeStyle && scopeLabel && (
+                          <span
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12.5px] font-semibold whitespace-nowrap"
+                            style={{ background: scopeStyle.badgeBg, color: scopeStyle.badgeText }}
+                          >
+                            <span className="w-1.5 h-1.5 flex-shrink-0" style={{ borderRadius: 2, background: scopeStyle.stripe }} />
+                            {scopeLabel}
+                          </span>
+                        )}
+                      </div>
+                    )}
                     {materialsColumnEnabled && (
                       <div className="px-3 py-4 flex items-center group/session" style={cellStyle}>
                         {sessionActions(session)}
