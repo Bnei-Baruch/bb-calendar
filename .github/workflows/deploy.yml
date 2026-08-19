@@ -1,49 +1,45 @@
 name: Deploy to Production
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to VM
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Setup SSH
         run: |
-          cd /root/luz
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
-          # Configure git
-          git config --global --add safe.directory /root/luz
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+      - name: Sync files to production
+        run: |
+          rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+            --exclude node_modules \
+            --exclude bb-calendar-488901-6a4730c846cc.json \
+            --exclude telegram-session.txt \
+            --exclude data/ \
+            ./ root@10.77.1.40:/root/luz/
 
-          # Preserve runtime files that are tracked in git but mutated live on prod
-          # (Telegram bot session, cached posts) — a hard reset would otherwise revert them.
-          cp -f telegram-session.txt /tmp/telegram-session.txt.bak 2>/dev/null || true
-          cp -f data/posts.json /tmp/posts.json.bak 2>/dev/null || true
-
-          # Fetch latest from remote using HTTPS with token
-          git fetch https://${{ env.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git ${{ github.ref_name }}
-
-          # Reset to exact remote version of current branch (discards local changes)
-          git reset --hard FETCH_HEAD
-
-          # Clean untracked files, but never touch data/ or backups/
-          # (Telegram media cache, DB backups — not recoverable from git)
-          git clean -fd -e data -e backups
-
-          # Restore the preserved runtime files
-          cp -f /tmp/telegram-session.txt.bak telegram-session.txt 2>/dev/null || true
-          cp -f /tmp/posts.json.bak data/posts.json 2>/dev/null || true
-
-          # Install deps and build frontend
-          npm install
-          npm run build
-
-          # Restart both PM2 processes
-          pm2 restart bb-calendar-api bb-calendar-web
-
-          # Show status
-          pm2 list
+      - name: Install backend deps and restart services
+        run: |
+          ssh -i ~/.ssh/deploy_key root@10.77.1.40 "cd /root/luz && npm install && pm2 restart bb-calendar-api bb-calendar-web && pm2 list"
