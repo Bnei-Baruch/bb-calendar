@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState, type ReactNode } from 'react';
+import { Fragment, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { format } from 'date-fns';
 import type { Locale } from 'date-fns';
 import { he, enUS, ru, es } from 'date-fns/locale';
@@ -79,7 +79,7 @@ const COLUMN_LABELS: Record<string, { time: string; session: string; scope: stri
   bg: { time: 'Час', session: 'Сесия', scope: 'Обхват', materials: 'Материали' },
 };
 
-const ROW_GRID = '145px 1fr 130px 70px';
+const ROW_GRID = '145px 1fr 130px 120px';
 
 function formatDateRange(startStr: string, endStr: string | undefined, locale: Locale): string {
   const start = new Date(`${startStr}T00:00:00`);
@@ -127,8 +127,21 @@ export function ConventionSchedule({
   const currentDate = sortedDates.includes(activeDate) ? activeDate : sortedDates[0];
 
   const [embedOpen, setEmbedOpen] = useState(false);
-  const [pickedTheme, setPickedTheme] = useState<EmbedTheme['id']>(theme ?? DEFAULT_EMBED_THEME);
+  const [appDarkMode, setAppDarkMode] = useState(() => document.documentElement.classList.contains('dark'));
+  const [userPickedTheme, setUserPickedTheme] = useState<EmbedTheme['id'] | null>(null);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!chrome) return;
+    const observer = new MutationObserver(() => {
+      setAppDarkMode(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, [chrome]);
+
+  const pickedTheme = userPickedTheme ?? (chrome ? (appDarkMode ? 'dark' : DEFAULT_EMBED_THEME) : (theme ?? DEFAULT_EMBED_THEME));
+  const setPickedTheme = (id: EmbedTheme['id']) => setUserPickedTheme(id);
   const activeTheme = chrome ? pickedTheme : (theme ?? DEFAULT_EMBED_THEME);
 
   const isMultiDay = sortedDates.length > 1;
