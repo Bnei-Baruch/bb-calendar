@@ -453,14 +453,64 @@ export function DayView() {
                       {timeless.length > 0 && (
                         <div className="space-y-1">
                           {timeless.map((e) => (
-                            <div
-                              key={e.id}
-                              className={e.type === 'conference' ? 'cursor-pointer' : ''}
-                              onClick={e.type === 'conference' ? () => handleEventClick(e.id) : undefined}
-                            >
-                              <p className={`font-semibold ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
-                              {e.description && (
-                                <p className={`text-sm opacity-75 ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
+                            <div key={e.id} className="flex items-center gap-3">
+                              <div
+                                className={`flex-1 ${e.type === 'conference' ? 'cursor-pointer' : ''}`}
+                                onClick={e.type === 'conference' ? () => handleEventClick(e.id) : undefined}
+                              >
+                                <p className={`font-semibold ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
+                                {e.description && (
+                                  <p className={`text-sm opacity-75 ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
+                                )}
+                              </div>
+                              {canEdit && e._db && (
+                                <div className="flex items-center gap-1 shrink-0">
+                                  <button
+                                    onClick={ev => { ev.stopPropagation(); setEditEvent(e); }}
+                                    className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
+                                    title="Edit"
+                                  ><Pencil className="w-4 h-4" /></button>
+                                  {admin && (
+                                    <div className="relative">
+                                      <button
+                                        onClick={ev => {
+                                          ev.stopPropagation();
+                                          if (e.recurrenceId) {
+                                            setDeleteMenuId(deleteMenuId === e.id ? null : e.id);
+                                          } else {
+                                            if (!confirm('Delete this event?')) return;
+                                            adminApi.deleteEvent(e.id).then(refetch);
+                                          }
+                                        }}
+                                        className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:text-red-400 dark:hover:bg-red-900/30 transition-colors"
+                                        title="Delete"
+                                      ><Trash2 className="w-4 h-4" /></button>
+                                      {deleteMenuId === e.id && (
+                                        <div
+                                          className="absolute z-50 end-0 top-9 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden min-w-[160px]"
+                                          onClick={ev => ev.stopPropagation()}
+                                        >
+                                          <button
+                                            className="w-full text-start px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                            onClick={async () => {
+                                              setDeleteMenuId(null);
+                                              await adminApi.deleteEvent(e.id);
+                                              refetch();
+                                            }}
+                                          >Delete this only</button>
+                                          <button
+                                            className="w-full text-start px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 border-t border-gray-100 dark:border-gray-700"
+                                            onClick={async () => {
+                                              setDeleteMenuId(null);
+                                              await adminApi.deleteEventFuture(e.id);
+                                              refetch();
+                                            }}
+                                          >Delete this &amp; future</button>
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
                               )}
                             </div>
                           ))}
