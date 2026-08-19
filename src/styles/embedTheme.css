@@ -1,22 +1,39 @@
 /* Brand-color themes for the embeddable convention/holiday schedule.
    Scoped under .bb-embed so these tokens never collide with the app's own
-   theme.css / dark-mode variables. */
+   theme.css / dark-mode variables. Sourced from the "Convention Schedule"
+   Claude Design project (Bnei Baruch — Kabbalah L'Am Design System). */
 
 .bb-embed[data-embed-theme='cyan'] {
   --embed-bg: #ecfeff;
   --embed-bg-surface: #ffffff;
   --embed-bg-subtle: #f3f4f6;
   --embed-bg-muted: #f0fdff;
+  --embed-bg-tabs: #eef8fb;
   --embed-fg: #111827;
   --embed-fg-muted: #4b5563;
   --embed-fg-subtle: #6b7280;
-  --embed-fg-heading: #164e63;
+  --embed-fg-heading: #0f3a63;
   --embed-fg-link: #0e7490;
   --embed-fg-link-hover: #155e75;
   --embed-btn-ink: #ffffff;
   --embed-border: #e5e7eb;
   --embed-border-strong: #d1d5db;
   --embed-accent: #00b6be;
+  --embed-tab-active-bg: #0f3a63;
+  --embed-tab-active-fg: #ffffff;
+  --embed-tab-active-sub: #9ec9e6;
+  --embed-cat-global: #06b6d4;
+  --embed-pill-global-bg: #cffafe;
+  --embed-pill-global-fg: #0e6d78;
+  --embed-row-global: #f6fdfe;
+  --embed-cat-local: #f59e0b;
+  --embed-pill-local-bg: #fef3c7;
+  --embed-pill-local-fg: #92400e;
+  --embed-row-local: #fffcf2;
+  --embed-cat-ten: #0f3a63;
+  --embed-pill-ten-bg: #e5eaf1;
+  --embed-pill-ten-fg: #1e3a5f;
+  --embed-row-ten: #f7f9fc;
 }
 
 .bb-embed[data-embed-theme='blue'] {
@@ -24,6 +41,7 @@
   --embed-bg-surface: #ffffff;
   --embed-bg-subtle: #f3f4f6;
   --embed-bg-muted: #eff6ff;
+  --embed-bg-tabs: #f2f7ff;
   --embed-fg: #111827;
   --embed-fg-muted: #4b5563;
   --embed-fg-subtle: #6b7280;
@@ -34,6 +52,21 @@
   --embed-border: #e5e7eb;
   --embed-border-strong: #d1d5db;
   --embed-accent: #1d4ed8;
+  --embed-tab-active-bg: #1e3a8a;
+  --embed-tab-active-fg: #ffffff;
+  --embed-tab-active-sub: #a5bdf0;
+  --embed-cat-global: #2563eb;
+  --embed-pill-global-bg: #dbeafe;
+  --embed-pill-global-fg: #1e40af;
+  --embed-row-global: #f7faff;
+  --embed-cat-local: #f59e0b;
+  --embed-pill-local-bg: #fef3c7;
+  --embed-pill-local-fg: #92400e;
+  --embed-row-local: #fffcf2;
+  --embed-cat-ten: #0f766e;
+  --embed-pill-ten-bg: #ccfbf1;
+  --embed-pill-ten-fg: #115e59;
+  --embed-row-ten: #f5fcfb;
 }
 
 .bb-embed[data-embed-theme='amber'] {
@@ -41,6 +74,7 @@
   --embed-bg-surface: #ffffff;
   --embed-bg-subtle: #f9fafb;
   --embed-bg-muted: #fffbeb;
+  --embed-bg-tabs: #fffaf0;
   --embed-fg: #111827;
   --embed-fg-muted: #4b5563;
   --embed-fg-subtle: #6b7280;
@@ -48,9 +82,24 @@
   --embed-fg-link: #b45309;
   --embed-fg-link-hover: #92400e;
   --embed-btn-ink: #ffffff;
-  --embed-border: #e5e7eb;
-  --embed-border-strong: #d1d5db;
+  --embed-border: #eee6d8;
+  --embed-border-strong: #ddd0bb;
   --embed-accent: #b45309;
+  --embed-tab-active-bg: #92400e;
+  --embed-tab-active-fg: #ffffff;
+  --embed-tab-active-sub: #f3c99a;
+  --embed-cat-global: #b45309;
+  --embed-pill-global-bg: #fef3c7;
+  --embed-pill-global-fg: #78350f;
+  --embed-row-global: #fffdf7;
+  --embed-cat-local: #64748b;
+  --embed-pill-local-bg: #e2e8f0;
+  --embed-pill-local-fg: #334155;
+  --embed-row-local: #f9fafb;
+  --embed-cat-ten: #0f766e;
+  --embed-pill-ten-bg: #ccfbf1;
+  --embed-pill-ten-fg: #115e59;
+  --embed-row-ten: #f5fcfb;
 }
 
 .bb-embed[data-embed-theme='neutral'] {
@@ -58,6 +107,7 @@
   --embed-bg-surface: #ffffff;
   --embed-bg-subtle: #f9fafb;
   --embed-bg-muted: #f9fafb;
+  --embed-bg-tabs: #f9fafb;
   --embed-fg: #111827;
   --embed-fg-muted: #4b5563;
   --embed-fg-subtle: #6b7280;
@@ -68,23 +118,54 @@
   --embed-border: #e5e7eb;
   --embed-border-strong: #d1d5db;
   --embed-accent: #374151;
+  --embed-tab-active-bg: #111827;
+  --embed-tab-active-fg: #ffffff;
+  --embed-tab-active-sub: #9ca3af;
+  --embed-cat-global: #374151;
+  --embed-pill-global-bg: #f3f4f6;
+  --embed-pill-global-fg: #111827;
+  --embed-row-global: #fcfcfd;
+  --embed-cat-local: #f59e0b;
+  --embed-pill-local-bg: #fef3c7;
+  --embed-pill-local-fg: #92400e;
+  --embed-row-local: #fffcf2;
+  --embed-cat-ten: #0e7490;
+  --embed-pill-ten-bg: #cffafe;
+  --embed-pill-ten-fg: #155e75;
+  --embed-row-ten: #f7fdfe;
 }
 
 .bb-embed[data-embed-theme='dark'] {
   --embed-bg: #030712;
-  --embed-bg-surface: #1f2937;
+  --embed-bg-surface: #111827;
   --embed-bg-subtle: #374151;
   --embed-bg-muted: #111827;
-  --embed-fg: #f3f4f6;
+  --embed-bg-tabs: #0b1220;
+  --embed-fg: #e5e7eb;
   --embed-fg-muted: #9ca3af;
   --embed-fg-subtle: #9ca3af;
   --embed-fg-heading: #a5f3fc;
   --embed-fg-link: #67e8f9;
   --embed-fg-link-hover: #a5f3fc;
   --embed-btn-ink: #062a35;
-  --embed-border: #374151;
-  --embed-border-strong: #4b5563;
+  --embed-border: #1f2937;
+  --embed-border-strong: #374151;
   --embed-accent: #0e7490;
+  --embed-tab-active-bg: #22d3ee;
+  --embed-tab-active-fg: #062a35;
+  --embed-tab-active-sub: #0b4956;
+  --embed-cat-global: #22d3ee;
+  --embed-pill-global-bg: #0b3b45;
+  --embed-pill-global-fg: #a5f3fc;
+  --embed-row-global: rgba(34, 211, 238, .05);
+  --embed-cat-local: #f59e0b;
+  --embed-pill-local-bg: #3a2a08;
+  --embed-pill-local-fg: #fcd34d;
+  --embed-row-local: rgba(245, 158, 11, .06);
+  --embed-cat-ten: #a78bfa;
+  --embed-pill-ten-bg: #2c2547;
+  --embed-pill-ten-fg: #ddd6fe;
+  --embed-row-ten: rgba(167, 139, 250, .06);
 }
 
 .bb-embed {

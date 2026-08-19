@@ -21,6 +21,8 @@ export function EmbedScheduleView() {
   const langParam = searchParams.get('lang') as Language | null;
   const language: Language = langParam && SUPPORTED_LANGS.includes(langParam) ? langParam : 'he';
 
+  const showMaterials = searchParams.get('materials') !== '0';
+
   const event = eventId ? getEventById(allEvents, eventId) : undefined;
 
   useEffect(() => {
@@ -63,6 +65,7 @@ export function EmbedScheduleView() {
         language={language}
         chrome={false}
         theme={theme}
+        showMaterials={showMaterials}
       />
     </div>
   );

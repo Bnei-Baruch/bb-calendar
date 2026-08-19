@@ -11,6 +11,7 @@ export const translations: Record<Language, {
   calendarShort: string; posts: string; postsShort: string; registerMeal: string;
   addToCalendar: string; googleCalendar: string; icsCalendar: string;
   embed: string; embedPanelTitle: string; copyCode: string; copied: string; timezoneLabel: string;
+  showMaterialsToggle: string; embedHelp: string;
 }> = {
   he: {
     appName: 'לוח אירועים',
@@ -51,6 +52,8 @@ export const translations: Record<Language, {
     copyCode: 'העתק קוד',
     copied: 'הועתק',
     timezoneLabel: 'השעות מוצגות לפי שעון ישראל (GMT+3)',
+    showMaterialsToggle: 'הצג קישורי חומרים',
+    embedHelp: 'הווידג׳ט מוצג ללא כותרת האתר ומתאים את עצמו לרוחב המכולה. באלמנטור: הוסיפו רכיב HTML והדביקו את שתי השורות.',
   },
   en: {
     appName: 'Events Calendar',
@@ -91,6 +94,8 @@ export const translations: Record<Language, {
     copyCode: 'Copy code',
     copied: 'Copied',
     timezoneLabel: 'Times shown in Israel time (GMT+3)',
+    showMaterialsToggle: 'Show materials links',
+    embedHelp: 'The widget renders schedule-only and adapts to the container width. Elementor: drop an HTML widget on the page and paste both lines.',
   },
   ru: {
     appName: 'Календарь событий',
@@ -131,6 +136,8 @@ export const translations: Record<Language, {
     copyCode: 'Скопировать код',
     copied: 'Скопировано',
     timezoneLabel: 'Время указано по израильскому времени (GMT+3)',
+    showMaterialsToggle: 'Показывать ссылки на материалы',
+    embedHelp: 'Виджет отображает только расписание и подстраивается под ширину контейнера. Elementor: добавьте HTML-виджет на страницу и вставьте обе строки.',
   },
   es: {
     appName: 'Calendario de Eventos',
@@ -171,6 +178,8 @@ export const translations: Record<Language, {
     copyCode: 'Copiar código',
     copied: 'Copiado',
     timezoneLabel: 'Horarios mostrados en hora de Israel (GMT+3)',
+    showMaterialsToggle: 'Mostrar enlaces de materiales',
+    embedHelp: 'El widget muestra solo el horario y se adapta al ancho del contenedor. Elementor: añade un widget HTML en la página y pega ambas líneas.',
   },
   de: {
     appName: 'Veranstaltungskalender',
@@ -211,6 +220,8 @@ export const translations: Record<Language, {
     copyCode: 'Code kopieren',
     copied: 'Kopiert',
     timezoneLabel: 'Zeiten in israelischer Zeit (GMT+3)',
+    showMaterialsToggle: 'Materiallinks anzeigen',
+    embedHelp: 'Das Widget zeigt nur den Zeitplan an und passt sich der Breite des Containers an. Elementor: Fügen Sie ein HTML-Widget auf der Seite hinzu und fügen Sie beide Zeilen ein.',
   },
   it: {
     appName: 'Calendario degli Eventi',
@@ -251,6 +262,8 @@ export const translations: Record<Language, {
     copyCode: 'Copia codice',
     copied: 'Copiato',
     timezoneLabel: "Orari mostrati nell'ora di Israele (GMT+3)",
+    showMaterialsToggle: 'Mostra link ai materiali',
+    embedHelp: 'Il widget mostra solo il programma e si adatta alla larghezza del contenitore. Elementor: aggiungi un widget HTML alla pagina e incolla entrambe le righe.',
   },
   fr: {
     appName: 'Calendrier des Événements',
@@ -291,6 +304,8 @@ export const translations: Record<Language, {
     copyCode: 'Copier le code',
     copied: 'Copié',
     timezoneLabel: "Horaires affichés selon l'heure d'Israël (GMT+3)",
+    showMaterialsToggle: 'Afficher les liens vers les documents',
+    embedHelp: "Le widget n'affiche que le programme et s'adapte à la largeur du conteneur. Elementor : ajoutez un widget HTML sur la page et collez les deux lignes.",
   },
   pt: {
     appName: 'Calendário de Eventos',
@@ -331,6 +346,8 @@ export const translations: Record<Language, {
     copyCode: 'Copiar código',
     copied: 'Copiado',
     timezoneLabel: 'Horários exibidos no horário de Israel (GMT+3)',
+    showMaterialsToggle: 'Mostrar links de materiais',
+    embedHelp: 'O widget exibe apenas o horário e se adapta à largura do contêiner. Elementor: adicione um widget HTML na página e cole as duas linhas.',
   },
   uk: {
     appName: 'Календар подій',
@@ -371,6 +388,8 @@ export const translations: Record<Language, {
     copyCode: 'Копіювати код',
     copied: 'Скопійовано',
     timezoneLabel: 'Час вказано за ізраїльським часом (GMT+3)',
+    showMaterialsToggle: 'Показувати посилання на матеріали',
+    embedHelp: 'Віджет показує лише розклад і підлаштовується під ширину контейнера. Elementor: додайте HTML-віджет на сторінку та вставте обидва рядки.',
   },
   tr: {
     appName: 'Etkinlik Takvimi',
@@ -411,6 +430,8 @@ export const translations: Record<Language, {
     copyCode: 'Kodu kopyala',
     copied: 'Kopyalandı',
     timezoneLabel: 'Saatler İsrail saatine göre gösterilir (GMT+3)',
+    showMaterialsToggle: 'Materyal bağlantılarını göster',
+    embedHelp: "Widget yalnızca programı gösterir ve kapsayıcı genişliğine uyum sağlar. Elementor: sayfaya bir HTML widget'ı ekleyin ve her iki satırı yapıştırın.",
   },
   bg: {
     appName: 'Календар на събитията',
@@ -451,6 +472,8 @@ export const translations: Record<Language, {
     copyCode: 'Копирай кода',
     copied: 'Копирано',
     timezoneLabel: 'Часовете са показани по израелско време (GMT+3)',
+    showMaterialsToggle: 'Показвай връзки към материали',
+    embedHelp: 'Уиджетът показва само графика и се адаптира към ширината на контейнера. Elementor: добавете HTML уиджет на страницата и поставете и двата реда.',
   },
 };
 
