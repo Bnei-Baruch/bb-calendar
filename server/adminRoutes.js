@@ -182,7 +182,7 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
   try {
     const { type = 'regular', date, endDate, startTime = '', endTime = '',
             titles = {}, descriptions, location, private: priv = false, generationTag, parentId,
-            recurrence, recurrenceEnd, recurrenceDays } = req.body;
+            recurrence, recurrenceEnd, recurrenceDays, scope } = req.body;
     if (!date) return res.status(400).json({ error: 'date required' });
 
     let safeTitles = titles;
@@ -199,9 +199,9 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
     const createdByRole = isTranslatorRole(req.user) ? 'events_translator' : 'events_admin';
     const safeRecurrenceDays = recurrence === 'custom' && recurrenceDays ? recurrenceDays : null;
     const { rows } = await pool.query(
-      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id, created_by_role, recurrence, recurrence_end, recurrence_days)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null, createdByRole, recurrence || null, recurrenceEnd || null, safeRecurrenceDays]
+      `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, generation_tag, parent_id, created_by_role, recurrence, recurrence_end, recurrence_days, scope)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *`,
+      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, generationTag || null, parentId || null, createdByRole, recurrence || null, recurrenceEnd || null, safeRecurrenceDays, scope || null]
     );
     const parent = rows[0];
 
@@ -215,11 +215,11 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
         const vals = [], params = [];
         let idx = 1;
         for (const d of occurrenceDates) {
-          vals.push(`($${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++})`);
-          params.push(type, d, endDate || null, startTime, endTime, JSON.stringify(safeTitles), safeDescs ? JSON.stringify(safeDescs) : null, location || null, safePriv, parentId || null, parent.id);
+          vals.push(`($${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++},$${idx++})`);
+          params.push(type, d, endDate || null, startTime, endTime, JSON.stringify(safeTitles), safeDescs ? JSON.stringify(safeDescs) : null, location || null, safePriv, parentId || null, parent.id, scope || null);
         }
         await pool.query(
-          `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, parent_id, recurrence_id) VALUES ${vals.join(',')}`,
+          `INSERT INTO events (type, date, end_date, start_time, end_time, titles, descriptions, location, private, parent_id, recurrence_id, scope) VALUES ${vals.join(',')}`,
           params
         );
       }
@@ -235,7 +235,7 @@ router.post('/events', requireAdminOrTranslator, async (req, res) => {
 
 router.put('/events/:id', requireAdminOrTranslator, async (req, res) => {
   try {
-    const { type, date, endDate, startTime, endTime, titles, descriptions, location, private: priv, parentId } = req.body;
+    const { type, date, endDate, startTime, endTime, titles, descriptions, location, private: priv, parentId, scope } = req.body;
 
     let safeTitles = titles;
     let safeDescs = descriptions;
@@ -254,9 +254,9 @@ router.put('/events/:id', requireAdminOrTranslator, async (req, res) => {
     const { rows } = await pool.query(
       `UPDATE events SET
          type=$1, date=$2, end_date=$3, start_time=$4, end_time=$5,
-         titles=$6, descriptions=$7, location=$8, private=$9, parent_id=$10
-       WHERE id=$11 RETURNING *`,
-      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, parentId || null, req.params.id]
+         titles=$6, descriptions=$7, location=$8, private=$9, parent_id=$10, scope=$11
+       WHERE id=$12 RETURNING *`,
+      [type, date, endDate || null, startTime, endTime, safeTitles, safeDescs || null, location || null, safePriv, parentId || null, scope || null, req.params.id]
     );
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
     const updated = rowToEvent(rows[0]);
@@ -453,7 +453,7 @@ router.use(requireAdmin);
 // ── Templates CRUD ────────────────────────────────────────────────────────────
 
 const tmplToJson = r => ({
-  id: r.id, name: r.name, titles: r.titles, type: r.type || 'regular',
+  id: r.id, name: r.name, titles: r.titles, descriptions: r.descriptions || {}, type: r.type || 'regular',
   defaultStartTime: r.default_start_time, defaultEndTime: r.default_end_time,
   privateByDefault: r.private_by_default,
 });
@@ -479,12 +479,12 @@ router.get('/templates/:id', async (req, res) => {
 
 router.post('/templates', async (req, res) => {
   try {
-    const { name, titles = {}, defaultStartTime = '', defaultEndTime = '', privateByDefault = false, type = 'regular' } = req.body;
+    const { name, titles = {}, descriptions = {}, defaultStartTime = '', defaultEndTime = '', privateByDefault = false, type = 'regular' } = req.body;
     if (!name) return res.status(400).json({ error: 'name required' });
     const { rows } = await pool.query(
-      `INSERT INTO event_templates (name, titles, default_start_time, default_end_time, private_by_default, type)
-       VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`,
-      [name, titles, defaultStartTime, defaultEndTime, privateByDefault, type]
+      `INSERT INTO event_templates (name, titles, descriptions, default_start_time, default_end_time, private_by_default, type)
+       VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+      [name, titles, descriptions, defaultStartTime, defaultEndTime, privateByDefault, type]
     );
     res.status(201).json(tmplToJson(rows[0]));
   } catch (err) {
@@ -494,11 +494,11 @@ router.post('/templates', async (req, res) => {
 
 router.put('/templates/:id', async (req, res) => {
   try {
-    const { name, titles, defaultStartTime, defaultEndTime, privateByDefault, type = 'regular' } = req.body;
+    const { name, titles, descriptions, defaultStartTime, defaultEndTime, privateByDefault, type = 'regular' } = req.body;
     const { rows } = await pool.query(
-      `UPDATE event_templates SET name=$1, titles=$2, default_start_time=$3, default_end_time=$4, private_by_default=$5, type=$6
-       WHERE id=$7 RETURNING *`,
-      [name, titles, defaultStartTime, defaultEndTime, privateByDefault, type, req.params.id]
+      `UPDATE event_templates SET name=$1, titles=$2, descriptions=$3, default_start_time=$4, default_end_time=$5, private_by_default=$6, type=$7
+       WHERE id=$8 RETURNING *`,
+      [name, titles, descriptions, defaultStartTime, defaultEndTime, privateByDefault, type, req.params.id]
     );
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
     res.json(tmplToJson(rows[0]));

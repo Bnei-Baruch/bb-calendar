@@ -1,0 +1,101 @@
+/* Brand-color themes for the embeddable convention/holiday schedule.
+   Scoped under .bb-embed so these tokens never collide with the app's own
+   theme.css / dark-mode variables. */
+
+.bb-embed[data-embed-theme='cyan'] {
+  --embed-bg: #ecfeff;
+  --embed-bg-surface: #ffffff;
+  --embed-bg-subtle: #f3f4f6;
+  --embed-bg-muted: #f0fdff;
+  --embed-fg: #111827;
+  --embed-fg-muted: #4b5563;
+  --embed-fg-subtle: #6b7280;
+  --embed-fg-heading: #164e63;
+  --embed-fg-link: #0e7490;
+  --embed-fg-link-hover: #155e75;
+  --embed-btn-ink: #ffffff;
+  --embed-border: #e5e7eb;
+  --embed-border-strong: #d1d5db;
+  --embed-accent: #00b6be;
+}
+
+.bb-embed[data-embed-theme='blue'] {
+  --embed-bg: #eff6ff;
+  --embed-bg-surface: #ffffff;
+  --embed-bg-subtle: #f3f4f6;
+  --embed-bg-muted: #eff6ff;
+  --embed-fg: #111827;
+  --embed-fg-muted: #4b5563;
+  --embed-fg-subtle: #6b7280;
+  --embed-fg-heading: #1e3a8a;
+  --embed-fg-link: #2563eb;
+  --embed-fg-link-hover: #1d4ed8;
+  --embed-btn-ink: #ffffff;
+  --embed-border: #e5e7eb;
+  --embed-border-strong: #d1d5db;
+  --embed-accent: #1d4ed8;
+}
+
+.bb-embed[data-embed-theme='amber'] {
+  --embed-bg: #fffbeb;
+  --embed-bg-surface: #ffffff;
+  --embed-bg-subtle: #f9fafb;
+  --embed-bg-muted: #fffbeb;
+  --embed-fg: #111827;
+  --embed-fg-muted: #4b5563;
+  --embed-fg-subtle: #6b7280;
+  --embed-fg-heading: #78350f;
+  --embed-fg-link: #b45309;
+  --embed-fg-link-hover: #92400e;
+  --embed-btn-ink: #ffffff;
+  --embed-border: #e5e7eb;
+  --embed-border-strong: #d1d5db;
+  --embed-accent: #b45309;
+}
+
+.bb-embed[data-embed-theme='neutral'] {
+  --embed-bg: #ffffff;
+  --embed-bg-surface: #ffffff;
+  --embed-bg-subtle: #f9fafb;
+  --embed-bg-muted: #f9fafb;
+  --embed-fg: #111827;
+  --embed-fg-muted: #4b5563;
+  --embed-fg-subtle: #6b7280;
+  --embed-fg-heading: #111827;
+  --embed-fg-link: #374151;
+  --embed-fg-link-hover: #111827;
+  --embed-btn-ink: #ffffff;
+  --embed-border: #e5e7eb;
+  --embed-border-strong: #d1d5db;
+  --embed-accent: #374151;
+}
+
+.bb-embed[data-embed-theme='dark'] {
+  --embed-bg: #030712;
+  --embed-bg-surface: #1f2937;
+  --embed-bg-subtle: #374151;
+  --embed-bg-muted: #111827;
+  --embed-fg: #f3f4f6;
+  --embed-fg-muted: #9ca3af;
+  --embed-fg-subtle: #9ca3af;
+  --embed-fg-heading: #a5f3fc;
+  --embed-fg-link: #67e8f9;
+  --embed-fg-link-hover: #a5f3fc;
+  --embed-btn-ink: #062a35;
+  --embed-border: #374151;
+  --embed-border-strong: #4b5563;
+  --embed-accent: #0e7490;
+}
+
+.bb-embed {
+  background: var(--embed-bg-surface);
+  color: var(--embed-fg);
+}
+
+.bb-embed a {
+  color: var(--embed-fg-link);
+}
+
+.bb-embed a:hover {
+  color: var(--embed-fg-link-hover);
+}

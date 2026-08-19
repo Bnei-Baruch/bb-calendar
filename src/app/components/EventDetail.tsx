@@ -1,17 +1,16 @@
 import { useNavigate, useParams, useOutletContext, useLocation, useSearchParams } from 'react-router';
 import { useState, useEffect } from 'react';
-import { ArrowRight, Clock, Calendar, MapPin, BookOpen, Share2, Plus, Pencil, Trash2 } from 'lucide-react';
-import { AddToCalendarButton } from './AddToCalendarButton';
+import { ArrowRight, Calendar, MapPin, Share2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
-import { Badge } from './ui/badge';
 import { Language, useTranslation } from '../utils/i18n';
-import { getEventById } from '../data/events';
+import { getEventById, getContainerSchedule } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
 import { adminApi } from '../admin/adminApi';
 import type { AdminEvent } from '../admin/adminApi';
 import { AddEventModal } from '../admin/AddEventModal';
+import { ConventionSchedule } from './ConventionSchedule';
 
 export function EventDetail() {
   const { language } = useOutletContext<{ language: Language }>();
@@ -48,37 +47,7 @@ export function EventDetail() {
   const isMultiDay = !!(event?.endDate && event.endDate !== event.date);
 
   // Collect all events within the date range, grouped by day (works for both single and multi-day)
-  const eventsByDate: Record<string, typeof allEvents> = {};
-  if (event) {
-    const endRange = isMultiDay ? event.endDate! : event.date;
-    // Pre-populate all days in range so every day shows even if empty
-    let d = event.date;
-    while (d <= endRange) {
-      eventsByDate[d] = [];
-      const next = new Date(d);
-      next.setDate(next.getDate() + 1);
-      d = next.toISOString().split('T')[0];
-    }
-
-    const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
-    const isContainer = event.type === 'conference' || event.type === 'holiday';
-    allEvents
-      .filter(e =>
-        e.date >= event.date &&
-        e.date <= endRange &&
-        e.id !== event.id &&
-        !(e.endDate && e.endDate !== e.date) &&
-        (isContainer ? e.parentId === event.id : !e.parentId)
-      )
-      .forEach(e => {
-        if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
-        eventsByDate[e.date].push(e);
-      });
-    Object.keys(eventsByDate).forEach(d => {
-      eventsByDate[d].sort((a, b) => toMin(a.startTime) - toMin(b.startTime));
-    });
-  }
-
+  const eventsByDate: Record<string, typeof allEvents> = event ? getContainerSchedule(allEvents, event) : {};
   const sortedDates = Object.keys(eventsByDate).sort();
 
   if (!event) {
@@ -93,6 +62,8 @@ export function EventDetail() {
       </div>
     );
   }
+
+  const isContainerType = event.type === 'conference' || event.type === 'holiday';
 
   const formatDateByLanguage = (dateStr: string) => {
     const [y, mo, da] = dateStr.split('-').map(Number);
@@ -132,17 +103,6 @@ export function EventDetail() {
       return `${sd}.${sm}.${sy}-${ed}.${em}.${ey}`;
     }
     return formatDateByLanguage(event.date);
-  };
-
-  const getEventTypeBadge = (type: string) => {
-    switch (type) {
-      case 'conference':
-        return <Badge className="bg-purple-500">{language === 'he' ? 'כנס' : 'Conference'}</Badge>;
-      case 'holiday':
-        return <Badge className="bg-green-500">{language === 'he' ? 'חג' : 'Holiday'}</Badge>;
-      default:
-        return <Badge className="bg-blue-500">{language === 'he' ? 'רגיל' : 'Regular'}</Badge>;
-    }
   };
 
   const calculateDuration = () => {
@@ -191,7 +151,7 @@ export function EventDetail() {
       });
     });
     lines.push('');
-    lines.push(`${siteLabel}: https://cal.kli.one`);
+    lines.push(`${siteLabel}: https://events.kli.one`);
     return lines.join('\n');
   };
 
@@ -225,6 +185,33 @@ export function EventDetail() {
     },
   ];
 
+  const shareButtonEl = sortedDates.length > 0 && (
+    <div className="relative shrink-0">
+      <button
+        onClick={() => setShareOpen(v => !v)}
+        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer whitespace-nowrap text-gray-700 dark:text-gray-300"
+      >
+        <Share2 className="w-3.5 h-3.5" />
+        <span>{isRTL ? 'שתף' : 'Share'}</span>
+      </button>
+      {shareOpen && (
+        <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 min-w-[180px]`} dir={isRTL ? 'rtl' : 'ltr'}>
+          {shareOptions.map((opt, i) =>
+            opt.href ? (
+              <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300" onClick={() => setShareOpen(false)}>
+                {opt.icon}<span>{opt.label}</span>
+              </a>
+            ) : (
+              <button key={i} onClick={opt.onClick} className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300">
+                {opt.icon}<span>{opt.label}</span>
+              </button>
+            )
+          )}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className={`container mx-auto px-4 py-8 ${isRTL ? 'rtl' : 'ltr'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-4xl mx-auto">
@@ -248,62 +235,38 @@ export function EventDetail() {
         </Button>
 
         <Card className="p-8">
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex-1">
-              <h1 className={`text-3xl font-bold mb-4 dark:text-gray-100 ${isRTL ? 'text-right' : ''}`}>
-                {event.title[language]}
-              </h1>
+          {!isContainerType && (
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex-1">
+                <h1 className={`text-3xl font-bold mb-4 dark:text-gray-100 ${isRTL ? 'text-right' : ''}`}>
+                  {event.title[language]}
+                </h1>
+              </div>
+              <div className="flex items-center gap-2 shrink-0 ms-4">
+                {shareButtonEl}
+              </div>
             </div>
-            <div className="flex items-center gap-2 shrink-0 ms-4">
-              {(event.type === 'conference' || event.type === 'holiday') && (
-                <AddToCalendarButton event={event} language={language} isRTL={isRTL} />
-              )}
-            {sortedDates.length > 0 && (
-              <div className="relative shrink-0">
-                <button
-                  onClick={() => setShareOpen(v => !v)}
-                  className="h-9 w-auto px-3 inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm text-sm text-gray-700 dark:text-gray-300"
-                >
-                  <Share2 className="h-4 w-4" />
-                  <span>{isRTL ? 'שתף' : 'Share'}</span>
-                </button>
-                {shareOpen && (
-                  <div className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 min-w-[180px]`} dir={isRTL ? 'rtl' : 'ltr'}>
-                    {shareOptions.map((opt, i) =>
-                      opt.href ? (
-                        <a key={i} href={opt.href} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300" onClick={() => setShareOpen(false)}>
-                          {opt.icon}<span>{opt.label}</span>
-                        </a>
-                      ) : (
-                        <button key={i} onClick={opt.onClick} className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300">
-                          {opt.icon}<span>{opt.label}</span>
-                        </button>
-                      )
-                    )}
-                  </div>
+          )}
+
+          {!isContainerType && (
+            <div className="space-y-4">
+              <div className={`flex items-center gap-3 text-gray-700 dark:text-gray-300 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+                {isRTL ? (
+                  <>
+                    <span className="text-lg">{getEventDateRange()}</span>
+                    <Calendar className="w-5 h-5 text-blue-600" />
+                  </>
+                ) : (
+                  <>
+                    <Calendar className="w-5 h-5 text-blue-600" />
+                    <span className="text-lg">{getEventDateRange()}</span>
+                  </>
                 )}
               </div>
-            )}
             </div>
-          </div>
+          )}
 
-          <div className="space-y-4">
-            <div className={`flex items-center gap-3 text-gray-700 dark:text-gray-300 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-              {isRTL ? (
-                <>
-                  <span className="text-lg">{getEventDateRange()}</span>
-                  <Calendar className="w-5 h-5 text-blue-600" />
-                </>
-              ) : (
-                <>
-                  <Calendar className="w-5 h-5 text-blue-600" />
-                  <span className="text-lg">{getEventDateRange()}</span>
-                </>
-              )}
-            </div>
-          </div>
-
-          {event.description && (
+          {!isContainerType && event.description?.[language] && (
             <div className="mt-8 pt-6 border-t">
               <h3 className={`font-semibold text-lg mb-3 ${isRTL ? 'text-right' : ''}`}>{t.description}</h3>
               <p className={`text-gray-700 dark:text-gray-300 leading-relaxed ${isRTL ? 'text-right' : ''}`}>
@@ -312,28 +275,27 @@ export function EventDetail() {
             </div>
           )}
 
-          {(sortedDates.length > 0 || (canEdit && (event.type === 'conference' || event.type === 'holiday'))) && (
-            <div className="mt-8 pt-6 border-t">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className={`font-semibold text-xl ${isRTL ? 'text-right' : ''}`}>
-                  {({
-                    he: 'לוח זמנים מפורט',
-                    en: 'Detailed Schedule',
-                    ru: 'Подробное расписание',
-                    es: 'Horario detallado',
-                    de: 'Detaillierter Zeitplan',
-                    it: 'Programma dettagliato',
-                    fr: 'Programme détaillé',
-                    pt: 'Horário detalhado',
-                    uk: 'Детальний розклад',
-                    tr: 'Ayrıntılı Program',
-                    bg: 'Подробен график',
-                  } as Record<string, string>)[language] ?? 'Detailed Schedule'}
-                </h3>
-                {admin && (event.type === 'conference' || event.type === 'holiday') && (
+          {(sortedDates.length > 0 || (canEdit && isContainerType)) && (
+            <div className={isContainerType ? '' : 'mt-8 pt-6 border-t'}>
+              <ConventionSchedule
+                event={event}
+                allEvents={allEvents}
+                language={language}
+                chrome
+                canEdit={canEdit}
+                isAdmin={admin}
+                shareButton={isContainerType ? shareButtonEl : undefined}
+                onAddSession={date => setAddDate(date)}
+                onEditSession={evt => setEditEvent(evt as unknown as AdminEvent)}
+                onDeleteSession={async evt => {
+                  if (!confirm('Delete this event?')) return;
+                  await adminApi.deleteEvent(evt.id);
+                  refetch();
+                }}
+                headerExtra={admin && isContainerType && (
                   <button
                     onClick={() => { setImportOpen(v => !v); setImportResult(''); }}
-                    className="text-xs px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="text-xs font-semibold px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors whitespace-nowrap"
                   >
                     {({
                       he: '↑ ייבוא מגיליון',
@@ -350,141 +312,44 @@ export function EventDetail() {
                     } as Record<string, string>)[language] ?? '↑ Import from Sheets'}
                   </button>
                 )}
-              </div>
-              {importOpen && admin && (() => {
-                const doImport = async () => {
-                  if (!importUrl.trim()) return;
-                  setImporting(true);
-                  setImportResult('');
-                  try {
-                    const { created, updated } = await adminApi.importEventsFromSheets(importUrl.trim(), event.id);
-                    setImportResult(`✅ Created: ${created}, updated: ${updated}`);
-                    setImportUrl('');
-                    setImportOpen(false);
-                    refetch();
-                  } catch (e: any) {
-                    setImportResult(`❌ ${e.message}`);
-                  } finally {
-                    setImporting(false);
-                  }
-                };
-                return (
-                  <div className="mb-6 flex flex-col gap-2">
-                    <div className="flex gap-2">
-                      <input
-                        type="url"
-                        value={importUrl}
-                        onChange={e => setImportUrl(e.target.value)}
-                        placeholder="Paste Google Sheets URL…"
-                        className="flex-1 border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
-                        onKeyDown={e => e.key === 'Enter' && doImport()}
-                      />
-                      <Button variant="outline" onClick={doImport} disabled={importing || !importUrl.trim()}>
-                        {importing ? (isRTL ? 'מייבא…' : 'Importing…') : (isRTL ? 'ייבא' : 'Import')}
-                      </Button>
-                    </div>
-                    {importResult && <p className="text-sm">{importResult}</p>}
-                  </div>
-                );
-              })()}
-              <div className="space-y-6">
-                {sortedDates.map(date => {
-                  const toMin = (t: string) => { if (!t) return -1; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); };
-                  const dateEvents = eventsByDate[date].sort((a, b) => toMin(a.startTime) - toMin(b.startTime));
-                  
+              >
+                {importOpen && admin && (() => {
+                  const doImport = async () => {
+                    if (!importUrl.trim()) return;
+                    setImporting(true);
+                    setImportResult('');
+                    try {
+                      const { created, updated } = await adminApi.importEventsFromSheets(importUrl.trim(), event.id);
+                      setImportResult(`✅ Created: ${created}, updated: ${updated}`);
+                      setImportUrl('');
+                      setImportOpen(false);
+                      refetch();
+                    } catch (e: any) {
+                      setImportResult(`❌ ${e.message}`);
+                    } finally {
+                      setImporting(false);
+                    }
+                  };
                   return (
-                    <div key={date}>
-                      <div className="flex items-center gap-3 mb-4 pb-2 border-b-2 border-purple-300 dark:border-purple-700">
-                        <Calendar className="w-5 h-5 text-purple-600 shrink-0" />
-                        <h4 className="font-bold text-lg text-gray-800 dark:text-gray-100 flex-1">
-                          {formatDateByLanguage(date)}
-                        </h4>
-                        {canEdit && (
-                          <button
-                            onClick={() => setAddDate(date)}
-                            className="w-7 h-7 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shrink-0"
-                            title={isRTL ? 'הוסף אירוע' : 'Add event'}
-                          ><Plus className="w-4 h-4" /></button>
-                        )}
+                    <div className="mb-6 flex flex-col gap-2">
+                      <div className="flex gap-2">
+                        <input
+                          type="url"
+                          value={importUrl}
+                          onChange={e => setImportUrl(e.target.value)}
+                          placeholder="Paste Google Sheets URL…"
+                          className="flex-1 border rounded-lg px-3 py-2 text-sm dark:bg-gray-800 dark:border-gray-700"
+                          onKeyDown={e => e.key === 'Enter' && doImport()}
+                        />
+                        <Button variant="outline" onClick={doImport} disabled={importing || !importUrl.trim()}>
+                          {importing ? (isRTL ? 'מייבא…' : 'Importing…') : (isRTL ? 'ייבא' : 'Import')}
+                        </Button>
                       </div>
-                      <div className="space-y-2">
-                        {(() => {
-                          const timeless = dateEvents.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
-                          const timed = dateEvents.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
-                          return (
-                            <>
-                              {timeless.length > 0 && (
-                                <div className={`bg-blue-50 dark:bg-blue-900/20 ${isRTL ? 'border-r-4' : 'border-l-4'} border-blue-600 rounded-lg shadow-sm mt-2 mb-3 space-y-1`} style={isRTL ? {paddingRight: '25px', paddingTop: '5px', paddingBottom: '5px'} : {paddingLeft: '25px', paddingTop: '5px', paddingBottom: '5px'}}>
-                                  {timeless.map(evt => (
-                                    <div key={evt.id}>
-                                      <p className={`text-blue-900 dark:text-blue-200 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}>{evt.title[language]}</p>
-                                      {evt.description && (
-                                        <p className={`text-blue-700 dark:text-blue-300 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{evt.description[language]}</p>
-                                      )}
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                              {timed.map(evt => (
-                                <div
-                                  key={evt.id}
-                                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group/ev"
-                                >
-                                  <Clock className="w-4 h-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
-                                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap" dir="ltr">
-                                    {isRTL
-                                      ? `${evt.endTime} - ${evt.startTime}`
-                                      : `${evt.startTime} - ${evt.endTime}`}
-                                  </span>
-                                  <p className="flex-1 text-gray-900 dark:text-gray-100">{evt.title[language]}</p>
-                                  {evt.title.en === 'Meal' && (
-                                    <a
-                                      href={`https://pay.kli.one/${language}/Calendar-Meals`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-xs font-semibold px-2 py-1 rounded-full shrink-0 transition-colors text-white bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
-                                    >
-                                      {t.registerMeal}
-                                    </a>
-                                  )}
-                                  {evt.studyLink && (
-                                    <a
-                                      href={evt.studyLink}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-700 shrink-0 transition-colors"
-                                    >
-                                      <BookOpen className="w-4 h-4 text-white" />
-                                    </a>
-                                  )}
-                                  {canEdit && evt._db && (
-                                    <div className="flex items-center gap-1 opacity-0 group-hover/ev:opacity-100 transition-opacity">
-                                      <button
-                                        onClick={() => setEditEvent(evt as unknown as AdminEvent)}
-                                        className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
-                                        title="Edit"
-                                      ><Pencil className="w-3.5 h-3.5" /></button>
-                                      {admin && <button
-                                        onClick={async () => {
-                                          if (!confirm('Delete this event?')) return;
-                                          await adminApi.deleteEvent(evt.id);
-                                          refetch();
-                                        }}
-                                        className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
-                                        title="Delete"
-                                      ><Trash2 className="w-3.5 h-3.5" /></button>}
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                            </>
-                          );
-                        })()}
-                      </div>
+                      {importResult && <p className="text-sm">{importResult}</p>}
                     </div>
                   );
-                })}
-              </div>
+                })()}
+              </ConventionSchedule>
             </div>
           )}
         </Card>

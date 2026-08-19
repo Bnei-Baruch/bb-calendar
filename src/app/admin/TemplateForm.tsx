@@ -14,6 +14,7 @@ export function TemplateForm() {
   const [form, setForm] = useState({
     name: '',
     titles: {} as Record<string, string>,
+    descriptions: {} as Record<string, string>,
     defaultStartTime: '',
     defaultEndTime: '',
     privateByDefault: false,
@@ -21,6 +22,7 @@ export function TemplateForm() {
   });
   const [activeLang, setActiveLang] = useState<Language>('he');
   const [translating, setTranslating] = useState(false);
+  const [translatingDescription, setTranslatingDescription] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -30,6 +32,7 @@ export function TemplateForm() {
         .then(t => setForm({
           name: t.name,
           titles: { ...t.titles },
+          descriptions: { ...(t.descriptions ?? {}) },
           defaultStartTime: t.defaultStartTime,
           defaultEndTime: t.defaultEndTime,
           privateByDefault: t.privateByDefault,
@@ -41,6 +44,10 @@ export function TemplateForm() {
 
   const setTitle = (lang: Language, value: string) => {
     setForm(f => ({ ...f, titles: { ...f.titles, [lang]: value } }));
+  };
+
+  const setDescription = (lang: Language, value: string) => {
+    setForm(f => ({ ...f, descriptions: { ...f.descriptions, [lang]: value } }));
   };
 
   const autoTranslate = async () => {
@@ -61,6 +68,24 @@ export function TemplateForm() {
     }
   };
 
+  const autoTranslateDescription = async () => {
+    const source = form.descriptions['he'] || form.descriptions['en'];
+    if (!source) { setError('Fill in Hebrew first'); return; }
+    const sourceLang = form.descriptions['he'] ? 'he' : 'en';
+    const missing = ALL_LANGS.filter(l => l !== sourceLang && !form.descriptions[l]);
+    if (!missing.length) return;
+    setTranslatingDescription(true);
+    setError('');
+    try {
+      const { translations } = await adminApi.translate(source, sourceLang, missing);
+      setForm(f => ({ ...f, descriptions: { ...f.descriptions, ...translations } }));
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setTranslatingDescription(false);
+    }
+  };
+
   const save = async () => {
     if (!form.name) { setError('Name is required'); return; }
     setSaving(true);
@@ -69,6 +94,7 @@ export function TemplateForm() {
       const payload = {
         name: form.name,
         titles: form.titles,
+        descriptions: form.descriptions,
         defaultStartTime: form.defaultStartTime,
         defaultEndTime: form.defaultEndTime,
         privateByDefault: form.privateByDefault,
@@ -171,7 +197,7 @@ export function TemplateForm() {
           </div>
 
           <div>
-            <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]}</label>
+            <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]} — title</label>
             <textarea
               value={form.titles[activeLang] ?? ''}
               onChange={e => setTitle(activeLang, e.target.value)}
@@ -183,7 +209,23 @@ export function TemplateForm() {
           </div>
 
           <Button variant="outline" size="sm" onClick={autoTranslate} disabled={translating} className="w-full">
-            {translating ? 'Translating…' : '🤖 Auto-translate all from Hebrew'}
+            {translating ? 'Translating…' : '🤖 Auto-translate title from Hebrew'}
+          </Button>
+
+          <div>
+            <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]} — description</label>
+            <textarea
+              value={form.descriptions[activeLang] ?? ''}
+              onChange={e => setDescription(activeLang, e.target.value)}
+              rows={3}
+              placeholder={`Description in ${languageNames[activeLang]}…`}
+              className="w-full border rounded-lg px-3 py-2 text-sm resize-none dark:bg-gray-800 dark:border-gray-700"
+              dir={activeLang === 'he' ? 'rtl' : 'ltr'}
+            />
+          </div>
+
+          <Button variant="outline" size="sm" onClick={autoTranslateDescription} disabled={translatingDescription} className="w-full">
+            {translatingDescription ? 'Translating…' : '🤖 Auto-translate description from Hebrew'}
           </Button>
         </div>
 

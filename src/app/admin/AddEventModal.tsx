@@ -4,7 +4,7 @@ import { adminApi, type AdminEvent, type AdminTemplate } from './adminApi';
 import { Button } from '../components/ui/button';
 import { type Language, languageNames } from '../utils/i18n';
 import { useEvents } from '../context/EventsContext';
-import { isAdmin } from './AdminGuard';
+import { isAdmin, isAdminOrTranslator } from './AdminGuard';
 
 const ALL_LANGS: Language[] = ['he', 'en', 'ru', 'es', 'de', 'it', 'fr', 'pt', 'uk', 'tr', 'bg'];
 
@@ -19,6 +19,7 @@ interface Props {
 export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props) {
   const isEdit = !!event;
   const admin = isAdmin();
+  const adminOrTranslator = isAdminOrTranslator();
   const visibleLangs = admin ? ALL_LANGS : ALL_LANGS.filter(l => l !== 'he');
   const { events: allEvents } = useEvents();
 
@@ -37,7 +38,9 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     endTime: event?.endTime ?? '',
     type: event?.type ?? 'regular',
     private: event?.private ?? false,
+    scope: event?.scope,
     titles: event?.title ?? {} as Record<string, string>,
+    descriptions: event?.description ?? {} as Record<string, string>,
   });
   const [activeLang, setActiveLang] = useState<Language>(admin ? 'he' : 'en');
   const [showTitles, setShowTitles] = useState(isEdit);
@@ -63,6 +66,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     return d.toISOString().slice(0, 10);
   });
   const [translating, setTranslating] = useState(false);
+  const [translatingDescription, setTranslatingDescription] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savingFuture, setSavingFuture] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -80,6 +84,9 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     const templateTitles = admin
       ? { ...t.titles }
       : Object.fromEntries(Object.entries(t.titles).filter(([l]) => l !== 'he'));
+    const templateDescriptions = admin
+      ? { ...(t.descriptions ?? {}) }
+      : Object.fromEntries(Object.entries(t.descriptions ?? {}).filter(([l]) => l !== 'he'));
     setForm(f => ({
       ...f,
       type: t.type || f.type,
@@ -87,11 +94,16 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
       endTime: t.defaultEndTime || f.endTime,
       private: admin ? t.privateByDefault : false,
       titles: templateTitles,
+      descriptions: templateDescriptions,
     }));
   };
 
   const setTitle = (lang: Language, value: string) => {
     setForm(f => ({ ...f, titles: { ...f.titles, [lang]: value } }));
+  };
+
+  const setDescription = (lang: Language, value: string) => {
+    setForm(f => ({ ...f, descriptions: { ...f.descriptions, [lang]: value } }));
   };
 
   const autoTranslate = async () => {
@@ -111,6 +123,23 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     }
   };
 
+  const autoTranslateDescription = async () => {
+    const source = form.descriptions['he'] || form.descriptions['en'];
+    if (!source) return;
+    const sourceLang = form.descriptions['he'] ? 'he' : 'en';
+    const missing = visibleLangs.filter(l => l !== sourceLang && !form.descriptions[l]);
+    if (!missing.length) return;
+    setTranslatingDescription(true);
+    try {
+      const { translations } = await adminApi.translate(source, sourceLang, missing);
+      setForm(f => ({ ...f, descriptions: { ...f.descriptions, ...translations } }));
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setTranslatingDescription(false);
+    }
+  };
+
   const buildPayload = () => ({
     type: form.type,
     date: form.date,
@@ -118,8 +147,10 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     startTime: form.startTime,
     endTime: form.endTime,
     titles: form.titles,
+    descriptions: form.descriptions,
     private: form.private,
     parentId: selectedParentId || undefined,
+    scope: selectedParentId ? form.scope : undefined,
     recurrence: recurrence !== 'none' ? recurrence : undefined,
     recurrenceEnd: recurrence !== 'none' ? recurrenceEnd : undefined,
     recurrenceDays: recurrence === 'custom' && customDays.size > 0
@@ -153,6 +184,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
     try {
       await adminApi.updateEventSeries(event.id, {
         titles: form.titles,
+        descriptions: form.descriptions,
         startTime: form.startTime,
         endTime: form.endTime,
         private: form.private,
@@ -245,6 +277,32 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
             </div>
           )}
 
+          {selectedParentId && (
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Scope</label>
+              <div className="flex gap-2">
+                {([
+                  { value: undefined, label: '— blank —' },
+                  { value: 'global' as const, label: 'Global' },
+                  { value: 'local' as const, label: 'Local' },
+                  { value: 'ten' as const, label: 'Ten' },
+                ]).map(opt => (
+                  <button key={opt.label} type="button"
+                    onClick={() => setForm(f => ({ ...f, scope: opt.value }))}
+                    className={[
+                      'px-3 py-1.5 rounded-lg text-sm border',
+                      form.scope === opt.value
+                        ? 'bg-blue-600 text-white border-blue-600'
+                        : 'border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700',
+                    ].join(' ')}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div>
             <label className="block text-xs text-gray-500 mb-1">Type</label>
             <div className="flex gap-2">
@@ -300,8 +358,8 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
             </label>
           )}
 
-          {/* Recurrence — editable for admin on create or when editing recurring event */}
-          {admin && (!isEdit || !!event?.recurrenceId) ? (
+          {/* Recurrence — editable for admin/translator on create or when editing recurring event */}
+          {adminOrTranslator && (!isEdit || !!event?.recurrenceId) ? (
             <div className="space-y-2">
               {isEdit && event?.recurrenceId && (
                 <p className="text-xs text-blue-600 dark:text-blue-400">🔁 Recurring series — recurrence changes apply when "Save future" is clicked</p>
@@ -364,7 +422,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
               onClick={() => setShowTitles(v => !v)}
               className="w-full flex items-center justify-between px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
             >
-              <span>▶ Override titles</span>
+              <span>▶ Titles &amp; descriptions</span>
               <span className="text-xs text-gray-400">{showTitles ? '▲' : '▼'}</span>
             </button>
 
@@ -386,7 +444,7 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
                   ))}
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]}</label>
+                  <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]} — title</label>
                   <textarea
                     value={form.titles[activeLang] ?? ''}
                     onChange={e => setTitle(activeLang, e.target.value)}
@@ -396,7 +454,20 @@ export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props
                   />
                 </div>
                 <Button variant="outline" size="sm" onClick={autoTranslate} disabled={translating} className="w-full">
-                  {translating ? 'Translating…' : '🤖 Auto-translate from Hebrew'}
+                  {translating ? 'Translating…' : '🤖 Auto-translate title from Hebrew'}
+                </Button>
+                <div>
+                  <label className="block text-xs text-gray-400 mb-1">{languageNames[activeLang]} — description</label>
+                  <textarea
+                    value={form.descriptions[activeLang] ?? ''}
+                    onChange={e => setDescription(activeLang, e.target.value)}
+                    rows={3}
+                    className="w-full border rounded-lg px-3 py-2 text-sm resize-none dark:bg-gray-800 dark:border-gray-700"
+                    dir={activeLang === 'he' ? 'rtl' : 'ltr'}
+                  />
+                </div>
+                <Button variant="outline" size="sm" onClick={autoTranslateDescription} disabled={translatingDescription} className="w-full">
+                  {translatingDescription ? 'Translating…' : '🤖 Auto-translate description from Hebrew'}
                 </Button>
               </div>
             )}

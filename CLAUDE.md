@@ -70,4 +70,4 @@ All UI strings are in `src/utils/i18n.ts` keyed by language code. Components use
 
 ## Deployment
 
-Production is at `cal.kli.one`. Deployment uses rsync + `npm run build` + PM2 (`serve` for static files on :5173, `node server.js` on :3001) behind nginx with SSL on the DNS machine.
+Production is at `events.kli.one`. Deployment uses rsync + `npm run build` + PM2 (`serve` for static files on :5173, `node server.js` on :3001) behind nginx with SSL on the DNS machine.

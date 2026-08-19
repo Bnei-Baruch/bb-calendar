@@ -1,0 +1,45 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Sync files to production
+        run: |
+          rsync -avz -e "ssh -i ~/.ssh/deploy_key" \
+            --exclude node_modules \
+            --exclude bb-calendar-488901-6a4730c846cc.json \
+            --exclude telegram-session.txt \
+            --exclude data/ \
+            ./ root@10.77.1.40:/root/luz/
+
+      - name: Install backend deps and restart services
+        run: |
+          ssh -i ~/.ssh/deploy_key root@10.77.1.40 "cd /root/luz && npm install && pm2 restart bb-calendar-api bb-calendar-web && pm2 list"

@@ -56,8 +56,13 @@ function buildResource(event) {
     if (rrule) resource.recurrence = [rrule];
 
     if (event.startTime) {
+      // If end time is before start time and no explicit endDate, the event crosses midnight
+      const crossesMidnight = !event.endDate && event.endTime && event.endTime < event.startTime;
+      const endDateStr = event.endDate || (crossesMidnight
+        ? (() => { const d = new Date(event.date + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + 1); return d.toISOString().slice(0, 10); })()
+        : event.date);
       resource.start = { dateTime: `${event.date}T${event.startTime}:00`, timeZone: TZ };
-      resource.end   = { dateTime: `${event.endDate || event.date}T${event.endTime}:00`, timeZone: TZ };
+      resource.end   = { dateTime: `${endDateStr}T${event.endTime}:00`, timeZone: TZ };
     } else {
       // All-day event — GCal end date is exclusive, so add 1 day to endDate
       resource.start = { date: event.date };

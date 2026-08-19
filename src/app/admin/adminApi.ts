@@ -82,6 +82,7 @@ export interface AdminEvent {
   recurrenceEnd?: string;
   recurrenceId?: string;
   recurrenceDays?: string;
+  scope?: 'global' | 'local' | 'ten';
 }
 
 export interface EventPayload {
@@ -98,12 +99,14 @@ export interface EventPayload {
   recurrence?: string;
   recurrenceEnd?: string;
   recurrenceDays?: string;
+  scope?: 'global' | 'local' | 'ten';
 }
 
 export interface AdminTemplate {
   id: number;
   name: string;
   titles: Record<string, string>;
+  descriptions?: Record<string, string>;
   defaultStartTime: string;
   defaultEndTime: string;
   privateByDefault: boolean;
@@ -113,6 +116,7 @@ export interface AdminTemplate {
 export interface TemplatePayload {
   name: string;
   titles: Record<string, string>;
+  descriptions?: Record<string, string>;
   defaultStartTime?: string;
   defaultEndTime?: string;
   privateByDefault?: boolean;

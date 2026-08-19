@@ -15,6 +15,7 @@ export interface Event {
   studyLink?: string;
   private?: boolean;
   parentId?: string;
+  scope?: 'global' | 'local' | 'ten';
   _db?: boolean;
   createdByRole?: string;
   recurrence?: 'daily' | 'weekly' | 'monthly' | 'custom';
@@ -51,6 +52,40 @@ export function getIsraelToday(): string {
     timeZone: 'Asia/Jerusalem',
     year: 'numeric', month: '2-digit', day: '2-digit',
   }).format(new Date());
+}
+
+export function getContainerSchedule(allEvents: Event[], event: Event): Record<string, Event[]> {
+  const isMultiDay = !!(event.endDate && event.endDate !== event.date);
+  const endRange = isMultiDay ? event.endDate! : event.date;
+
+  const byDate: Record<string, Event[]> = {};
+  let d = event.date;
+  while (d <= endRange) {
+    byDate[d] = [];
+    const next = new Date(d);
+    next.setDate(next.getDate() + 1);
+    d = next.toISOString().split('T')[0];
+  }
+
+  const isContainer = event.type === 'conference' || event.type === 'holiday';
+  allEvents
+    .filter(e =>
+      e.date >= event.date &&
+      e.date <= endRange &&
+      e.id !== event.id &&
+      !(e.endDate && e.endDate !== e.date) &&
+      (isContainer ? e.parentId === event.id : !e.parentId)
+    )
+    .forEach(e => {
+      if (!byDate[e.date]) byDate[e.date] = [];
+      byDate[e.date].push(e);
+    });
+
+  Object.keys(byDate).forEach(date => {
+    byDate[date].sort((a, b) => toMinutes(a.startTime) - toMinutes(b.startTime));
+  });
+
+  return byDate;
 }
 
 export function getMonthEvents(allEvents: Event[], year: number, month: number): Map<string, Event[]> {

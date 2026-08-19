@@ -9,8 +9,13 @@ import { PostsView } from './components/PostsView';
 import { AdminGuard } from './admin/AdminGuard';
 import { TemplateList } from './admin/TemplateList';
 import { TemplateForm } from './admin/TemplateForm';
+import { EmbedScheduleView } from './components/EmbedScheduleView';
 
 export const router = createBrowserRouter([
+  {
+    path: '/embed/:eventId',
+    Component: EmbedScheduleView,
+  },
   {
     path: '/',
     Component: Root,

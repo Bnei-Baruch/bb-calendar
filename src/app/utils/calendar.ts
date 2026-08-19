@@ -15,7 +15,7 @@ export function generateICS(event: Event, language: Language): string {
   const title = event.title[language] || event.title.en;
   const description = event.description?.[language] || '';
   const location = event.location || '';
-  const uid = `${event.id}@cal.kli.one`;
+  const uid = `${event.id}@events.kli.one`;
   const now = new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15) + 'Z';
   const start = event.date.replace(/-/g, '');
   const endBase = event.endDate && event.endDate !== event.date ? event.endDate : event.date;
@@ -24,7 +24,7 @@ export function generateICS(event: Event, language: Language): string {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//KLI Calendar//cal.kli.one//EN',
+    'PRODID:-//KLI Calendar//events.kli.one//EN',
     'BEGIN:VEVENT',
     `UID:${uid}`,
     `DTSTAMP:${now}`,
