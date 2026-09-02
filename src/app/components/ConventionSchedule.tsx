@@ -39,30 +39,30 @@ const TEN_LABEL: Record<string, string> = {
 };
 
 const GLOBAL_LEGEND: Record<string, string> = {
-  he: 'עולמי — שידור לכל האזורים בעולם', en: 'Global — broadcast to all regions worldwide',
-  ru: 'Глобально — трансляция для всех регионов по всему миру', es: 'Global — transmisión para todas las regiones del mundo',
-  de: 'Global — Übertragung für alle Regionen weltweit', it: 'Globale — trasmissione per tutte le regioni nel mondo',
-  fr: 'Global — diffusion pour toutes les régions dans le monde', pt: 'Global — transmissão para todas as regiões no mundo',
-  uk: 'Глобально — трансляція для всіх регіонів по всьому світу', tr: 'Küresel — dünya çapındaki tüm bölgeler için yayın',
-  bg: 'Глобално — излъчване за всички региони по света',
+  he: 'עולמי - שידור לכל האזורים בעולם', en: 'Global - broadcast to all regions worldwide',
+  ru: 'Глобально - трансляция для всех регионов по всему миру', es: 'Global - transmisión para todas las regiones del mundo',
+  de: 'Global - Übertragung für alle Regionen weltweit', it: 'Globale - trasmissione per tutte le regioni nel mondo',
+  fr: 'Global - diffusion pour toutes les régions dans le monde', pt: 'Global - transmissão para todas as regiões no mundo',
+  uk: 'Глобально - трансляція для всіх регіонів по всьому світу', tr: 'Küresel - dünya çapındaki tüm bölgeler için yayın',
+  bg: 'Глобално - излъчване за всички региони по света',
 };
 
 const LOCAL_LEGEND: Record<string, string> = {
-  he: 'אזורי — התכנסות אזורית', en: 'Regional — gathering at your regional venue',
-  ru: 'Региональный — встреча в вашем региональном центре', es: 'Regional — reunión en tu sede regional',
-  de: 'Regional — Treffen an eurem regionalen Standort', it: 'Regionale — incontro nella tua sede regionale',
-  fr: 'Régional — rencontre dans votre lieu régional', pt: 'Regional — encontro no seu local regional',
-  uk: 'Регіональний — зустріч у вашому регіональному осередку', tr: 'Bölgesel — bölgesel merkezinizde buluşma',
-  bg: 'Регионален — среща във вашия регионален център',
+  he: 'אזורי - התכנסות אזורית', en: 'Regional - gathering at your regional venue',
+  ru: 'Региональный - встреча в вашем региональном центре', es: 'Regional - reunión en tu sede regional',
+  de: 'Regional - Treffen an eurem regionalen Standort', it: 'Regionale - incontro nella tua sede regionale',
+  fr: 'Régional - rencontre dans votre lieu régional', pt: 'Regional - encontro no seu local regional',
+  uk: 'Регіональний - зустріч у вашому регіональному осередку', tr: 'Bölgesel - bölgesel merkezinizde buluşma',
+  bg: 'Регионален - среща във вашия регионален център',
 };
 
 const TEN_LEGEND: Record<string, string> = {
-  he: 'עשירייה — עבודה בעשירייה', en: 'Ten — work in your ten',
-  ru: 'Десятка — работа в вашей десятке', es: 'Diez — trabajo en tu grupo de diez',
-  de: 'Zehnergruppe — Arbeit in eurer Zehnergruppe', it: 'Decina — lavoro nella tua decina',
-  fr: 'Dizaine — travail dans votre dizaine', pt: 'Dez — trabalho no seu grupo de dez',
-  uk: 'Десятка — робота у вашій десятці', tr: 'Onlu Grup — onlu grubunuzda çalışma',
-  bg: 'Десятка — работа във вашата десятка',
+  he: 'עשירייה - עבודה בעשירייה', en: 'Ten - work in your ten',
+  ru: 'Десятка - работа в вашей десятке', es: 'Diez - trabajo en tu grupo de diez',
+  de: 'Zehnergruppe - Arbeit in eurer Zehnergruppe', it: 'Decina - lavoro nella tua decina',
+  fr: 'Dizaine - travail dans votre dizaine', pt: 'Dez - trabalho no seu grupo de dez',
+  uk: 'Десятка - робота у вашій десятці', tr: 'Onlu Grup - onlu grubunuzda çalışma',
+  bg: 'Десятка - работа във вашата десятка',
 };
 
 const COLUMN_LABELS: Record<string, { time: string; session: string; scope: string; materials: string }> = {
@@ -99,15 +99,15 @@ function getScopeLabel(scope: Event['scope'], language: Language): string | null
   return null;
 }
 
-function formatDateRange(startStr: string, endStr: string | undefined, locale: Locale): string {
+function formatDateRange(startStr: string, endStr: string | undefined): string {
   const start = new Date(`${startStr}T00:00:00`);
-  if (!endStr || endStr === startStr) return format(start, 'd MMMM yyyy', { locale });
+  if (!endStr || endStr === startStr) return format(start, 'dd.MM.yyyy');
   const end = new Date(`${endStr}T00:00:00`);
   const sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
-  if (sameMonth) return `${format(start, 'd', { locale })}–${format(end, 'd MMMM yyyy', { locale })}`;
+  if (sameMonth) return `${format(start, 'dd')}-${format(end, 'dd.MM.yyyy')}`;
   const sameYear = start.getFullYear() === end.getFullYear();
-  if (sameYear) return `${format(start, 'd MMMM', { locale })} – ${format(end, 'd MMMM yyyy', { locale })}`;
-  return `${format(start, 'd MMMM yyyy', { locale })} – ${format(end, 'd MMMM yyyy', { locale })}`;
+  if (sameYear) return `${format(start, 'dd.MM')}-${format(end, 'dd.MM.yyyy')}`;
+  return `${format(start, 'dd.MM.yyyy')}-${format(end, 'dd.MM.yyyy')}`;
 }
 
 interface ConventionScheduleProps {
@@ -236,7 +236,7 @@ export function ConventionSchedule({
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm mb-2" style={{ color: 'var(--embed-fg-muted)' }}>
               <span className="inline-flex items-center gap-1.5">
                 <CalendarIcon className="w-3.5 h-3.5" />
-                {formatDateRange(event.date, event.endDate, locale)}
+                <span dir="ltr" style={{ unicodeBidi: 'isolate' }}>{formatDateRange(event.date, event.endDate)}</span>
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Globe className="w-3.5 h-3.5" />
@@ -328,13 +328,13 @@ export function ConventionSchedule({
                 key={date}
                 type="button"
                 onClick={() => setActiveDate(date)}
-                className="flex-1 min-w-[110px] max-w-[220px] text-start px-5 py-3.5 rounded-[10px] transition-colors"
+                className="flex-1 min-w-[110px] max-w-[220px] text-center px-5 py-3.5 rounded-[10px] transition-colors"
                 style={active
                   ? { border: '1px solid var(--embed-tab-active-bg)', background: 'var(--embed-tab-active-bg)', color: 'var(--embed-tab-active-fg)' }
                   : { border: '1px solid var(--embed-border)', background: 'var(--embed-bg-surface)', color: 'var(--embed-fg-heading)' }}
               >
                 <div className="text-xs font-semibold" style={{ color: active ? 'var(--embed-tab-active-sub)' : 'var(--embed-fg-subtle)' }}>{format(d, 'EEEE', { locale })}</div>
-                <div className="text-lg font-bold mt-0.5 whitespace-nowrap">{format(d, 'd MMM', { locale })}</div>
+                <div className="text-lg font-bold mt-0.5 whitespace-nowrap" dir="ltr" style={{ unicodeBidi: 'isolate' }}>{format(d, 'dd.MM.yyyy')}</div>
               </button>
             );
           })}
@@ -348,7 +348,9 @@ export function ConventionSchedule({
             ? { background: '#fed7aa', color: '#7c2d12' }
             : { background: 'var(--embed-bg-tabs)', color: 'var(--embed-fg-heading)' }}
         >
-          {format(new Date(`${currentDate}T00:00:00`), 'EEEE, d MMMM yyyy', { locale })}
+          {format(new Date(`${currentDate}T00:00:00`), 'EEEE', { locale })}
+          {', '}
+          <span dir="ltr" style={{ unicodeBidi: 'isolate' }}>{format(new Date(`${currentDate}T00:00:00`), 'dd.MM.yyyy')}</span>
         </div>
       )}
 
@@ -448,11 +450,12 @@ export function ConventionSchedule({
                     <div className={`flex items-center ps-3 py-4 ${hasScope ? 'pe-14' : 'pe-3'}`} style={cellStyle}>
                       {!isTimeless && (
                         <div
-                          className="text-[15px] font-bold whitespace-nowrap"
+                          className="flex items-center gap-1 text-[15px] font-bold whitespace-nowrap"
                           style={{ color: 'var(--embed-fg-heading)', fontVariantNumeric: 'tabular-nums' }}
-                          dir="ltr"
                         >
-                          {session.startTime} – {session.endTime}
+                          <span dir="ltr">{session.startTime}</span>
+                          <span>–</span>
+                          <span dir="ltr">{session.endTime}</span>
                         </div>
                       )}
                     </div>
@@ -510,8 +513,10 @@ export function ConventionSchedule({
                   >
                     <div className="flex items-center gap-2.5 flex-wrap">
                       {!isTimeless && (
-                        <span className="text-sm font-bold whitespace-nowrap" style={{ color: 'var(--embed-fg-heading)', fontVariantNumeric: 'tabular-nums' }} dir="ltr">
-                          {session.startTime} – {session.endTime}
+                        <span className="inline-flex items-center gap-1 text-sm font-bold whitespace-nowrap" style={{ color: 'var(--embed-fg-heading)', fontVariantNumeric: 'tabular-nums' }}>
+                          <span dir="ltr">{session.startTime}</span>
+                          <span>–</span>
+                          <span dir="ltr">{session.endTime}</span>
                         </span>
                       )}
                       {scopeStyle && scopeLabel && (
@@ -540,22 +545,22 @@ export function ConventionSchedule({
       })()}
 
       {sessions.some(s => s.scope) && (
-        <div className="flex flex-wrap gap-4 mt-4 pt-4 text-xs" style={{ borderTop: '1px solid var(--embed-border)', color: 'var(--embed-fg-muted)' }}>
+        <div className="flex flex-wrap gap-4 mt-4 pt-4 text-[11px]" style={{ borderTop: '1px solid var(--embed-border)', color: 'var(--embed-fg-muted)' }}>
           {sessions.some(s => s.scope === 'global') && (
             <span className="inline-flex items-center gap-2">
-              <span className="w-2 h-2 flex-shrink-0" style={{ borderRadius: 2, background: 'var(--embed-cat-global)' }} />
+              <span className="w-2 h-[2px] flex-shrink-0" style={{ borderRadius: 1, background: 'var(--embed-cat-global)' }} />
               {GLOBAL_LEGEND[language] ?? GLOBAL_LEGEND.en}
             </span>
           )}
           {sessions.some(s => s.scope === 'local') && (
             <span className="inline-flex items-center gap-2">
-              <span className="w-2 h-2 flex-shrink-0" style={{ borderRadius: 2, background: 'var(--embed-cat-local)' }} />
+              <span className="w-2 h-[2px] flex-shrink-0" style={{ borderRadius: 1, background: 'var(--embed-cat-local)' }} />
               {LOCAL_LEGEND[language] ?? LOCAL_LEGEND.en}
             </span>
           )}
           {sessions.some(s => s.scope === 'ten') && (
             <span className="inline-flex items-center gap-2">
-              <span className="w-2 h-2 flex-shrink-0" style={{ borderRadius: 2, background: 'var(--embed-cat-ten)' }} />
+              <span className="w-2 h-[2px] flex-shrink-0" style={{ borderRadius: 1, background: 'var(--embed-cat-ten)' }} />
               {TEN_LEGEND[language] ?? TEN_LEGEND.en}
             </span>
           )}
