@@ -31,7 +31,7 @@ export function UpcomingEventsView() {
       if (isHoliday(event)) return false;
       if (!canEdit && !event.title?.[language]) return false;
       const isMultiDay = event.endDate && event.endDate !== event.date;
-      return isMultiDay || event.type === 'special';
+      return isMultiDay || event.type === 'special' || event.type === 'conference';
     })
     .sort((a, b) => a.date.localeCompare(b.date));
 
