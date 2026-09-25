@@ -134,12 +134,13 @@ export function DayView() {
     const lines: string[] = [`*${appTitle}*`, `*${formatDayHeader(date)}*`, '──────────'];
     const dayEvents = getEventsByDate(displayEvents, dateStr);
     const parentEvent = displayEvents
-      .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
+      .filter(e => e.date <= dateStr && (e.endDate || e.date) >= dateStr && (e.type === 'conference' || (e.endDate && e.endDate !== e.date)))
       .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
     const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
     if (parentEvent) {
+      const isMultiDay = parentEvent.endDate && parentEvent.endDate !== parentEvent.date;
       const dayNumber = Math.round((parseISO(dateStr).getTime() - parseISO(parentEvent.date).getTime()) / 86400000) + 1;
-      lines.push(`${parentEvent.title[language]} - ${t.day} ${dayNumber}`);
+      lines.push(isMultiDay ? `${parentEvent.title[language]} - ${t.day} ${dayNumber}` : parentEvent.title[language]);
     }
     if (events.length === 0 && !parentEvent) {
       lines.push(t.noEvents);
@@ -188,15 +189,16 @@ export function DayView() {
       const date = parseISO(dateStr);
       const dayEvents = getEventsByDate(displayEvents, dateStr);
       const parentEvent = displayEvents
-        .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
+        .filter(e => e.date <= dateStr && (e.endDate || e.date) >= dateStr && (e.type === 'conference' || (e.endDate && e.endDate !== e.date)))
         .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
       const events = parentEvent ? dayEvents.filter(e => e.id !== parentEvent.id) : dayEvents;
 
       lines.push(`*${formatDayHeader(date)}*`);
       lines.push('──────────');
       if (parentEvent) {
+        const isMultiDay = parentEvent.endDate && parentEvent.endDate !== parentEvent.date;
         const dayNumber = Math.round((parseISO(dateStr).getTime() - parseISO(parentEvent.date).getTime()) / 86400000) + 1;
-        lines.push(`${parentEvent.title[language]} - ${t.day} ${dayNumber}`);
+        lines.push(isMultiDay ? `${parentEvent.title[language]} - ${t.day} ${dayNumber}` : parentEvent.title[language]);
       }
       if (events.length === 0 && !parentEvent) {
         lines.push(t.noEvents);
@@ -361,12 +363,13 @@ export function DayView() {
               const color = dayColors[dayIdx];
               const allDayEvents = getEventsByDate(displayEvents, dateStr);
               const parentEvent = displayEvents
-                .filter(e => e.endDate && e.endDate !== e.date && e.date <= dateStr && e.endDate >= dateStr)
+                .filter(e => e.date <= dateStr && (e.endDate || e.date) >= dateStr && (e.type === 'conference' || (e.endDate && e.endDate !== e.date)))
                 .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
               const events = parentEvent
                 ? allDayEvents.filter(e => e.id !== parentEvent.id)
                 : allDayEvents;
-              const dayNumber = parentEvent
+              const isParentMultiDay = !!(parentEvent?.endDate && parentEvent.endDate !== parentEvent.date);
+              const dayNumber = parentEvent && isParentMultiDay
                 ? Math.round((parseISO(dateStr).getTime() - parseISO(parentEvent.date).getTime()) / 86400000) + 1
                 : null;
               const timeless = events.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
