@@ -244,7 +244,7 @@ export function ConventionSchedule({
               </span>
             </div>
             {event.description?.[language] && (
-              <p className="text-sm max-w-prose" style={{ color: 'var(--embed-fg-muted)' }}>
+              <p className="text-sm max-w-prose whitespace-pre-line" style={{ color: 'var(--embed-fg-muted)' }}>
                 {event.description[language]}
               </p>
             )}
@@ -468,7 +468,7 @@ export function ConventionSchedule({
                       <div>
                         <p className="text-[15.5px] font-semibold" style={{ color: 'var(--embed-fg)' }}>{getEventTitle(session, language)}</p>
                         {session.description?.[language] && (
-                          <p className="text-[13px] mt-0.5" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
+                          <p className="text-[13px] mt-0.5 whitespace-pre-line" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
                         )}
                       </div>
                     </div>
@@ -534,7 +534,7 @@ export function ConventionSchedule({
                       {sessionActions(session)}
                     </div>
                     {session.description?.[language] && (
-                      <p className="text-[12.5px]" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
+                      <p className="text-[12.5px] whitespace-pre-line" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
                     )}
                   </div>
                 );

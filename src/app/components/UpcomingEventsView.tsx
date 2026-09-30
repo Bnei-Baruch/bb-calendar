@@ -147,7 +147,7 @@ export function UpcomingEventsView() {
                       </div>
                     )}
                     {event.description?.[language] && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2 whitespace-pre-line">
                         {event.description[language]}
                       </p>
                     )}

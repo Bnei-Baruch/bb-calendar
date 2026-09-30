@@ -441,7 +441,7 @@ export function DayView() {
                         <AddToCalendarButton event={parentEvent} language={language} isRTL={isRTL} />
                       </div>
                       {parentEvent.description && (
-                        <p className="text-center text-blue-100 mt-1 text-sm">
+                        <p className="text-center text-blue-100 mt-1 text-sm whitespace-pre-line">
                           {parentEvent.description[language]}
                         </p>
                       )}
@@ -463,7 +463,7 @@ export function DayView() {
                               >
                                 <p className={`font-semibold ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
                                 {e.description && (
-                                  <p className={`text-sm opacity-75 ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
+                                  <p className={`text-sm opacity-75 whitespace-pre-line ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
                                 )}
                               </div>
                               {canEdit && e._db && (
@@ -525,7 +525,7 @@ export function DayView() {
                           className={`bg-white/70 dark:bg-white/5 rounded-lg p-3 transition-colors ${event.type === 'conference' ? 'cursor-pointer hover:bg-white/90 dark:hover:bg-white/10' : ''}`}
                           onClick={event.type === 'conference' ? () => handleEventClick(event.id) : undefined}
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-baseline gap-3">
                             <div className={`flex items-center gap-1.5 text-sm min-w-[100px] ${color.text}`}>
                               <Clock className="w-3.5 h-3.5 shrink-0" />
                               <span className="font-medium" dir="ltr">
@@ -547,13 +547,13 @@ export function DayView() {
                                 )}
                               </h4>
                               {event.description && (
-                                <p className={`text-xs sm:text-sm opacity-75 mt-0.5 ${color.text}`}>
+                                <p className={`text-xs sm:text-sm opacity-75 mt-0.5 whitespace-pre-line ${color.text}`}>
                                   {event.description[language]}
                                 </p>
                               )}
                             </div>
                             {canEdit && event._db && (
-                              <div className="flex items-center gap-1 shrink-0">
+                              <div className="flex items-center gap-1 shrink-0 self-start">
                                 <button
                                   onClick={e => { e.stopPropagation(); setEditEvent(event); }}
                                   className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
@@ -607,7 +607,7 @@ export function DayView() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={e => e.stopPropagation()}
-                                className="text-xs font-semibold px-2 py-1 rounded-full shrink-0 transition-colors text-white bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
+                                className="text-xs font-semibold px-2 py-1 rounded-full shrink-0 self-start transition-colors text-white bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
                               >
                                 {t.registerMeal}
                               </a>
@@ -619,7 +619,7 @@ export function DayView() {
                                 rel="noopener noreferrer"
                                 onClick={e => e.stopPropagation()}
                                 title={t.studyMaterials}
-                                className={`flex items-center justify-center w-7 h-7 rounded-full shrink-0 transition-colors text-white ${color.badge} opacity-90 hover:opacity-100`}
+                                className={`flex items-center justify-center w-7 h-7 rounded-full shrink-0 self-start transition-colors text-white ${color.badge} opacity-90 hover:opacity-100`}
                               >
                                 <BookOpen className="w-3.5 h-3.5" />
                               </a>
