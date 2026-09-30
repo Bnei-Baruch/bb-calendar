@@ -5,7 +5,7 @@ import { ArrowRight, Calendar, MapPin, Share2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Language, useTranslation } from '../utils/i18n';
-import { getEventById, getContainerSchedule } from '../data/events';
+import { getEventById, getContainerSchedule, getDescriptionShareLines } from '../data/events';
 import { useEvents } from '../context/EventsContext';
 import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
 import { adminApi } from '../admin/adminApi';
@@ -145,10 +145,11 @@ export function EventDetail() {
       const dateEvents = [...eventsByDate[date]].sort((a, b) => toMin(a.startTime) - toMin(b.startTime));
       const timeless = dateEvents.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
       const timed = dateEvents.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
-      timeless.forEach(e => lines.push(e.title[language]));
+      timeless.forEach(e => { lines.push(e.title[language]); lines.push(...getDescriptionShareLines(e, language)); });
       timed.forEach(e => {
         const time = `${padTime(e.startTime)} - ${padTime(e.endTime)}`;
         lines.push(`${time}  ${e.title[language]}`);
+        lines.push(...getDescriptionShareLines(e, language));
       });
     });
     lines.push('');

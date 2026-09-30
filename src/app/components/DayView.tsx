@@ -7,7 +7,7 @@ import { Card } from './ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Calendar } from './ui/calendar';
 import { Language, useTranslation } from '../utils/i18n';
-import { getEventsByDate, getIsraelToday } from '../data/events';
+import { getEventsByDate, getIsraelToday, getDescriptionShareLines } from '../data/events';
 import { EventDescription } from './EventDescription';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
@@ -148,8 +148,8 @@ export function DayView() {
     } else {
       const timeless = events.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
       const timed = events.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
-      timeless.forEach(e => lines.push(e.title[language]));
-      timed.forEach(e => lines.push(`${padTime(e.startTime)} - ${padTime(e.endTime)}  ${e.title[language]}`));
+      timeless.forEach(e => { lines.push(e.title[language]); lines.push(...getDescriptionShareLines(e, language)); });
+      timed.forEach(e => { lines.push(`${padTime(e.startTime)} - ${padTime(e.endTime)}  ${e.title[language]}`); lines.push(...getDescriptionShareLines(e, language)); });
     }
     lines.push('', `${siteLabel}: https://events.kli.one`);
     return lines.join('\n');
@@ -206,10 +206,11 @@ export function DayView() {
       } else {
         const timeless = events.filter(e => !e.startTime || !e.endTime || e.startTime === e.endTime);
         const timed = events.filter(e => e.startTime && e.endTime && e.startTime !== e.endTime);
-        timeless.forEach(e => lines.push(e.title[language]));
+        timeless.forEach(e => { lines.push(e.title[language]); lines.push(...getDescriptionShareLines(e, language)); });
         timed.forEach(e => {
           const time = `${padTime(e.startTime)} - ${padTime(e.endTime)}`;
           lines.push(`${time}  ${e.title[language]}`);
+          lines.push(...getDescriptionShareLines(e, language));
         });
       }
       lines.push('');

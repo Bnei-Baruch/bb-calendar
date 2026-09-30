@@ -32,6 +32,12 @@ export function getEventDescription(event: Event, language: Language): string {
   return event.description?.[language] || event.description?.en || event.description?.he || '';
 }
 
+/** Description as share-text lines: bulleted when it has several lines. */
+export function getDescriptionShareLines(event: Event, language: Language): string[] {
+  const lines = (event.description?.[language] ?? '').split('\n').map(l => l.trim()).filter(Boolean);
+  return lines.length > 1 ? lines.map(l => `• ${l}`) : lines;
+}
+
 function toMinutes(time: string): number {
   const [h, m] = time.split(':').map(Number);
   return (h || 0) * 60 + (m || 0);
