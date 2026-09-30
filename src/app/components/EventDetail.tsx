@@ -1,4 +1,5 @@
 import { useNavigate, useParams, useOutletContext, useLocation, useSearchParams } from 'react-router';
+import { EventDescription } from './EventDescription';
 import { useState, useEffect } from 'react';
 import { ArrowRight, Calendar, MapPin, Share2 } from 'lucide-react';
 import { Button } from './ui/button';
@@ -269,9 +270,7 @@ export function EventDetail() {
           {!isContainerType && event.description?.[language] && (
             <div className="mt-8 pt-6 border-t">
               <h3 className={`font-semibold text-lg mb-3 ${isRTL ? 'text-right' : ''}`}>{t.description}</h3>
-              <p className={`text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line ${isRTL ? 'text-right' : ''}`}>
-                {event.description[language]}
-              </p>
+              <EventDescription text={event.description[language]} className={`text-gray-700 dark:text-gray-300 leading-relaxed ${isRTL ? 'text-right' : ''}`} />
             </div>
           )}
 

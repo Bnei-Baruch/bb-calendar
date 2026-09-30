@@ -4,6 +4,7 @@ import type { Locale } from 'date-fns';
 import { he, enUS, ru, es } from 'date-fns/locale';
 import { BookOpen, Pencil, Trash2, Plus, Code2, Copy, Check, Calendar as CalendarIcon, Globe } from 'lucide-react';
 import { Event, getContainerSchedule, getEventTitle } from '../data/events';
+import { EventDescription } from './EventDescription';
 import { EMBED_THEMES, DEFAULT_EMBED_THEME, EmbedTheme } from '../data/embedThemes';
 import { Language, useTranslation } from '../utils/i18n';
 import { AddToCalendarButton } from './AddToCalendarButton';
@@ -468,7 +469,7 @@ export function ConventionSchedule({
                       <div>
                         <p className="text-[15.5px] font-semibold" style={{ color: 'var(--embed-fg)' }}>{getEventTitle(session, language)}</p>
                         {session.description?.[language] && (
-                          <p className="text-[13px] mt-0.5 whitespace-pre-line" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
+                          <EventDescription text={session.description[language]} className="text-[13px] mt-0.5" style={{ color: 'var(--embed-fg-subtle)' }} />
                         )}
                       </div>
                     </div>
@@ -534,7 +535,7 @@ export function ConventionSchedule({
                       {sessionActions(session)}
                     </div>
                     {session.description?.[language] && (
-                      <p className="text-[12.5px] whitespace-pre-line" style={{ color: 'var(--embed-fg-subtle)' }}>{session.description[language]}</p>
+                      <EventDescription text={session.description[language]} className="text-[12.5px]" style={{ color: 'var(--embed-fg-subtle)' }} />
                     )}
                   </div>
                 );

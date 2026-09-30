@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Calendar } from './ui/calendar';
 import { Language, useTranslation } from '../utils/i18n';
 import { getEventsByDate, getIsraelToday } from '../data/events';
+import { EventDescription } from './EventDescription';
 import { useEvents } from '../context/EventsContext';
 import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
 import { useState, useEffect } from 'react';
@@ -463,7 +464,7 @@ export function DayView() {
                               >
                                 <p className={`font-semibold ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.title[language]}</p>
                                 {e.description && (
-                                  <p className={`text-sm opacity-75 whitespace-pre-line ${color.text} ${isRTL ? 'text-right' : 'text-left'}`}>{e.description[language]}</p>
+                                  <EventDescription text={e.description[language]} className={`text-sm opacity-75 ${color.text} ${isRTL ? 'text-right' : 'text-left'}`} />
                                 )}
                               </div>
                               {canEdit && e._db && (
@@ -547,9 +548,7 @@ export function DayView() {
                                 )}
                               </h4>
                               {event.description && (
-                                <p className={`text-xs sm:text-sm opacity-75 mt-0.5 whitespace-pre-line ${color.text}`}>
-                                  {event.description[language]}
-                                </p>
+                                <EventDescription text={event.description[language]} className={`text-xs sm:text-sm opacity-75 mt-0.5 ${color.text}`} />
                               )}
                             </div>
                             {canEdit && event._db && (
