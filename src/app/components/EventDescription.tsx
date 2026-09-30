@@ -1,13 +1,14 @@
 import type { CSSProperties } from 'react';
 
 interface EventDescriptionProps {
-  text: string;
+  text?: string;
   className?: string;
   style?: CSSProperties;
 }
 
 /** Renders a description; when it has more than one line, each line becomes a bullet. */
 export function EventDescription({ text, className = '', style }: EventDescriptionProps) {
+  if (!text) return null;
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
   if (lines.length < 2) {
     return <p className={`${className} whitespace-pre-line`} style={style}>{text}</p>;
