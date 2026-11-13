@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, useCallback, ReactNode } from 'react';
 import { Event } from '../data/events';
 import keycloak from '../../keycloak';
+import { useTimezone } from './TimezoneContext';
+import { convertFromIsrael, ISRAEL_TZ } from '../utils/timezone';
 
 interface EventsContextValue {
   events: Event[];
@@ -12,8 +14,23 @@ const EventsContext = createContext<EventsContextValue>({ events: [], loading: t
 
 const POLL_MS = 10 * 60 * 1000;
 
+/** Event times are stored in Israel time; shift timed single-day events into the display zone. */
+function convertEvents(list: Event[], tz: string): Event[] {
+  if (tz === ISRAEL_TZ) return list;
+  return list.map(e => {
+    if (e.type === 'conference' || e.type === 'holiday') return e;
+    if (e.endDate && e.endDate !== e.date) return e;
+    if (!e.startTime || !e.endTime || e.startTime === e.endTime) return e;
+    const s = convertFromIsrael(e.date, e.startTime, tz);
+    const en = convertFromIsrael(e.date, e.endTime, tz);
+    return { ...e, date: s.date, startTime: s.time, endTime: en.time, _orig: e };
+  });
+}
+
 export function EventsProvider({ children }: { children: ReactNode }) {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [rawEvents, setEvents] = useState<Event[]>([]);
+  const { effectiveTz } = useTimezone();
+  const events = useMemo(() => convertEvents(rawEvents, effectiveTz), [rawEvents, effectiveTz]);
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {

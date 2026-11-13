@@ -6,6 +6,7 @@ import { LanguageSelector } from './LanguageSelector';
 import { Language, useTranslation } from '../utils/i18n';
 import keycloak from '../../keycloak';
 import { isAdmin } from '../admin/AdminGuard';
+import { TimezoneSelector } from './TimezoneSelector';
 import { GenerateModal } from '../admin/GenerateModal';
 import { HolidayGenerateModal } from '../admin/HolidayGenerateModal';
 
@@ -230,6 +231,10 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
               </>
             )}
 
+            <div className="hidden lg:block">
+              <TimezoneSelector language={currentLanguage} mode="popover" isRTL={isRTL} />
+            </div>
+
             <LanguageSelector
               currentLanguage={currentLanguage}
               onLanguageChange={onLanguageChange}
@@ -270,12 +275,13 @@ export function Header({ currentLanguage, onLanguageChange }: HeaderProps) {
         </div>
         
         {/* Mobile Title - Below logo, only on small screens */}
-        <div className="lg:hidden mt-2 text-center">
+        <div className="lg:hidden mt-2 flex flex-col items-center gap-2 text-center">
           <Link to="/">
             <h1 className="text-sm sm:text-base font-bold text-blue-900 dark:text-blue-300">
               {t.appName}
             </h1>
           </Link>
+          <TimezoneSelector language={currentLanguage} mode="drawer" isRTL={isRTL} />
         </div>
       </div>
 

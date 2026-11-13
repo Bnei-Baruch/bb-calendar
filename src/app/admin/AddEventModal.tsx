@@ -16,7 +16,9 @@ interface Props {
   onSaved: () => void;
 }
 
-export function AddEventModal({ date, event, parentId, onClose, onSaved }: Props) {
+export function AddEventModal({ date, event: eventProp, parentId, onClose, onSaved }: Props) {
+  // Edit forms always work on the stored (Israel-time) event, never the time-zone-converted copy.
+  const event = eventProp ? ((eventProp as any)._orig as AdminEvent | undefined) ?? eventProp : undefined;
   const isEdit = !!event;
   const admin = isAdmin();
   const adminOrTranslator = isAdminOrTranslator();

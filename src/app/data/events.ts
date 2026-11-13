@@ -1,4 +1,5 @@
 import type { Language } from '../utils/i18n';
+import { getTodayInTz } from '../utils/timezone';
 
 export type EventType = 'regular' | 'conference' | 'holiday' | 'special';
 
@@ -22,6 +23,13 @@ export interface Event {
   recurrenceEnd?: string;
   recurrenceId?: string;
   recurrenceDays?: string;
+  /** Set when times were converted to the user's time zone: the untouched Israel-time event (use for editing). */
+  _orig?: Event;
+}
+
+/** Event as stored (Israel time) — pass this to admin edit forms. */
+export function rawEvent<T extends Event>(e: T): Event {
+  return e._orig ?? e;
 }
 
 export function getEventTitle(event: Event, language: Language): string {
@@ -53,11 +61,9 @@ export function getEventById(allEvents: Event[], id: string): Event | undefined 
   return allEvents.find(e => e.id === id);
 }
 
+/** Today's date (YYYY-MM-DD) in the user's selected time zone (Israel until chosen). */
 export function getIsraelToday(): string {
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Jerusalem',
-    year: 'numeric', month: '2-digit', day: '2-digit',
-  }).format(new Date());
+  return getTodayInTz();
 }
 
 export function getContainerSchedule(allEvents: Event[], event: Event): Record<string, Event[]> {
@@ -68,16 +74,16 @@ export function getContainerSchedule(allEvents: Event[], event: Event): Record<s
   let d = event.date;
   while (d <= endRange) {
     byDate[d] = [];
-    const next = new Date(d);
-    next.setDate(next.getDate() + 1);
+    const [yy, mm, dd] = d.split('-').map(Number);
+    const next = new Date(Date.UTC(yy, mm - 1, dd + 1));
     d = next.toISOString().split('T')[0];
   }
 
   const isContainer = event.type === 'conference' || event.type === 'holiday';
   allEvents
     .filter(e =>
-      e.date >= event.date &&
-      e.date <= endRange &&
+      // children of a container may shift outside its range after time zone conversion
+      ((isContainer && e.parentId === event.id) || (e.date >= event.date && e.date <= endRange)) &&
       e.id !== event.id &&
       !(e.endDate && e.endDate !== e.date) &&
       (isContainer ? e.parentId === event.id : !e.parentId)

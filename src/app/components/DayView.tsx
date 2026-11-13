@@ -10,7 +10,7 @@ import { Language, useTranslation } from '../utils/i18n';
 import { getEventsByDate, getIsraelToday, getDescriptionShareLines } from '../data/events';
 import { EventDescription } from './EventDescription';
 import { useEvents } from '../context/EventsContext';
-import { format, addDays, subDays, parseISO, isToday } from 'date-fns';
+import { format, addDays, subDays, parseISO } from 'date-fns';
 import { useState, useEffect } from 'react';
 import { isAdmin, isAdminOrTranslator } from '../admin/AdminGuard';
 import { AddEventModal } from '../admin/AddEventModal';
@@ -361,7 +361,7 @@ export function DayView() {
           <div className="space-y-4">
             {weekDates.map((dateStr, dayIdx) => {
               const date = parseISO(dateStr);
-              const todayFlag = isToday(date);
+              const todayFlag = dateStr === getIsraelToday();
               const color = dayColors[dayIdx];
               const allDayEvents = getEventsByDate(displayEvents, dateStr);
               const parentEvent = displayEvents
