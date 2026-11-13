@@ -19,6 +19,11 @@ export function resolveTz(tz: string): string {
   return tz;
 }
 
+const ISRAEL_ALIASES = new Set([ISRAEL_TZ, 'Asia/Tel_Aviv', 'Israel']);
+export function isIsraelZone(tz: string): boolean {
+  return ISRAEL_ALIASES.has(tz);
+}
+
 let activeTz = ISRAEL_TZ;
 /** Set by TimezoneProvider; lets non-React helpers (getIsraelToday) follow the user's zone. */
 export function setActiveTimezone(tz: string) { activeTz = tz; }
